@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
@@ -116,8 +116,8 @@ export default function Home() {
       />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full flex-1">
-        {/* TACTICAL CRISIS SWITCHBOARD HERO */}
-        {!isSubmitted && (
+        {/* TACTICAL CRISIS SWITCHBOARD HERO (Only shown on Step 1: Tell us what happened) */}
+        {!isSubmitted && currentStep === 1 && (
           <div className="pt-8 pb-4">
             <div className="flex items-center justify-between mb-3 px-1">
               <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-slate-400">
