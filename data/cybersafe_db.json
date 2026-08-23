@@ -1,0 +1,106 @@
+{
+  "users": [
+    {
+      "id": "USR-DEFAULT-001",
+      "phone": "9999999999",
+      "password": "password123",
+      "name": "Citizen Demo User",
+      "createdAt": "2026-08-23T17:01:46.194Z"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "INC-1787504506020",
+      "userId": "USR-DEFAULT-001",
+      "flowType": "financial_fraud",
+      "profile": {
+        "id": "INC-1787504506020",
+        "victimName": "Citizen",
+        "victimPhone": "+91-9999999999",
+        "victimAccountMasked": "XXXX-XXXX-0000",
+        "scamCategory": "UPI_PHISHING",
+        "cityState": "New Delhi, DL",
+        "utrNumber": "",
+        "fraudAmount": 0,
+        "suspectVpa": "",
+        "suspectBankIfsc": "",
+        "suspectAccountNo": "",
+        "transactionTime": "2026-08-23T17:01:46.020Z",
+        "victimBank": "State Bank of India (SBI)",
+        "evidenceFileName": "",
+        "rawEvidenceText": "",
+        "impersonatedAgency": "Central Bureau of Investigation (CBI)",
+        "scammerCallerId": "",
+        "extortionDemandAmount": 250000
+      },
+      "auditReport": {
+        "overallCompletenessScore": 70,
+        "isGoldenHourValid": true,
+        "minutesElapsed": 0,
+        "rbiZeroLiabilityEligible": true,
+        "rbiRuleCitation": "RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18",
+        "applicableBnsSections": [
+          "Section 318(4) BNS 2023 (Cheating and dishonestly inducing delivery of property)",
+          "Section 319 BNS 2023 (Cheating by personation)"
+        ],
+        "applicableItActSections": [
+          "Section 66C IT Act 2000 (Identity theft)",
+          "Section 66D IT Act 2000 (Cheating by personation using computer resource)"
+        ],
+        "summaryVerdict": "Emergency incident data verified. Bank Lien Freeze Notice & Police FIR ready for 1-Tap dispatch.",
+        "vectors": [
+          {
+            "vectorName": "utr_validation",
+            "label": "12-Digit UTR / RRN Identifier",
+            "score": 30,
+            "status": "FAILED",
+            "details": "Missing or truncated UTR reference number.",
+            "iconName": "ShieldCheck"
+          },
+          {
+            "vectorName": "golden_hour_window",
+            "label": "Golden 2-Hour Recovery Window",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Incident reported within Golden Window (0 mins ago). High Fund Lock Probability (>80%).",
+            "iconName": "Clock"
+          },
+          {
+            "vectorName": "suspect_node",
+            "label": "Mule Account & VPA Telemetry",
+            "score": 50,
+            "status": "WARNING",
+            "details": "Suspect VPA details incomplete; bank will trace via UTR inter-bank switch.",
+            "iconName": "UserX"
+          },
+          {
+            "vectorName": "rbi_protection",
+            "label": "RBI Statutory Zero-Liability Rule",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Enforcing RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18 for zero customer loss in third-party breaches.",
+            "iconName": "FileCheck"
+          }
+        ],
+        "actionPlan": [
+          "Send 1-Click Freeze Lien Request to Bank Branch Manager & Nodal Officer under Sec 91 BNSS.",
+          "File Cyber Police Station FIR Dossier with verified UTR evidence.",
+          "Dial Helpline 1930 and read the generated high-contrast Tele-Script to the operator."
+        ]
+      },
+      "payload": {
+        "ackToken": "I4C-NCRP-2026-EEC429",
+        "timestamp": "2026-08-23T17:01:46.031Z",
+        "helplineReference": "1930-TICKET-871098",
+        "i4cNodeTarget": "NATIONAL_CYBER_CRIME_REPORTING_PORTAL_SANDBOX_V2",
+        "utrChecksum": "SHA256:-VERIFIED",
+        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-EEC429",
+        "status": "SUBMITTED"
+      },
+      "isSubmitted": false,
+      "status": "AUDITED",
+      "createdAt": "2026-08-23T17:01:46.194Z",
+      "updatedAt": "2026-08-23T17:01:46.196Z"
+    }
+  ]
+}

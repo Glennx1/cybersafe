@@ -11,6 +11,9 @@ import { DigitalArrestStep3Action } from "@/components/DigitalArrestStep3Action"
 import { TeleScriptModal } from "@/components/TeleScriptModal";
 import { IncidentTracker } from "@/components/IncidentTracker";
 import { EmergencyVoiceGuide } from "@/components/EmergencyVoiceGuide";
+import { AuthModal } from "@/components/AuthModal";
+import { SavedCasesModal } from "@/components/SavedCasesModal";
+import { UserSessionRecord } from "@/lib/db";
 import {
   Language,
   FlowType,
@@ -37,7 +40,7 @@ export default function Home() {
     suspectBankIfsc: "",
     suspectAccountNo: "",
     transactionTime: new Date().toISOString(),
-    victimBank: "Unknown Bank",
+    victimBank: "State Bank of India (SBI)",
     evidenceFileName: "",
     rawEvidenceText: "",
     impersonatedAgency: "Central Bureau of Investigation (CBI)",
@@ -49,23 +52,48 @@ export default function Home() {
   const [flowType, setFlowType] = useState<FlowType>("financial_fraud");
   const [currentStep, setCurrentStep] = useState<number>(1);
 
-  const [profile, setProfile] = useState<IncidentProfile>(emptyProfile);
+  // Authenticated User State (default seed demo user)
+  const [currentUser, setCurrentUser] = useState<{ id: string; phone: string; name: string } | null>({
+    id: "USR-DEFAULT-001",
+    phone: "9999999999",
+    name: "Citizen Demo User"
+  });
 
+  const [profile, setProfile] = useState<IncidentProfile>(emptyProfile);
   const [auditReport, setAuditReport] = useState<ForensicAuditReport>(runForensicAudit(emptyProfile));
   const [syntheticPayload, setSyntheticPayload] = useState<DispatchPayload | null>(null);
 
   // Modals
   const [showTeleScript, setShowTeleScript] = useState<boolean>(false);
   const [showPayloadModal, setShowPayloadModal] = useState<boolean>(false);
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
+  const [showSavedCasesModal, setShowSavedCasesModal] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  // Re-calculate audit report whenever profile changes
+  // Re-calculate audit report & Auto-save to Local Database
   useEffect(() => {
     const report = runForensicAudit(profile);
     const payload = generateDispatchPayload(profile, report);
     setAuditReport(report);
     setSyntheticPayload(payload);
-  }, [profile]);
+
+    // Auto-save session if user is logged in
+    if (currentUser?.id && profile.id) {
+      fetch("/api/sessions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: profile.id,
+          userId: currentUser.id,
+          flowType,
+          profile,
+          auditReport: report,
+          payload,
+          isSubmitted
+        })
+      }).catch((e) => console.error("Session auto-save failed", e));
+    }
+  }, [profile, flowType, isSubmitted, currentUser]);
 
   const handleDispatchSubmission = async () => {
     try {
@@ -77,6 +105,24 @@ export default function Home() {
       if (response.ok) {
         setShowPayloadModal(false);
         setIsSubmitted(true);
+
+        // Update database with submitted status
+        if (currentUser?.id && profile.id) {
+          fetch("/api/sessions", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: profile.id,
+              userId: currentUser.id,
+              flowType,
+              profile,
+              auditReport,
+              payload: syntheticPayload,
+              isSubmitted: true
+            })
+          }).catch(console.error);
+        }
+
         confetti({
           particleCount: 100,
           spread: 70,
@@ -95,7 +141,24 @@ export default function Home() {
   const handleReset = () => {
     setIsSubmitted(false);
     setCurrentStep(1);
-    setProfile(emptyProfile);
+    setProfile({
+      ...emptyProfile,
+      id: `INC-${Date.now()}`
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleResumeSession = (savedSession: UserSessionRecord) => {
+    setProfile(savedSession.profile);
+    setFlowType(savedSession.flowType);
+    if (savedSession.auditReport) {
+      setAuditReport(savedSession.auditReport);
+    }
+    if (savedSession.payload) {
+      setSyntheticPayload(savedSession.payload);
+    }
+    setIsSubmitted(savedSession.isSubmitted);
+    setCurrentStep(savedSession.isSubmitted ? 3 : 2);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -113,6 +176,10 @@ export default function Home() {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         transactionTime={profile.transactionTime}
+        currentUser={currentUser}
+        onOpenAuth={() => setShowAuthModal(true)}
+        onOpenSavedCases={() => setShowSavedCasesModal(true)}
+        onLogout={() => setCurrentUser(null)}
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1">
@@ -411,6 +478,25 @@ export default function Home() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Account Login Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onLoginSuccess={(user) => {
+          setCurrentUser(user);
+        }}
+      />
+
+      {/* Saved Cases History Modal */}
+      {currentUser && (
+        <SavedCasesModal
+          isOpen={showSavedCasesModal}
+          userId={currentUser.id}
+          onClose={() => setShowSavedCasesModal(false)}
+          onSelectSession={handleResumeSession}
+        />
       )}
     </main>
   );
