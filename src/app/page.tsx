@@ -100,7 +100,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col justify-between bg-[#070A11] text-slate-100 font-sans tactical-grid">
+    <main className="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 font-sans">
       {/* Emergency Sticky Header */}
       <Header
         language={language}
@@ -115,67 +115,65 @@ export default function Home() {
         transactionTime={profile.transactionTime}
       />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full flex-1">
-        {/* TACTICAL CRISIS SWITCHBOARD HERO (Only shown on Step 1: Tell us what happened) */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1">
+        {/* HERO OPTION BANNERS (Only shown on Step 1: Tell us what happened) */}
         {!isSubmitted && currentStep === 1 && (
-          <div className="pt-8 pb-4">
-            <div className="flex items-center justify-between mb-3 px-1">
-              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-slate-400">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
-                <span>SELECT ACTIVE INCIDENT VECTOR</span>
-              </div>
-              <span className="text-[10px] font-mono text-slate-500">
-                SEC 91 BNSS // BSA SEC 63 COMPLIANT
-              </span>
+          <div className="pt-8 pb-6">
+            <div className="text-center mb-6">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Tell us what happened
+              </h1>
+              <p className="text-slate-600 text-sm mt-1">
+                Choose the option that best matches your situation.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
               {/* Option 1: Financial Cyber Fraud */}
               <div
                 onClick={() => {
                   setFlowType("financial_fraud");
                   setCurrentStep(1);
                 }}
-                className={`p-5 rounded-2xl cursor-pointer transition-all border relative overflow-hidden flex flex-col justify-between ${
+                className={`p-6 rounded-2xl cursor-pointer transition-all border relative flex flex-col justify-between ${
                   flowType === "financial_fraud"
-                    ? "bg-slate-900/90 border-rose-500/80 shadow-2xl shadow-rose-950/40 ring-1 ring-rose-500/30 border-t-2 border-t-rose-500"
-                    : "bg-slate-900/40 border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/60 opacity-60 hover:opacity-100"
+                    ? "bg-white border-indigo-600 shadow-lg ring-2 ring-indigo-500/20"
+                    : "bg-white/80 border-slate-200 hover:border-indigo-300 hover:shadow-md"
                 }`}
               >
                 {flowType === "financial_fraud" && (
-                  <div className="absolute top-0 right-0 bg-rose-600 text-white text-[9px] font-mono font-bold px-3 py-0.5 rounded-bl-xl uppercase tracking-wider flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                    <span>ACTIVE_CHANNEL</span>
+                  <div className="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+                    Selected
                   </div>
                 )}
                 <div>
-                  <div className="flex items-center gap-3 mb-2.5">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-mono font-bold ${
+                  <div className="flex items-center gap-3.5 mb-3">
+                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-bold ${
                       flowType === "financial_fraud"
-                        ? "bg-rose-500 text-white shadow-lg shadow-rose-500/30 border border-rose-400"
-                        : "bg-slate-800 text-slate-400 border border-slate-700"
+                        ? "bg-indigo-50 text-indigo-600 border border-indigo-100"
+                        : "bg-slate-100 text-slate-500 border border-slate-200"
                     }`}>
-                      <Zap className="w-5 h-5" />
+                      <Zap className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="font-extrabold text-sm text-white tracking-tight">
-                        Financial Cyber Fraud
+                      <h3 className="font-bold text-base text-slate-900">
+                        Money was sent or deducted without my permission
                       </h3>
-                      <span className="text-[10px] font-mono text-rose-400 font-bold block">
-                        PROTOCOL: 1930_CFCFRMS_INTERCEPT
+                      <span className="text-xs text-rose-600 font-semibold block">
+                        Payment, UPI, card, or bank-transfer fraud
                       </span>
                     </div>
                   </div>
 
-                  <p className="text-xs text-slate-300 leading-relaxed mb-3">
-                    Unauthorized UPI debits, GPay/PhonePe phishing, or netbanking theft. Extract 12-digit UTR and trigger a <strong>Sec 91 BNSS Inter-Bank Lien Freeze</strong> before cashout.
+                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                    Add the payment details you have, then use the next steps to contact your bank and the cybercrime helpline.
                   </p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-1.5 text-[9px] font-mono text-slate-400 pt-3 border-t border-slate-800">
-                  <span className="bg-slate-800/90 px-2 py-0.5 rounded-md border border-slate-700">3-Sec OCR Intake</span>
-                  <span className="bg-slate-800/90 px-2 py-0.5 rounded-md border border-slate-700">Sec 91 Bank Lien</span>
-                  <span className="bg-slate-800/90 px-2 py-0.5 rounded-md border border-slate-700">Sec 503 BNSS Petition</span>
+                <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 pt-3 border-t border-slate-100">
+                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">Screenshot Helper</span>
+                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">Bank Lien Request</span>
+                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">Magistrate Petition</span>
                 </div>
               </div>
 
@@ -185,46 +183,45 @@ export default function Home() {
                   setFlowType("digital_arrest");
                   setCurrentStep(1);
                 }}
-                className={`p-5 rounded-2xl cursor-pointer transition-all border relative overflow-hidden flex flex-col justify-between ${
+                className={`p-6 rounded-2xl cursor-pointer transition-all border relative flex flex-col justify-between ${
                   flowType === "digital_arrest"
-                    ? "bg-slate-900/90 border-amber-500/80 shadow-2xl shadow-amber-950/40 ring-1 ring-amber-500/30 border-t-2 border-t-amber-500"
-                    : "bg-slate-900/40 border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/60 opacity-60 hover:opacity-100"
+                    ? "bg-white border-amber-500 shadow-lg ring-2 ring-amber-500/20"
+                    : "bg-white/80 border-slate-200 hover:border-amber-300 hover:shadow-md"
                 }`}
               >
                 {flowType === "digital_arrest" && (
-                  <div className="absolute top-0 right-0 bg-amber-500 text-slate-950 text-[9px] font-mono font-bold px-3 py-0.5 rounded-bl-xl uppercase tracking-wider flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-pulse" />
-                    <span>ACTIVE_CHANNEL</span>
+                  <div className="absolute top-0 right-0 bg-amber-500 text-slate-950 text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+                    Selected
                   </div>
                 )}
                 <div>
-                  <div className="flex items-center gap-3 mb-2.5">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-mono font-bold ${
+                  <div className="flex items-center gap-3.5 mb-3">
+                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-bold ${
                       flowType === "digital_arrest"
-                        ? "bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/30 border border-amber-300"
-                        : "bg-slate-800 text-slate-400 border border-slate-700"
+                        ? "bg-amber-50 text-amber-600 border border-amber-100"
+                        : "bg-slate-100 text-slate-500 border border-slate-200"
                     }`}>
-                      <ShieldAlert className="w-5 h-5" />
+                      <ShieldAlert className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="font-extrabold text-sm text-white tracking-tight">
-                        Digital Arrest & Extortion Shield
+                      <h3 className="font-bold text-base text-slate-900">
+                        Suspicious calls, messages, or fake documents
                       </h3>
-                      <span className="text-[10px] font-mono text-amber-400 font-bold block">
-                        PROTOCOL: DOT_CHAKSHU_EXTORTION_SHIELD
+                      <span className="text-xs text-amber-700 font-semibold block">
+                        Fake law-enforcement calls, blackmail, or digital arrest threats
                       </span>
                     </div>
                   </div>
 
-                  <p className="text-xs text-slate-300 leading-relaxed mb-3">
-                    Threatened by scammers impersonating CBI, ED, Police, or Customs via WhatsApp/Skype. Prove document forgery and initiate <strong>DoT Chakshu SIM bans</strong>.
+                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                    Save the caller details and messages. We'll guide you through the safest reporting steps.
                   </p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-1.5 text-[9px] font-mono text-slate-400 pt-3 border-t border-slate-800">
-                  <span className="bg-slate-800/90 px-2 py-0.5 rounded-md border border-slate-700">AI Forgery Radar</span>
-                  <span className="bg-slate-800/90 px-2 py-0.5 rounded-md border border-slate-700">Legal Proof Room</span>
-                  <span className="bg-slate-800/90 px-2 py-0.5 rounded-md border border-slate-700">DoT Chakshu SIM Ban</span>
+                <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 pt-3 border-t border-slate-100">
+                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">Document Check</span>
+                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">Complaint Draft</span>
+                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">SIM Block Guidance</span>
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import {
@@ -127,26 +127,22 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
     <div className="max-w-4xl mx-auto py-6 animate-in fade-in duration-300">
       {/* Step Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-mono font-bold mb-2 border border-amber-500/30">
-          <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
-          <span>STAGE_01 // FORGERY RADAR SCANNER</span>
-        </div>
-        <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-          Deconstruct Fake Police Warrants & Extortion Summons
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+          Check suspicious call & document details
         </h2>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl mx-auto font-sans">
-          Are you receiving video calls or forged letters claiming you are under "Digital Arrest" by CBI, Mumbai Police, or Customs? Upload the document to run instant forgery analysis.
+        <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl mx-auto font-sans">
+          Received a video call, message, or letter claiming you are under "Digital Arrest"? Upload the document or add caller details below to check for red flags.
         </p>
       </div>
 
       {/* Scammer Details Card */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 sm:p-6 mb-6 shadow-sm font-mono">
-        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-          <Building className="w-3.5 h-3.5 text-amber-400" />
-          <span>EXTORTION THREAT METADATA // INCIDENT IDENTIFIERS</span>
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
+        <h3 className="text-xs font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <Building className="w-4 h-4 text-amber-600" />
+          <span>Caller & Threat Details</span>
         </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
           <div>
             <label className="text-[10px] font-bold text-slate-400 uppercase block mb-1">
               Impersonated Agency
