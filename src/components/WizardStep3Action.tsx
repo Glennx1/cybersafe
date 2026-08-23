@@ -246,6 +246,78 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
         </div>
       </div>
 
+      {/* 4. What Should You Do Next Checklist */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
+        <div className="flex items-center gap-2 mb-4">
+          <ShieldCheck className="w-4 h-4 text-indigo-600" />
+          <h3 className="text-sm font-bold text-slate-900">
+            What should you do next? (Recommended Next Steps)
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          {/* Step 1: Stay Calm & Disconnect */}
+          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+            <div className="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 font-bold">
+              1
+            </div>
+            <div>
+              <strong className="text-slate-900 font-bold block mb-0.5">Stay Calm & Disconnect</strong>
+              <p className="text-slate-600 leading-relaxed">
+                Do not panic or engage further with the scammer. Never pay any secondary "unfreeze charge" or "processing fee" to recover money.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 2: Secure Your Banking */}
+          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+            <div className="w-7 h-7 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 font-bold">
+              2
+            </div>
+            <div>
+              <strong className="text-slate-900 font-bold block mb-0.5">Secure Your Accounts & Passwords</strong>
+              <p className="text-slate-600 leading-relaxed">
+                Immediately change your UPI MPIN, NetBanking passwords, and email passwords. Uninstall any screen-sharing apps (e.g. AnyDesk, TeamViewer) if installed.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 3: Visit Home Bank Branch */}
+          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+            <div className="w-7 h-7 rounded-xl bg-indigo-100 text-indigo-800 flex items-center justify-center shrink-0 font-bold">
+              3
+            </div>
+            <div>
+              <strong className="text-slate-900 font-bold block mb-0.5">Visit Your Home Bank Branch</strong>
+              <p className="text-slate-600 leading-relaxed">
+                Within 24–48 hours, visit your home branch manager with a copy of the <strong>Bank Lien Letter</strong> to ensure the dispute is recorded on the bank nodal switch.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 4: Keep Acknowledgement & Visit Police Station */}
+          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+            <div className="w-7 h-7 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center shrink-0 font-bold">
+              4
+            </div>
+            <div>
+              <strong className="text-slate-900 font-bold block mb-0.5">Save Acknowledgement & Visit Cyber Police</strong>
+              <p className="text-slate-600 leading-relaxed">
+                Save the SMS acknowledgement from <strong>1930 / cybercrime.gov.in</strong>. If needed, take your bank statement to the local Cyber Police Station to get a certified FIR copy.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Golden Rule Callout */}
+        <div className="mt-4 p-3.5 bg-indigo-50/60 border border-indigo-100 rounded-2xl flex items-center justify-between gap-3 text-xs text-indigo-950">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-indigo-600 shrink-0" />
+            <span><strong>Remember:</strong> Genuine police officers or bank staff will never ask for your OTP, PIN, or to transfer money to another account.</span>
+          </div>
+        </div>
+      </div>
+
       {/* Bank Email Dispatch Modal */}
       <BankEmailDispatchModal
         isOpen={isEmailModalOpen}
