@@ -52,12 +52,8 @@ export default function Home() {
   const [flowType, setFlowType] = useState<FlowType>("financial_fraud");
   const [currentStep, setCurrentStep] = useState<number>(1);
 
-  // Authenticated User State (default seed demo user)
-  const [currentUser, setCurrentUser] = useState<{ id: string; phone: string; name: string } | null>({
-    id: "USR-DEFAULT-001",
-    phone: "9999999999",
-    name: "Citizen Demo User"
-  });
+  // Authenticated User State (starts as null to require sign-in first)
+  const [currentUser, setCurrentUser] = useState<{ id: string; phone: string; name: string } | null>(null);
 
   const [profile, setProfile] = useState<IncidentProfile>(emptyProfile);
   const [auditReport, setAuditReport] = useState<ForensicAuditReport>(runForensicAudit(emptyProfile));
@@ -69,6 +65,44 @@ export default function Home() {
   const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
   const [showSavedCasesModal, setShowSavedCasesModal] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
+  // Quick Sign In form states for unauthenticated landing screen
+  const [loginPhone, setLoginPhone] = useState("9999999999");
+  const [loginPassword, setLoginPassword] = useState("password123");
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [loginLoading, setLoginLoading] = useState(false);
+
+  const handleInitialLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError(null);
+    setLoginLoading(true);
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone: loginPhone,
+          password: loginPassword,
+          isRegister: false
+        })
+      });
+      const data = await res.json();
+      if (data.success && data.user) {
+        setCurrentUser(data.user);
+        setProfile(prev => ({
+          ...prev,
+          victimPhone: data.user.phone,
+          victimName: data.user.name || prev.victimName
+        }));
+      } else {
+        setLoginError(data.message || "Invalid credentials.");
+      }
+    } catch (err) {
+      setLoginError("Failed to connect to authentication server.");
+    } finally {
+      setLoginLoading(false);
+    }
+  };
 
   // Re-calculate audit report & Auto-save to Local Database
   useEffect(() => {
@@ -183,117 +217,220 @@ export default function Home() {
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1">
-        {/* HERO OPTION BANNERS (Only shown on Step 1: Tell us what happened) */}
-        {!isSubmitted && currentStep === 1 && (
-          <div className="pt-8 pb-6">
-            <div className="text-center mb-6">
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                Tell us what happened
-              </h1>
-              <p className="text-slate-600 text-sm mt-1">
-                Choose the option that best matches your situation.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
-              {/* Option 1: Financial Cyber Fraud */}
-              <div
-                onClick={() => {
-                  setFlowType("financial_fraud");
-                  setCurrentStep(1);
-                }}
-                className={`p-6 rounded-2xl cursor-pointer transition-all border relative flex flex-col justify-between ${
-                  flowType === "financial_fraud"
-                    ? "bg-white border-indigo-600 shadow-lg ring-2 ring-indigo-500/20"
-                    : "bg-white/80 border-slate-200 hover:border-indigo-300 hover:shadow-md"
-                }`}
-              >
-                {flowType === "financial_fraud" && (
-                  <div className="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-                    Selected
-                  </div>
-                )}
-                <div>
-                  <div className="flex items-center gap-3.5 mb-3">
-                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-bold ${
-                      flowType === "financial_fraud"
-                        ? "bg-indigo-50 text-indigo-600 border border-indigo-100"
-                        : "bg-slate-100 text-slate-500 border border-slate-200"
-                    }`}>
-                      <Zap className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-base text-slate-900">
-                        Money was sent or deducted without my permission
-                      </h3>
-                      <span className="text-xs text-rose-600 font-semibold block">
-                        Payment, UPI, card, or bank-transfer fraud
-                      </span>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                    Add the payment details you have, then use the next steps to contact your bank and the cybercrime helpline.
-                  </p>
+        {/* === CASE A: NOT LOGGED IN -> REQUIRE SIGN IN FIRST === */}
+        {!currentUser ? (
+          <div className="py-12 flex flex-col items-center justify-center animate-in fade-in">
+            <div className="bg-white border border-slate-200 rounded-3xl shadow-xl max-w-lg w-full p-8 sm:p-10 relative">
+              <div className="text-center mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center mx-auto mb-4 shadow-xs">
+                  <Shield className="w-7 h-7" />
                 </div>
+                <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+                  Sign in to CyberRakshak 1930
+                </h1>
+                <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                  Access your secure dashboard to file cyber incidents, generate freeze notices, and manage cases.
+                </p>
+              </div>
 
-                <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 pt-3 border-t border-slate-100">
-                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">Screenshot Helper</span>
-                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">Bank Lien Request</span>
-                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">Magistrate Petition</span>
+              {/* Demo Credentials Box */}
+              <div className="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 mb-6 text-xs text-slate-700">
+                <div className="flex items-center justify-between font-bold text-indigo-900 mb-2">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+                    Demo Credentials Ready
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLoginPhone("9999999999");
+                      setLoginPassword("password123");
+                      setLoginError(null);
+                    }}
+                    className="text-xs text-indigo-600 hover:text-indigo-800 font-bold underline"
+                  >
+                    Auto-Fill
+                  </button>
+                </div>
+                <div className="text-xs text-slate-600 grid grid-cols-2 gap-2 bg-white/80 p-2.5 rounded-xl border border-indigo-100/60">
+                  <div>
+                    <span className="text-[10px] text-slate-400 block uppercase">Phone</span>
+                    <strong className="text-slate-900 font-mono">9999999999</strong>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-slate-400 block uppercase">Password</span>
+                    <strong className="text-slate-900 font-mono">password123</strong>
+                  </div>
                 </div>
               </div>
 
-              {/* Option 2: Digital Arrest & Extortion Shield */}
-              <div
-                onClick={() => {
-                  setFlowType("digital_arrest");
-                  setCurrentStep(1);
-                }}
-                className={`p-6 rounded-2xl cursor-pointer transition-all border relative flex flex-col justify-between ${
-                  flowType === "digital_arrest"
-                    ? "bg-white border-amber-500 shadow-lg ring-2 ring-amber-500/20"
-                    : "bg-white/80 border-slate-200 hover:border-amber-300 hover:shadow-md"
-                }`}
-              >
-                {flowType === "digital_arrest" && (
-                  <div className="absolute top-0 right-0 bg-amber-500 text-slate-950 text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-                    Selected
-                  </div>
-                )}
+              {loginError && (
+                <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs">
+                  {loginError}
+                </div>
+              )}
+
+              <form onSubmit={handleInitialLogin} className="space-y-4 text-xs">
                 <div>
-                  <div className="flex items-center gap-3.5 mb-3">
-                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-bold ${
-                      flowType === "digital_arrest"
-                        ? "bg-amber-50 text-amber-600 border border-amber-100"
-                        : "bg-slate-100 text-slate-500 border border-slate-200"
-                    }`}>
-                      <ShieldAlert className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-base text-slate-900">
-                        Suspicious calls, messages, or fake documents
-                      </h3>
-                      <span className="text-xs text-amber-700 font-semibold block">
-                        Fake law-enforcement calls, blackmail, or digital arrest threats
-                      </span>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                    Save the caller details and messages. We'll guide you through the safest reporting steps.
-                  </p>
+                  <label className="block text-slate-700 font-bold mb-1.5">Mobile Phone Number</label>
+                  <input
+                    type="tel"
+                    required
+                    value={loginPhone}
+                    onChange={(e) => setLoginPhone(e.target.value)}
+                    placeholder="Enter mobile number"
+                    className="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-hidden focus:ring-2 focus:ring-indigo-500 text-slate-900"
+                  />
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 pt-3 border-t border-slate-100">
-                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">Document Check</span>
-                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">Complaint Draft</span>
-                  <span className="bg-slate-100 px-2.5 py-1 rounded-md">SIM Block Guidance</span>
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1.5">Password</label>
+                  <input
+                    type="password"
+                    required
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    placeholder="Enter password"
+                    className="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 text-slate-900"
+                  />
                 </div>
+
+                <button
+                  type="submit"
+                  disabled={loginLoading}
+                  className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 disabled:opacity-50 mt-2"
+                >
+                  <span>{loginLoading ? "Authenticating..." : "Sign In & Begin Case"}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </form>
+
+              <div className="mt-6 pt-5 border-t border-slate-100 text-center text-xs text-slate-500">
+                Need a new account?{" "}
+                <button
+                  type="button"
+                  onClick={() => setShowAuthModal(true)}
+                  className="text-indigo-600 font-bold hover:underline"
+                >
+                  Register Here
+                </button>
               </div>
             </div>
           </div>
-        )}
+        ) : (
+          /* === CASE B: LOGGED IN -> SHOW MAIN WORKFLOW === */
+          <>
+            {/* HERO OPTION BANNERS (Only shown on Step 1: Tell us what happened) */}
+            {!isSubmitted && currentStep === 1 && (
+              <div className="pt-8 pb-6">
+                <div className="text-center mb-6">
+                  <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    Tell us what happened
+                  </h1>
+                  <p className="text-slate-600 text-sm mt-1">
+                    Choose the option that best matches your situation.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+                  {/* Option 1: Financial Cyber Fraud */}
+                  <div
+                    onClick={() => {
+                      setFlowType("financial_fraud");
+                      setCurrentStep(1);
+                    }}
+                    className={`p-6 rounded-2xl cursor-pointer transition-all border relative flex flex-col justify-between ${
+                      flowType === "financial_fraud"
+                        ? "bg-white border-indigo-600 shadow-lg ring-2 ring-indigo-500/20"
+                        : "bg-white/80 border-slate-200 hover:border-indigo-300 hover:shadow-md"
+                    }`}
+                  >
+                    {flowType === "financial_fraud" && (
+                      <div className="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+                        Selected
+                      </div>
+                    )}
+                    <div>
+                      <div className="flex items-center gap-3.5 mb-3">
+                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-bold ${
+                          flowType === "financial_fraud"
+                            ? "bg-indigo-50 text-indigo-600 border border-indigo-100"
+                            : "bg-slate-100 text-slate-500 border border-slate-200"
+                        }`}>
+                          <Zap className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-base text-slate-900">
+                            Money was sent or deducted without my permission
+                          </h3>
+                          <span className="text-xs text-rose-600 font-semibold block">
+                            Payment, UPI, card, or bank-transfer fraud
+                          </span>
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                        Add the payment details you have, then use the next steps to contact your bank and the cybercrime helpline.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 pt-3 border-t border-slate-100">
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">Screenshot Helper</span>
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">Bank Lien Request</span>
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">Magistrate Petition</span>
+                    </div>
+                  </div>
+
+                  {/* Option 2: Digital Arrest & Extortion Shield */}
+                  <div
+                    onClick={() => {
+                      setFlowType("digital_arrest");
+                      setCurrentStep(1);
+                    }}
+                    className={`p-6 rounded-2xl cursor-pointer transition-all border relative flex flex-col justify-between ${
+                      flowType === "digital_arrest"
+                        ? "bg-white border-amber-500 shadow-lg ring-2 ring-amber-500/20"
+                        : "bg-white/80 border-slate-200 hover:border-amber-300 hover:shadow-md"
+                    }`}
+                  >
+                    {flowType === "digital_arrest" && (
+                      <div className="absolute top-0 right-0 bg-amber-500 text-slate-950 text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+                        Selected
+                      </div>
+                    )}
+                    <div>
+                      <div className="flex items-center gap-3.5 mb-3">
+                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-bold ${
+                          flowType === "digital_arrest"
+                            ? "bg-amber-50 text-amber-600 border border-amber-100"
+                            : "bg-slate-100 text-slate-500 border border-slate-200"
+                        }`}>
+                          <ShieldAlert className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-base text-slate-900">
+                            Suspicious calls, messages, or fake documents
+                          </h3>
+                          <span className="text-xs text-amber-700 font-semibold block">
+                            Fake law-enforcement calls, blackmail, or digital arrest threats
+                          </span>
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                        Save the caller details and messages. We'll guide you through the safest reporting steps.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 pt-3 border-t border-slate-100">
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">Document Check</span>
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">Complaint Draft</span>
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">SIM Block Guidance</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
         {/* If submitted, show 4-Stage Live Dispatch Tracker */}
         {isSubmitted ? (
@@ -403,7 +540,9 @@ export default function Home() {
             )}
           </div>
         )}
-      </div>
+      </>
+    )}
+  </div>
 
       {/* Floating Vernacular Emergency Audio Guide */}
       <EmergencyVoiceGuide
