@@ -1,0 +1,63 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1100" viewBox="0 0 800 1100" style="background:#ffffff; font-family: Arial, sans-serif;">
+  <!-- Border -->
+  <rect x="20" y="20" width="760" height="1060" fill="#fffdfa" stroke="#8b0000" stroke-width="6"/>
+  <rect x="30" y="30" width="740" height="1040" fill="none" stroke="#222222" stroke-width="1.5"/>
+
+  <!-- Fake Header -->
+  <text x="400" y="75" text-anchor="middle" font-size="20" font-weight="bold" fill="#8b0000">CENTRAL BUREAU OF INVESTIGATION (CBI)</text>
+  <text x="400" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#333333">CYBER CRIME CELL &amp; ANTI-MONEY LAUNDERING WING</text>
+  <text x="400" y="120" text-anchor="middle" font-size="11" fill="#666666">HEADQUARTERS: CGO COMPLEX, LODHI ROAD, NEW DELHI - 110003</text>
+  
+  <line x1="50" y1="135" x2="750" y2="135" stroke="#8b0000" stroke-width="2"/>
+
+  <!-- High Alert Banner -->
+  <rect x="180" y="150" width="440" height="35" fill="#8b0000" rx="6"/>
+  <text x="400" y="174" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">OFFICIAL NOTICE OF DIGITAL ARREST &amp; SUMMONS</text>
+
+  <!-- Reference Details -->
+  <text x="60" y="220" font-size="12" font-weight="bold" fill="#222222">CASE REF NO: <tspan font-weight="normal">CBI/MUM/AML/2026/0892-D</tspan></text>
+  <text x="520" y="220" font-size="12" font-weight="bold" fill="#222222">DATE: <tspan font-weight="normal">22nd August 2026</tspan></text>
+
+  <text x="60" y="245" font-size="12" font-weight="bold" fill="#222222">SUBJECT: <tspan fill="#8b0000" font-weight="bold">IMMEDIATE ARREST WARRANT UNDER MONEY LAUNDERING &amp; NARCOTICS ACT</tspan></text>
+
+  <!-- Body Text -->
+  <text x="60" y="280" font-size="12" font-weight="bold" fill="#222222">TO: CITIZEN / SUSPECT</text>
+
+  <text x="60" y="315" font-size="11.5" fill="#333333">Whereas, credible evidence and confidential intelligence received from FedEx Customs &amp; Mumbai Cyber Cell</text>
+  <text x="60" y="335" font-size="11.5" fill="#333333">indicates that your Aadhaar and Bank Accounts have been implicated in an illegal consignment seized at</text>
+  <text x="60" y="355" font-size="11.5" fill="#333333">Mumbai International Airport containing narcotics (140g MDMA) and forged international passports.</text>
+
+  <text x="60" y="390" font-size="12" font-weight="bold" fill="#8b0000">MANDATORY LEGAL DIRECTIVES UNDER DIGITAL ARREST PROTOCOL:</text>
+
+  <text x="80" y="420" font-size="11.5" fill="#222222">1. You are hereby placed under <tspan font-weight="bold" fill="#8b0000">IMMEDIATE DIGITAL ARREST</tspan> under Section 41A CrPC.</text>
+  <text x="80" y="445" font-size="11.5" fill="#222222">2. You must remain in an isolated room with your <tspan font-weight="bold">Skype / WhatsApp Video Call camera ACTIVE</tspan> 24x7.</text>
+  <text x="80" y="470" font-size="11.5" fill="#222222">3. Do not contact any family member, lawyer, or local police station due to National Security restrictions.</text>
+
+  <!-- Financial Extortion Demand -->
+  <rect x="50" y="500" width="700" height="130" fill="#fff5f5" stroke="#e53e3e" stroke-width="1.5" rx="8"/>
+  <text x="70" y="525" font-size="12" font-weight="bold" fill="#c53030">MANDATORY RESERVE BANK OF INDIA (RBI) FINANCIAL VERIFICATION:</text>
+  
+  <text x="70" y="555" font-size="11.5" fill="#333333">To verify that your bank accounts are legitimate and avoid physical detention in Central Jail,</text>
+  <text x="70" y="575" font-size="11.5" fill="#333333">you are legally required to transfer a <tspan font-weight="bold" fill="#c53030">Refundable Security Clearance Deposit of Rs. 2,50,000/-</tspan></text>
+  <text x="70" y="595" font-size="11.5" fill="#333333">to the designated Supreme Court Escrow Clearing Account within 2 hours.</text>
+  <text x="70" y="615" font-size="11" font-weight="bold" fill="#c53030">Failure to comply will result in immediate armed SWAT team raid at your residential address.</text>
+
+  <!-- Fake Officer & Seals -->
+  <circle cx="200" cy="740" r="55" fill="none" stroke="#1a365d" stroke-width="2.5" stroke-dasharray="6,3"/>
+  <text x="200" y="735" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a365d">SUPREME COURT OF INDIA</text>
+  <text x="200" y="750" text-anchor="middle" font-size="9" fill="#1a365d">★ VERIFIED SEAL ★</text>
+
+  <circle cx="600" cy="740" r="55" fill="none" stroke="#8b0000" stroke-width="2.5"/>
+  <text x="600" y="735" text-anchor="middle" font-size="10" font-weight="bold" fill="#8b0000">CBI SPECIAL CELL</text>
+  <text x="600" y="750" text-anchor="middle" font-size="9" fill="#8b0000">ARREST WARRANT WING</text>
+
+  <!-- Fake Signatures -->
+  <text x="500" y="850" font-size="12" font-weight="bold" fill="#222222">INSPECTOR R. K. VERMA, IPS</text>
+  <text x="500" y="870" font-size="11" fill="#666666">Special Investigation Officer, Anti-Fraud Bureau</text>
+  <text x="500" y="890" font-size="11" fill="#666666">Central Bureau of Investigation, New Delhi</text>
+
+  <!-- Footer Warning -->
+  <rect x="30" y="990" width="740" height="70" fill="#2d3748"/>
+  <text x="400" y="1020" text-anchor="middle" font-size="11" font-weight="bold" fill="#ffffff">MHA NATIONAL THREAT DIRECTIVE • CLASSIFIED DOCUMENT</text>
+  <text x="400" y="1040" text-anchor="middle" font-size="10" fill="#cbd5e0">Any disclosure of this document on social media is punishable under Section 66D IT Act.</text>
+</svg>

@@ -1,0 +1,77 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #070A11;
+  color: #F1F5F9;
+}
+
+/* Tabular numbers for all monospace counters and currencies */
+.font-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle Tactical Grid Pattern */
+.tactical-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Corner Reticle Crosshairs */
+.reticle-box {
+  position: relative;
+}
+.reticle-box::before {
+  content: "+";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  color: #64748B;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1;
+}
+.reticle-box::after {
+  content: "+";
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  color: #64748B;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Custom Tactical Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0F17;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Scanning Laser Animation */
+@keyframes radar-sweep {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+.animate-scanline {
+  animation: radar-sweep 2s ease-in-out infinite;
+}

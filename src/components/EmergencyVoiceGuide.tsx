@@ -1,0 +1,81 @@
+﻿"use client";
+
+import React, { useState } from "react";
+import { Volume2, VolumeX, Sparkles } from "lucide-react";
+import { IncidentProfile, ForensicAuditReport, Language } from "@/lib/types";
+
+interface EmergencyVoiceGuideProps {
+  profile: IncidentProfile;
+  auditReport: ForensicAuditReport;
+  language: Language;
+  currentStep: number;
+}
+
+export const EmergencyVoiceGuide: React.FC<EmergencyVoiceGuideProps> = ({
+  profile,
+  auditReport,
+  language,
+  currentStep,
+}) => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const handleVoiceSpeak = () => {
+    if (!("speechSynthesis" in window)) {
+      alert("Text-to-speech not supported in this browser.");
+      return;
+    }
+
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+      return;
+    }
+
+    let text = "";
+    if (language === "hi") {
+      text = `साइबर रक्षक 1930 सहायता। आपका 12-अंकों का यूटीआर नंबर ${profile.utrNumber} दर्ज किया गया है। चोरी हुई राशि ₹${profile.fraudAmount} के लिए आपातकालीन बैंक फ्रीज नोटिस तैयार है।`;
+    } else if (language === "kn") {
+      text = `ಸೈಬರ್ ರಕ್ಷಕ್ 1930 ಸಹಾಯ. ನಿಮ್ಮ 12-ಅಂಕಿಗಳ ಯುಟಿಆರ್ ಸಂಖ್ಯೆ ${profile.utrNumber} ಪರಿಶೀಲಿಸಲಾಗಿದೆ. ₹${profile.fraudAmount} ಮೊತ್ತಕ್ಕಾಗಿ ಬ್ಯಾಂಕ್ ಫ್ರೀಜ್ ನೋಟಿಸ್ ಸಿದ್ಧವಾಗಿದೆ.`;
+    } else if (language === "ta") {
+      text = `சைபர் ரக்ஷக் 1930 உதவி. உங்களின் 12-இலக்க UTR எண் ${profile.utrNumber} சரிபார்க்கப்பட்டது. ₹${profile.fraudAmount} தொகைக்கு வங்கி முடக்க அறிவிப்பு தயார்.`;
+    } else if (language === "te") {
+      text = `సైబర్ రక్షక్ 1930 సహాయం. మీ 12-అంకెల UTR సంఖ్య ${profile.utrNumber} నిర్ధారించబడింది. ₹${profile.fraudAmount} కోసం బ్యాంక్ ఫ్రీజ్ నోటీస్ సిద్ధంగా ఉంది.`;
+    } else {
+      text = `CyberRakshak 1930 Emergency Assistance. Your 12-digit UTR ${profile.utrNumber} is verified. Your Golden 2-Hour Recovery Window is active for Rs. ${profile.fraudAmount.toLocaleString("en-IN")}. Standard Bank Freeze Notice & Cyber Police FIR ready for download.`;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1.0;
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 z-40">
+      <button
+        onClick={handleVoiceSpeak}
+        className={`px-4 py-2.5 rounded-full shadow-2xl border flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95 ${
+          isSpeaking
+            ? "bg-rose-600 text-white border-rose-500 ring-4 ring-rose-500/30"
+            : "bg-slate-950 text-white border-slate-800 hover:bg-slate-900"
+        }`}
+        title="Listen to Vernacular Audio Guidance"
+      >
+        <div className="flex items-center gap-1">
+          <span className={`w-1 h-3 rounded-full bg-rose-400 ${isSpeaking ? "animate-bounce" : "opacity-60"}`} />
+          <span className={`w-1 h-4 rounded-full bg-rose-400 ${isSpeaking ? "animate-bounce delay-75" : "opacity-60"}`} />
+          <span className={`w-1 h-2.5 rounded-full bg-amber-400 ${isSpeaking ? "animate-bounce delay-150" : "opacity-60"}`} />
+        </div>
+
+        <Volume2 className="w-4 h-4 text-rose-400" />
+        <span className="text-xs font-bold font-sans hidden sm:inline">
+          {isSpeaking ? "Speaking..." : "Voice Guide"}
+        </span>
+      </button>
+    </div>
+  );
+};
