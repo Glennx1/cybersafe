@@ -402,7 +402,7 @@
         "transactionTime": "2026-08-23T17:15:13.358Z",
         "victimBank": "State Bank of India (SBI)",
         "evidenceFileName": "fraud1.png",
-        "rawEvidenceText": "silent",
+        "rawEvidenceText": "",
         "impersonatedAgency": "Central Bureau of Investigation (CBI)",
         "scammerCallerId": "",
         "extortionDemandAmount": 250000,
@@ -418,7 +418,7 @@
       "auditReport": {
         "overallCompletenessScore": 100,
         "isGoldenHourValid": true,
-        "minutesElapsed": 2,
+        "minutesElapsed": 7,
         "rbiZeroLiabilityEligible": true,
         "rbiRuleCitation": "RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18",
         "applicableBnsSections": [
@@ -444,7 +444,7 @@
             "label": "Golden 2-Hour Recovery Window",
             "score": 100,
             "status": "PASSED",
-            "details": "Incident reported within Golden Window (2 mins ago). High Fund Lock Probability (>80%).",
+            "details": "Incident reported within Golden Window (7 mins ago). High Fund Lock Probability (>80%).",
             "iconName": "Clock"
           },
           {
@@ -471,18 +471,18 @@
         ]
       },
       "payload": {
-        "ackToken": "I4C-NCRP-2026-2FCDBC",
-        "timestamp": "2026-08-23T17:17:14.009Z",
-        "helplineReference": "1930-TICKET-138181",
+        "ackToken": "I4C-NCRP-2026-73A0C1",
+        "timestamp": "2026-08-23T17:22:44.184Z",
+        "helplineReference": "1930-TICKET-136355",
         "i4cNodeTarget": "NATIONAL_CYBER_CRIME_REPORTING_PORTAL_SANDBOX_V2",
         "utrChecksum": "SHA256:345678901234-VERIFIED",
-        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-2FCDBC",
+        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-73A0C1",
         "status": "SUBMITTED"
       },
       "isSubmitted": false,
       "status": "AUDITED",
       "createdAt": "2026-08-23T17:15:15.175Z",
-      "updatedAt": "2026-08-23T17:17:14.044Z"
+      "updatedAt": "2026-08-23T17:22:44.210Z"
     }
   ]
 }

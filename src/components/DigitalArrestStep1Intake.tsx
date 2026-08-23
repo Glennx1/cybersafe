@@ -153,7 +153,8 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
               className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-hidden focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
             >
               <option value="Central Bureau of Investigation (CBI)">CBI (Central Bureau of Investigation)</option>
-              <option value="Mumbai Cyber Crime Police">Mumbai Cyber Police / State Police</option>
+              <option value="Cyber Police">Cyber Police</option>
+              <option value="State Police">State Police</option>
               <option value="Enforcement Directorate (ED)">Enforcement Directorate (ED)</option>
               <option value="Customs & Narcotics Control Bureau">Customs & NCB (FedEx Drug Parcel)</option>
               <option value="Supreme Court of India">Supreme Court of India</option>
