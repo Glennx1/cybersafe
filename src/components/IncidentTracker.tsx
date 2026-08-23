@@ -1,7 +1,7 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
-import { CheckCircle2, ShieldAlert, Loader2, FileCode2, ArrowRight, RefreshCw } from "lucide-react";
+import { CheckCircle2, Loader2, RefreshCw, Shield, ArrowRight, Building, Lock, FileText, Check } from "lucide-react";
 import { DispatchPayload, IncidentProfile } from "@/lib/types";
 
 interface IncidentTrackerProps {
@@ -17,10 +17,11 @@ export const IncidentTracker: React.FC<IncidentTrackerProps> = ({
 }) => {
   const [activeStage, setActiveStage] = useState(1);
 
+  // Sequentially advance through the 4 live tracking stages
   useEffect(() => {
-    const timer1 = setTimeout(() => setActiveStage(2), 1500);
-    const timer2 = setTimeout(() => setActiveStage(3), 3500);
-    const timer3 = setTimeout(() => setActiveStage(4), 5500);
+    const timer1 = setTimeout(() => setActiveStage(2), 1800);
+    const timer2 = setTimeout(() => setActiveStage(3), 3800);
+    const timer3 = setTimeout(() => setActiveStage(4), 5800);
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
@@ -31,100 +32,116 @@ export const IncidentTracker: React.FC<IncidentTrackerProps> = ({
   const stages = [
     {
       num: 1,
-      title: "1. I4C National Portal Dispatch",
+      title: "1. Incident Recorded on National Portal",
       desc: `Acknowledgement Token: ${payload?.ackToken || 'I4C-NCRP-2026-9081A'}`,
-      detail: "Dispatched to Citizen Financial Cyber Fraud Reporting System (CFCFRMS)."
+      detail: "Your complaint details and 12-digit UTR have been sent to the National Cybercrime Portal (1930) to create your official case record."
     },
     {
       num: 2,
-      title: "2. Inter-Bank Freeze Lien Request",
-      desc: `Target Bank: ${profile.victimBank} & Suspect Node ${profile.suspectBankIfsc || 'Node'}`,
-      detail: "Issued under Section 91 BNSS 2023 & RBI Master Direction Customer Protection."
+      title: "2. Alert Sent to Banks",
+      desc: `Your Bank: ${profile.victimBank} • Suspect Bank: ${profile.suspectBankIfsc || 'Beneficiary Node'}`,
+      detail: "An urgent notification is sent to both your bank and the recipient bank to trace where the money was routed."
     },
     {
       num: 3,
-      title: "3. Suspect Mule Account Frozen",
-      desc: `Lien Ref: ${payload?.bankFreezeLienReference || 'LIEN-NOTICE-BANK-8819'}`,
-      detail: "Destination mule account flagged; fund laundering blocked in Golden Hour."
+      title: "3. Requesting Account Freeze",
+      desc: `Lien Tracking Ref: ${payload?.bankFreezeLienReference || 'LIEN-NOTICE-BANK-8819'}`,
+      detail: "A legal request under Section 91 BNSS is submitted to the recipient bank to lock the funds so the scammer cannot withdraw or transfer them."
     },
     {
       num: 4,
-      title: "4. Cyber Cell Police FIR Registered",
-      desc: `Helpline Ticket: ${payload?.helplineReference || '1930-TICKET-88194'}`,
-      detail: "Statutory BNS Sec 318(4)/319 & IT Act Sec 66C/66D investigation active."
+      title: "4. Police Complaint & Investigation Record",
+      desc: `Helpline Case Ref: ${payload?.helplineReference || '1930-TICKET-88194'}`,
+      detail: "Your incident is queued with the Cyber Police Cell. Keep this reference number for all future communications and bank refund follow-ups."
     }
   ];
 
   return (
-    <div className="max-w-4xl mx-auto py-10 animate-in fade-in duration-300">
-      <div className="bg-slate-950 text-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-800">
+    <div className="max-w-4xl mx-auto py-8 animate-in fade-in duration-300">
+      <div className="bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-md border border-slate-200">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-800 pb-5 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-5 mb-6 gap-4">
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-              <span className="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">
-                Live I4C Dispatch Tracker Active
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-xs text-emerald-700 font-bold uppercase tracking-wider">
+                Live Status Tracker
               </span>
             </div>
-            <h2 className="text-2xl font-black text-white tracking-tight">
-              Emergency Scam Incident Tracking & Fund Freeze
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+              Incident Status & Account Freeze Progress
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
-              Incident ID: <strong className="font-mono text-white">{profile.id}</strong> • UTR: <strong className="font-mono text-white">{profile.utrNumber}</strong>
+            <p className="text-xs text-slate-500 mt-1">
+              Case ID: <strong className="font-mono text-slate-800">{profile.id}</strong> • Transaction UTR: <strong className="font-mono text-slate-800">{profile.utrNumber || "N/A"}</strong>
             </p>
           </div>
 
-          <div className="text-right font-mono">
-            <div className="text-[10px] text-slate-400 font-bold uppercase">Stolen Amount</div>
-            <div className="text-2xl font-black text-rose-400">
+          <div className="bg-slate-50 p-3 sm:px-4 sm:py-2.5 rounded-2xl border border-slate-200 text-left sm:text-right shrink-0">
+            <div className="text-[11px] text-slate-500 font-medium">Disputed Amount</div>
+            <div className="text-2xl font-extrabold text-slate-900">
               ₹{profile.fraudAmount.toLocaleString("en-IN")}
             </div>
           </div>
         </div>
 
         {/* 4 Stage Timeline */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           {stages.map((stage) => {
-            const isDone = activeStage > stage.num || activeStage === 4;
-            const isCurrent = activeStage === stage.num && activeStage !== 4;
+            const isDone = activeStage > stage.num || (activeStage === 4 && stage.num <= 4);
+            const isCurrent = activeStage === stage.num && activeStage < 4;
 
             return (
               <div
                 key={stage.num}
-                className={`p-5 rounded-2xl border transition-all flex items-start gap-4 ${
+                className={`p-4 sm:p-5 rounded-2xl border transition-all flex items-start gap-4 ${
                   isDone
-                    ? "bg-slate-900/90 border-emerald-500/40 text-white"
+                    ? "bg-slate-50/80 border-emerald-200 text-slate-900"
                     : isCurrent
-                    ? "bg-rose-950/40 border-rose-500 text-white ring-1 ring-rose-500/50"
-                    : "bg-slate-900/30 border-slate-800 text-slate-500"
+                    ? "bg-indigo-50/60 border-indigo-400 text-slate-900 ring-2 ring-indigo-500/10"
+                    : "bg-slate-50/40 border-slate-200 text-slate-400"
                 }`}
               >
                 <div className="shrink-0 mt-0.5">
                   {isDone ? (
-                    <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                    <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                      <Check className="w-4 h-4 stroke-[3]" />
+                    </div>
                   ) : isCurrent ? (
-                    <Loader2 className="w-6 h-6 text-rose-500 animate-spin" />
+                    <div className="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    </div>
                   ) : (
-                    <div className="w-6 h-6 rounded-full border-2 border-slate-700 text-slate-500 flex items-center justify-center font-bold text-xs">
+                    <div className="w-7 h-7 rounded-full bg-slate-100 border border-slate-300 text-slate-400 flex items-center justify-center font-bold text-xs">
                       {stage.num}
                     </div>
                   )}
                 </div>
 
                 <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-bold text-sm text-white">{stage.title}</h3>
-                    {isDone && (
-                      <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">
-                        COMPLETED
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className={`font-bold text-sm ${isDone ? "text-slate-900" : isCurrent ? "text-indigo-950" : "text-slate-500"}`}>
+                      {stage.title}
+                    </h3>
+                    {isDone ? (
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 shrink-0">
+                        Completed
+                      </span>
+                    ) : isCurrent ? (
+                      <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200 shrink-0">
+                        In Progress...
+                      </span>
+                    ) : (
+                      <span className="text-[10px] font-medium text-slate-400 shrink-0">
+                        Queued
                       </span>
                     )}
                   </div>
-                  <div className="font-mono text-xs text-slate-300 font-medium mt-0.5">
+
+                  <div className="text-xs font-mono font-medium text-slate-600 mt-1">
                     {stage.desc}
                   </div>
-                  <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+
+                  <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
                     {stage.detail}
                   </p>
                 </div>
@@ -133,15 +150,15 @@ export const IncidentTracker: React.FC<IncidentTrackerProps> = ({
           })}
         </div>
 
-        {/* Reset Button */}
-        <div className="mt-8 pt-6 border-t border-slate-800 flex items-center justify-between">
-          <div className="text-xs text-slate-400">
-            Official CFCFRMS Audit Checksum: <span className="font-mono text-slate-300">SHA256:423910892014-VERIFIED</span>
+        {/* Footer info & Reset button */}
+        <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="text-xs text-slate-500 text-center sm:text-left">
+            Need immediate police assistance? You can also dial helpline <strong className="text-emerald-700 font-bold">1930</strong> toll-free anytime.
           </div>
 
           <button
             onClick={onReset}
-            className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+            className="w-full sm:w-auto px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-xs active:scale-95"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             <span>Report Another Incident</span>
