@@ -58,34 +58,34 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
   const stages = [
     {
       step: 1,
-      title: "1930 / I4C Portal Ticket",
-      time: "0–15 Mins",
+      title: "Report to 1930 Helpline",
+      time: "First 15 Mins",
       status: "COMPLETED",
-      desc: "Emergency ticket registered with Central CFCFRMS switch. UTR and victim accounts flagged.",
+      desc: "An emergency ticket is registered on the National Cybercrime Portal to flag your transaction UTR.",
       action: "Read Teleprompter Script"
     },
     {
       step: 2,
-      title: "Sec 91 Bank Lien Freeze",
+      title: "Freeze Recipient Bank Account",
       time: "15 Mins – 2 Hours",
       status: "ACTIVE NOW",
-      desc: "Notice served to suspect receiving bank nodal desk to freeze beneficiary account before cashout.",
+      desc: "An urgent notice is sent to the scammer's bank to lock the funds before they can withdraw or transfer them.",
       action: "Send Email & Download Freeze Letter"
     },
     {
       step: 3,
-      title: "Police Station FIR & NOC",
+      title: "Register Police Cyber FIR",
       time: "Days 1 – 5",
       status: "IN PROGRESS",
-      desc: "Police convert NCRP ticket into formal FIR under Sec 318(4) BNS and issue fund seizure certificate.",
+      desc: "The complaint is converted into an official FIR by the Cyber Police to legally seize the held money.",
       action: "Submit Police FIR Dossier"
     },
     {
       step: 4,
-      title: "Sec 503 BNSS Court Refund",
+      title: "Money Refunded to Your Account",
       time: "Days 7 – 15",
       status: "READY TO FILE",
-      desc: "Magistrate issues order directing bank to reverse frozen suspense funds directly to victim.",
+      desc: "The court or bank issues an order to transfer the frozen funds safely back into your bank account.",
       action: "File Magistrate Court Petition"
     }
   ];
@@ -174,7 +174,7 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
           <div className="flex items-center gap-2">
             <Scale className="w-4 h-4 text-indigo-600" />
             <h3 className="text-xs font-bold text-slate-900">
-              Recovery Steps (From Loss to Account Refund)
+              How Your Money Gets Recovered (Step-by-Step)
             </h3>
           </div>
         </div>
@@ -215,7 +215,7 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
             className="flex-1 h-12 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border border-slate-200 transition-all active:scale-95"
           >
             <Phone className="w-4 h-4 text-indigo-600" />
-            <span>1930 Phone Script</span>
+            <span>1930 Helpline Call Script</span>
           </button>
 
           <button
@@ -223,7 +223,7 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
             className="flex-1 h-12 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
           >
             <Send className="w-4 h-4" />
-            <span>Submit Digital Dispatch</span>
+            <span>Send Online Cyber Alert</span>
           </button>
         </div>
 

@@ -386,7 +386,7 @@
     {
       "id": "INC-1787505313358",
       "userId": "USR-DEFAULT-001",
-      "flowType": "digital_arrest",
+      "flowType": "financial_fraud",
       "profile": {
         "id": "INC-1787505313358",
         "victimName": "Glenn",
@@ -471,18 +471,18 @@
         ]
       },
       "payload": {
-        "ackToken": "I4C-NCRP-2026-B7F271",
-        "timestamp": "2026-08-23T17:57:14.196Z",
-        "helplineReference": "1930-TICKET-889350",
+        "ackToken": "I4C-NCRP-2026-FFB25B",
+        "timestamp": "2026-08-23T17:57:48.292Z",
+        "helplineReference": "1930-TICKET-823141",
         "i4cNodeTarget": "NATIONAL_CYBER_CRIME_REPORTING_PORTAL_SANDBOX_V2",
         "utrChecksum": "SHA256:345678901234-VERIFIED",
-        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-B7F271",
+        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-FFB25B",
         "status": "SUBMITTED"
       },
       "isSubmitted": false,
       "status": "AUDITED",
       "createdAt": "2026-08-23T17:15:15.175Z",
-      "updatedAt": "2026-08-23T17:57:14.218Z"
+      "updatedAt": "2026-08-23T17:57:48.319Z"
     }
   ]
 }
