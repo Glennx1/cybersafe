@@ -1,4 +1,4 @@
-﻿import jsPDF from "jspdf";
+import jsPDF from "jspdf";
 import { IncidentProfile, ForensicAuditReport } from "./types";
 
 export function generateBankFreezePdf(profile: IncidentProfile, audit: ForensicAuditReport) {
@@ -155,18 +155,20 @@ export function generatePoliceFirPdf(profile: IncidentProfile, audit: ForensicAu
 
   // Evidence Table
   doc.setFont("helvetica", "bold");
-  doc.text("FORENSIC EVIDENCE & SUSPECT DETAILS:", 15, nextY);
+  doc.text("FORENSIC EVIDENCE & BANKING TRANSACTION DETAILS:", 15, nextY);
 
   doc.setFont("helvetica", "normal");
-  doc.text(`â€¢ 12-Digit Banking UTR/RRN: ${profile.utrNumber}`, 15, nextY + 7);
-  doc.text(`â€¢ Victim Account: ${profile.victimAccountMasked} (${profile.victimBank})`, 15, nextY + 13);
-  doc.text(`â€¢ Suspect VPA: ${profile.suspectVpa || "N/A"}`, 15, nextY + 19);
-  doc.text(`â€¢ Suspect Bank IFSC: ${profile.suspectBankIfsc || "N/A"}`, 15, nextY + 25);
-  doc.text(`â€¢ Suspect Account: ${profile.suspectAccountNo || "N/A"}`, 15, nextY + 31);
+  doc.text(`• 12-Digit Banking UTR / RRN: ${profile.utrNumber || "N/A"}`, 15, nextY + 7);
+  doc.text(`• Victim Account Number: ${profile.victimAccountNo || profile.victimAccountMasked} (${profile.victimBank})`, 15, nextY + 13);
+  doc.text(`• Victim Branch IFSC Code: ${profile.victimBankIfsc || "N/A"}`, 15, nextY + 19);
+  doc.text(`• Suspect UPI / VPA Handle: ${profile.suspectVpa || "N/A"}`, 15, nextY + 25);
+  doc.text(`• Suspect Account Number: ${profile.suspectAccountNo || "N/A"}`, 15, nextY + 31);
+  doc.text(`• Suspect Bank / IFSC Code: ${profile.suspectBankIfsc || "N/A"}`, 15, nextY + 37);
 
   // Sec 63 BSA 2023 Evidence Hash
+  const hashY = nextY + 45;
   doc.setFont("helvetica", "bold");
-  doc.text("SEC 63 BSA 2023 ELECTRONIC EVIDENCE HASH (SHA-256):", 15, nextY + 45);
+  doc.text("SEC 63 BSA 2023 ELECTRONIC EVIDENCE HASH (SHA-256):", 15, hashY);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(8);
   doc.setTextColor(50, 50, 50);

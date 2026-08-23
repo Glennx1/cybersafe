@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { IncidentProfile, ForensicAuditReport, DispatchPayload, Language } from "@/lib/types";
 import { BankEmailDispatchModal } from "./BankEmailDispatchModal";
+import { CyberFirRegistrationModal } from "./CyberFirRegistrationModal";
 
 interface WizardStep3ActionProps {
   profile: IncidentProfile;
@@ -51,6 +52,7 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
   onBack,
 }) => {
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [isFirModalOpen, setIsFirModalOpen] = useState(false);
   const [selectedStage, setSelectedStage] = useState<number>(2);
 
   const stages = [
@@ -102,12 +104,71 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
           </div>
 
           <p className="text-xs sm:text-sm text-slate-600 max-w-xl leading-relaxed">
-            Banking UTR: <strong className="text-slate-900 font-bold">{profile.utrNumber || "N/A"}</strong> • Bank: <strong className="text-slate-900 font-bold">{profile.victimBank}</strong>. Download your official documents below or submit a digital dispatch directly to helpline 1930.
+            Banking UTR: <strong className="text-slate-900 font-bold">{profile.utrNumber || "N/A"}</strong> • Bank: <strong className="text-slate-900 font-bold">{profile.victimBank}</strong>. Complete your emergency actions below to freeze funds and file an official FIR.
           </p>
         </div>
       </div>
 
-      {/* 2. Recovery Roadmap */}
+      {/* 2. Core Actions Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        {/* Action 1: Register Cyber Police FIR */}
+        <div className="bg-white border-2 border-indigo-500/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold border border-indigo-100">
+                <Scale className="w-5 h-5" />
+              </div>
+              <span className="text-[11px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">
+                Primary Legal Action
+              </span>
+            </div>
+            <h3 className="font-bold text-base text-slate-900 mb-1">
+              Register Cyber Police FIR
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+              File your formal police complaint online via NCRP (cybercrime.gov.in) or download the pre-filled signed FIR Dossier for your local Cyber Crime Police Station.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsFirModalOpen(true)}
+            className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
+          >
+            <FileText className="w-4 h-4" />
+            <span>Open Cyber FIR Registration Guide</span>
+          </button>
+        </div>
+
+        {/* Action 2: Bank Fraud Desk Email & Freeze Notice */}
+        <div className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold border border-emerald-100">
+                <Mail className="w-5 h-5" />
+              </div>
+              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                Stop Money Transfer
+              </span>
+            </div>
+            <h3 className="font-bold text-base text-slate-900 mb-1">
+              Email Bank Fraud Desk
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+              Send Section 91 BNSS lien requisition notice directly to the nodal officers of {profile.victimBank} and beneficiary bank to freeze recipient accounts.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsEmailModalOpen(true)}
+            className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
+          >
+            <Mail className="w-4 h-4" />
+            <span>Email Bank Fraud Desk</span>
+          </button>
+        </div>
+      </div>
+
+      {/* 3. Recovery Roadmap */}
       <div className="bg-white text-slate-800 border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
         <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-slate-100">
           <div className="flex items-center gap-2">
@@ -147,15 +208,8 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
             </div>
           ))}
         </div>
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          <button
-            onClick={() => setIsEmailModalOpen(true)}
-            className="flex-1 h-12 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
-          >
-            <Mail className="w-4 h-4" />
-            <span>Email Bank Fraud Desk</span>
-          </button>
 
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <button
             onClick={onOpenTeleScript}
             className="flex-1 h-12 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border border-slate-200 transition-all active:scale-95"
@@ -173,7 +227,7 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
           </button>
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+        <div className="flex items-center justify-between pt-3 border-t border-slate-100 text-xs mt-3">
           <button
             onClick={onBack}
             className="px-4 py-2 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 bg-white border border-slate-200 transition-all flex items-center gap-1.5 shadow-xs"
@@ -197,6 +251,14 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
         isOpen={isEmailModalOpen}
         profile={profile}
         onClose={() => setIsEmailModalOpen(false)}
+      />
+
+      {/* Cyber Police FIR Registration Modal */}
+      <CyberFirRegistrationModal
+        isOpen={isFirModalOpen}
+        profile={profile}
+        auditReport={auditReport}
+        onClose={() => setIsFirModalOpen(false)}
       />
     </div>
   );
