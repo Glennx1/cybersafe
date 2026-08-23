@@ -150,6 +150,78 @@ export const IncidentTracker: React.FC<IncidentTrackerProps> = ({
           })}
         </div>
 
+        {/* What To Do Next (Real-World Cyber Crime Action Checklist) */}
+        <div className="mt-8 pt-6 border-t border-slate-100">
+          <div className="flex items-center gap-2 mb-4">
+            <Shield className="w-4 h-4 text-indigo-600" />
+            <h3 className="text-sm font-bold text-slate-900">
+              What should you do next? (Recommended Next Steps)
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            {/* Step 1: Stay Calm & Do Not Panic */}
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+              <div className="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 font-bold">
+                1
+              </div>
+              <div>
+                <strong className="text-slate-900 font-bold block mb-0.5">Stay Calm & Disconnect</strong>
+                <p className="text-slate-600 leading-relaxed">
+                  You have already flagged the transaction. Do not engage further with the scammer, answer suspicious follow-up calls, or pay any "processing fee" to unlock money.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 2: Secure Your Banking & Apps */}
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+              <div className="w-7 h-7 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 font-bold">
+                2
+              </div>
+              <div>
+                <strong className="text-slate-900 font-bold block mb-0.5">Secure Your Accounts & Passwords</strong>
+                <p className="text-slate-600 leading-relaxed">
+                  Immediately change your UPI MPIN, NetBanking passwords, and email passwords. If any remote-access app (e.g. AnyDesk, TeamViewer) was installed, uninstall it immediately.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3: Visit Home Bank Branch */}
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+              <div className="w-7 h-7 rounded-xl bg-indigo-100 text-indigo-800 flex items-center justify-center shrink-0 font-bold">
+                3
+              </div>
+              <div>
+                <strong className="text-slate-900 font-bold block mb-0.5">Visit Your Home Bank Branch</strong>
+                <p className="text-slate-600 leading-relaxed">
+                  Within 24–48 hours, visit your home branch manager. Submit the printed <strong>Bank Lien Letter</strong> and ask them to confirm if the recipient node has been marked with a lien.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 4: Keep Police & SMS Acknowledgements */}
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+              <div className="w-7 h-7 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center shrink-0 font-bold">
+                4
+              </div>
+              <div>
+                <strong className="text-slate-900 font-bold block mb-0.5">Save Acknowledgement & Visit Police Cell</strong>
+                <p className="text-slate-600 leading-relaxed">
+                  Keep SMS acknowledgements received from <strong>1930 / NCRP</strong> safe. If requested, visit your local Cyber Crime Police Station with your bank statement to obtain an official FIR copy.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Golden Rule Callout */}
+          <div className="mt-4 p-3.5 bg-indigo-50/60 border border-indigo-100 rounded-2xl flex items-center justify-between gap-3 text-xs text-indigo-950">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-600 shrink-0" />
+              <span><strong>Remember:</strong> Genuine police or bank officers will never call asking for your OTP, PIN, or to transfer money to another account.</span>
+            </div>
+          </div>
+        </div>
+
         {/* Footer info & Reset button */}
         <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-xs text-slate-500 text-center sm:text-left">
