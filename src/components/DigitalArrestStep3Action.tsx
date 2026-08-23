@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import {
@@ -48,57 +48,57 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
 
   return (
     <div className="max-w-4xl mx-auto py-6 animate-in fade-in duration-300">
-      {/* 1. Hero Threat Neutralization Banner */}
-      <div className="bg-slate-900/90 text-white rounded-2xl p-6 sm:p-7 border border-slate-800 shadow-2xl mb-6 font-mono">
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold mb-3 border border-emerald-500/30 w-fit">
-          <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>THREAT_NEUTRALIZED // EXTORTION DEFEATED</span>
+      {/* 1. Hero Reassurance Banner */}
+      <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs mb-6">
+        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-3 border border-emerald-200 w-fit">
+          <ShieldCheck className="w-4 h-4 text-emerald-600" />
+          <span>You are Safe. Take Action Below.</span>
         </div>
 
-        <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight mb-2 font-sans">
-          You are 100% Safe. Take Immediate Action.
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-2">
+          Recommended Next Steps
         </h2>
 
-        <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed font-sans">
-          The extortion syndicate attempting to intimidate you has no legal authority. Follow the 3 critical steps below to report the impersonators and ban their SIM cards.
+        <p className="text-xs sm:text-sm text-slate-600 max-w-xl leading-relaxed">
+          The scammers attempting to intimidate you have no legal authority. Follow these 3 immediate safety steps and file your official reports.
         </p>
       </div>
 
-      {/* 2. Step-by-Step De-escalation Protocol */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 sm:p-6 mb-6 shadow-sm">
-        <h3 className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-          <PhoneOff className="w-3.5 h-3.5 text-rose-400" />
-          <span>IMMEDIATE SAFETY & CALL-DROP PROTOCOL</span>
+      {/* 2. Step-by-Step Safety Steps */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
+        <h3 className="text-xs font-bold text-slate-800 mb-4 flex items-center gap-2">
+          <PhoneOff className="w-4 h-4 text-rose-600" />
+          <span>Immediate Safety Recommendations</span>
         </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
-          <div className="p-4 rounded-xl bg-slate-950/80 border border-rose-900/40">
-            <div className="w-6 h-6 rounded-md bg-rose-500 text-white text-xs font-bold flex items-center justify-center mb-2">
-              01
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <div className="w-6 h-6 rounded-md bg-rose-100 text-rose-700 text-xs font-bold flex items-center justify-center mb-2">
+              1
             </div>
-            <h4 className="text-xs font-bold text-rose-400 mb-1">Hang Up Video Call</h4>
-            <p className="text-[11px] text-slate-400 leading-relaxed font-sans">
-              Disconnect all Skype or WhatsApp video calls immediately. Real police officers NEVER conduct interrogations on video.
+            <h4 className="text-xs font-bold text-slate-900 mb-1">Hang Up the Call</h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Disconnect any Skype or WhatsApp video calls immediately. Real police officers never conduct interrogations or arrest citizens over video.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-950/80 border border-amber-900/40">
-            <div className="w-6 h-6 rounded-md bg-amber-500 text-slate-950 text-xs font-bold flex items-center justify-center mb-2">
-              02
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <div className="w-6 h-6 rounded-md bg-amber-100 text-amber-800 text-xs font-bold flex items-center justify-center mb-2">
+              2
             </div>
-            <h4 className="text-xs font-bold text-amber-400 mb-1">Block Number & Caller</h4>
-            <p className="text-[11px] text-slate-400 leading-relaxed font-sans">
-              Block the scammer's number on WhatsApp and Phone dialer. They cannot send any local police team to your house.
+            <h4 className="text-xs font-bold text-slate-900 mb-1">Block the Caller</h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Block the caller's phone number and messaging accounts. They have no jurisdiction and cannot send police to your home.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-950/80 border border-blue-900/40">
-            <div className="w-6 h-6 rounded-md bg-blue-500 text-white text-xs font-bold flex items-center justify-center mb-2">
-              03
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <div className="w-6 h-6 rounded-md bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center mb-2">
+              3
             </div>
-            <h4 className="text-xs font-bold text-cyan-400 mb-1">Break the Isolation</h4>
-            <p className="text-[11px] text-slate-400 leading-relaxed font-sans">
-              Inform family or friends. Scammers rely on keeping you in secret panic to coerce money transfers.
+            <h4 className="text-xs font-bold text-slate-900 mb-1">Speak to Family or Friends</h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Talk to a family member or trusted friend. Scammers rely on keeping you in secret panic to force transfers.
             </p>
           </div>
         </div>
@@ -107,103 +107,103 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
       {/* 3. Action Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         {/* Action 1: Download FIR PDF */}
-        <div className="bg-slate-900/80 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between group">
+        <div className="bg-white border border-slate-200 hover:border-indigo-300 rounded-2xl p-5 shadow-xs transition-all flex flex-col justify-between group">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <div className="w-8 h-8 rounded-lg bg-slate-800 text-slate-200 flex items-center justify-center font-bold border border-slate-700">
-                <FileCheck className="w-4 h-4" />
+              <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold border border-indigo-100">
+                <FileCheck className="w-5 h-5" />
               </div>
-              <span className="text-[9px] font-mono text-slate-500 uppercase">SEC 319 / 204 BNS</span>
+              <span className="text-xs text-slate-500 font-medium">BNS Sec 204 & 308</span>
             </div>
-            <h3 className="font-bold text-sm text-white mb-1">
-              Police Impersonation FIR Dossier
+            <h3 className="font-bold text-sm text-slate-900 mb-1">
+              Police Impersonation Complaint Draft
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-4 font-sans">
-              Formal criminal complaint citing Impersonation of a Public Servant (Sec 204), Extortion (Sec 308), and Sec 66D IT Act with the SHA-256 evidence hash.
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+              Download a pre-formatted legal complaint citing Impersonation of Public Servant and Extortion ready for your local police cyber cell or 1930 portal.
             </p>
           </div>
           <button
             onClick={onDownloadDigitalArrestFir}
-            className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-mono font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition-all active:scale-95"
+            className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>DOWNLOAD_IMPERSONATION_FIR</span>
+            <span>Download Police Complaint PDF</span>
           </button>
         </div>
 
         {/* Action 2: DoT Chakshu SIM Blocking */}
-        <div className="bg-slate-900/80 border border-slate-800 hover:border-blue-500/60 rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between group">
+        <div className="bg-white border border-slate-200 hover:border-blue-300 rounded-2xl p-5 shadow-xs transition-all flex flex-col justify-between group">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <div className="w-8 h-8 rounded-lg bg-blue-500/20 text-cyan-400 flex items-center justify-center font-bold border border-blue-500/30">
-                <Radio className="w-4 h-4" />
+              <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold border border-blue-100">
+                <Radio className="w-5 h-5" />
               </div>
-              <span className="text-[9px] font-mono text-slate-500 uppercase">DOT SANCHAR SAATHI</span>
+              <span className="text-xs text-slate-500 font-medium">DoT Sanchar Saathi</span>
             </div>
-            <h3 className="font-bold text-sm text-white mb-1">
-              Block Scammer on DoT Chakshu Portal
+            <h3 className="font-bold text-sm text-slate-900 mb-1">
+              Block Scammer on DoT Chakshu
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-4 font-sans">
-              Report the caller ID directly to the Department of Telecommunications (DoT) Chakshu facility to revoke their SIM card and block their IMEI nationwide.
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+              Report fraudulent numbers to the Department of Telecommunications Chakshu portal to have the scammer's SIM card and phone IMEI blocked.
             </p>
           </div>
-          <div className="space-y-2 font-mono">
+          <div className="space-y-2">
             <button
               onClick={handleCopyChakshuDetails}
-              className="w-full py-2 bg-slate-950 hover:bg-slate-800 text-slate-300 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 border border-slate-800 transition-all"
+              className="w-full py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 border border-slate-200 transition-all"
             >
-              {copiedChakshu ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copiedChakshu ? "COPIED_DETAILS!" : "COPY_SCAMMER_ID"}</span>
+              {copiedChakshu ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
+              <span>{copiedChakshu ? "Details Copied!" : "Copy Scammer Details"}</span>
             </button>
             <a
               href={chakshuUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-lg shadow-blue-600/20 transition-all active:scale-95"
+              className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition-all active:scale-95"
             >
               <ExternalLink className="w-3.5 h-3.5" />
-              <span>LAUNCH_CHAKSHU_PORTAL</span>
+              <span>Open Chakshu Portal</span>
             </a>
           </div>
         </div>
       </div>
 
       {/* 4. Real Verified Central Control Room Directory */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 sm:p-6 mb-6 shadow-md font-mono">
-        <h3 className="text-[10px] font-bold uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-2">
-          <Building2 className="w-3.5 h-3.5" />
-          <span>REAL OFFICIAL VERIFIED GOVERNMENT HOTLINES (CROSS-VERIFICATION)</span>
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
+        <h3 className="text-xs font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <Building2 className="w-4 h-4 text-indigo-600" />
+          <span>Official Verified Helplines & Numbers</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-          <div className="bg-slate-950/80 rounded-xl p-3 border border-slate-800">
-            <span className="text-slate-400 block text-[9px] uppercase font-bold">CBI Headquarters Control Room:</span>
-            <span className="font-mono text-white text-xs font-bold mt-1 block">011-24362755</span>
-            <span className="text-[9px] text-slate-500 block mt-0.5">Lodhi Road, New Delhi</span>
+          <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
+            <span className="text-slate-500 block text-xs font-medium">National Cybercrime Helpline:</span>
+            <span className="text-emerald-700 text-sm font-bold mt-0.5 block">1930 (Toll Free)</span>
+            <span className="text-[11px] text-slate-500 block mt-0.5">24x7 Citizen Cyber Defense</span>
           </div>
 
-          <div className="bg-slate-950/80 rounded-xl p-3 border border-slate-800">
-            <span className="text-slate-400 block text-[9px] uppercase font-bold">National Cybercrime Helpline:</span>
-            <span className="font-mono text-emerald-400 text-xs font-bold mt-1 block">1930 (Toll Free)</span>
-            <span className="text-[9px] text-slate-500 block mt-0.5">MHA 24x7 I4C Operations</span>
+          <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
+            <span className="text-slate-500 block text-xs font-medium">CBI Control Room:</span>
+            <span className="text-slate-900 text-xs font-bold mt-0.5 block">011-24362755</span>
+            <span className="text-[11px] text-slate-500 block mt-0.5">HQ Lodhi Road, New Delhi</span>
           </div>
 
-          <div className="bg-slate-950/80 rounded-xl p-3 border border-slate-800">
-            <span className="text-slate-400 block text-[9px] uppercase font-bold">Enforcement Directorate (ED):</span>
-            <span className="font-mono text-white text-xs font-bold mt-1 block">011-23339100</span>
-            <span className="text-[9px] text-slate-500 block mt-0.5">Pravachan Bhawan, New Delhi</span>
+          <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
+            <span className="text-slate-500 block text-xs font-medium">Enforcement Directorate (ED):</span>
+            <span className="text-slate-900 text-xs font-bold mt-0.5 block">011-23339100</span>
+            <span className="text-[11px] text-slate-500 block mt-0.5">Headquarters, New Delhi</span>
           </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <div className="flex items-center justify-between font-mono">
+      <div className="flex items-center justify-between">
         <button
           onClick={onBack}
-          className="px-5 py-3 rounded-xl text-xs font-bold text-slate-400 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-1.5"
+          className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 bg-white border border-slate-200 hover:border-slate-300 transition-all flex items-center gap-1.5 shadow-xs"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>BACK_TO_PROOF_ROOM</span>
+          <span>Back to Legal Reality</span>
         </button>
       </div>
     </div>
