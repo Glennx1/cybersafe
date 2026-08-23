@@ -13,7 +13,8 @@ import {
   CheckCircle2,
   FileText,
   Building,
-  Scale
+  Scale,
+  ShieldAlert
 } from "lucide-react";
 import { ForensicAuditReport, IncidentProfile, Language } from "@/lib/types";
 
@@ -39,8 +40,6 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
   return (
     <div className="max-w-4xl mx-auto py-6 animate-in fade-in duration-300">
-      {/* 1. Hero Diagnostic Banner */}
-      <div className="bg-slate-900/90 text-white rounded-2xl p-6 sm:p-7 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-slate-800 shadow-2xl">
       {/* 1. Audit Summary Banner */}
       <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-5">
@@ -202,16 +201,16 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
         </h3>
 
         <div className="space-y-3">
-          {auditReport.findings.map((finding: any) => {
+          {auditReport.vectors.map((vec, idx) => {
             return (
               <div
-                key={finding.id}
+                key={idx}
                 className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex items-start gap-3.5 transition-all"
               >
                 <div className="mt-0.5 shrink-0">
-                  {finding.status === "PASS" ? (
+                  {vec.status === "PASSED" ? (
                     <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                  ) : finding.status === "WARNING" ? (
+                  ) : vec.status === "WARNING" ? (
                     <AlertTriangle className="w-5 h-5 text-amber-500" />
                   ) : (
                     <ShieldAlert className="w-5 h-5 text-rose-500" />
@@ -221,27 +220,22 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <span className="font-bold text-sm text-slate-900">
-                      {finding.title}
+                      {vec.label}
                     </span>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                      finding.status === "PASS"
+                      vec.status === "PASSED"
                         ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                        : finding.status === "WARNING"
+                        : vec.status === "WARNING"
                         ? "bg-amber-50 text-amber-700 border-amber-200"
                         : "bg-rose-50 text-rose-700 border-rose-200"
                     }`}>
-                      {finding.status === "PASS" ? "Verified" : finding.status === "WARNING" ? "Attention" : "Urgent"}
+                      {vec.status === "PASSED" ? "Verified" : vec.status === "WARNING" ? "Attention" : "Urgent"}
                     </span>
                   </div>
 
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    {finding.description}
+                    {vec.details}
                   </p>
-
-                  <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                    <span>Guideline: <strong>{finding.legalRef}</strong></span>
-                    <span className="text-slate-400">{finding.timestamp}</span>
-                  </div>
                 </div>
               </div>
             );
