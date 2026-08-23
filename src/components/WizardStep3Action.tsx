@@ -150,44 +150,44 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <button
             onClick={() => setIsEmailModalOpen(true)}
-            className="flex-1 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 transition-all active:scale-95"
+            className="flex-1 h-12 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
           >
             <Mail className="w-4 h-4" />
-            <span>EMAIL_BANK_FRAUD_DESK</span>
+            <span>Email Bank Fraud Desk</span>
           </button>
 
           <button
             onClick={onOpenTeleScript}
-            className="flex-1 h-12 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition-all active:scale-95"
+            className="flex-1 h-12 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border border-slate-200 transition-all active:scale-95"
           >
-            <Phone className="w-4 h-4" />
-            <span>1930_SPEECH_TELEPROMPTER</span>
+            <Phone className="w-4 h-4 text-indigo-600" />
+            <span>1930 Phone Script</span>
           </button>
 
           <button
             onClick={onSubmitDispatch}
-            className="flex-1 h-12 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-600/20 transition-all active:scale-95"
+            className="flex-1 h-12 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
           >
             <Send className="w-4 h-4" />
-            <span>DISPATCH_I4C_NOTICE</span>
+            <span>Submit Digital Dispatch</span>
           </button>
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-slate-800 text-xs">
+        <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
           <button
             onClick={onBack}
-            className="px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white bg-slate-950 border border-slate-800 transition-all flex items-center gap-1.5"
+            className="px-4 py-2 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 bg-white border border-slate-200 transition-all flex items-center gap-1.5 shadow-xs"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>BACK_TO_AUDIT</span>
+            <span>Back to Details</span>
           </button>
 
           <button
             onClick={onOpenPayloadModal}
-            className="text-[11px] text-slate-400 hover:text-slate-200 flex items-center gap-1.5 py-1 px-2 font-mono"
+            className="text-xs text-slate-500 hover:text-slate-700 flex items-center gap-1.5 py-1 px-2 font-medium"
           >
-            <Code2 className="w-3.5 h-3.5 text-rose-400" />
-            <span>INSPECT_I4C_SCHEMA</span>
+            <Code2 className="w-3.5 h-3.5" />
+            <span>Inspect Raw Payload</span>
           </button>
         </div>
       </div>
