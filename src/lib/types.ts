@@ -1,4 +1,4 @@
-﻿export type Language = "en" | "hi" | "kn" | "ta" | "te";
+export type Language = "en" | "hi" | "kn" | "ta" | "te";
 
 export type FlowType = "financial_fraud" | "digital_arrest";
 
@@ -14,6 +14,8 @@ export interface IncidentProfile {
   victimName: string;
   victimPhone: string;
   victimBank: string;
+  victimAccountNo?: string;
+  victimBankIfsc?: string;
   victimAccountMasked: string;
   utrNumber: string; // 12-digit UTR/RRN
   fraudAmount: number;

@@ -138,7 +138,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Suspect Account / VPA ID
+              Suspect UPI / VPA ID
             </label>
             <input
               type="text"
@@ -146,6 +146,81 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
               value={profile.suspectVpa}
               onChange={(e) => onProfileChange({ ...profile, suspectVpa: e.target.value })}
               className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-indigo-700 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+            />
+          </div>
+
+          <div>
+            <label className="text-slate-600 font-medium block mb-1">
+              Suspect Account Number
+            </label>
+            <input
+              type="text"
+              placeholder="e.g. 987654321012"
+              value={profile.suspectAccountNo || ""}
+              onChange={(e) => onProfileChange({ ...profile, suspectAccountNo: e.target.value })}
+              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-rose-700 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+            />
+          </div>
+
+          <div>
+            <label className="text-slate-600 font-medium block mb-1">
+              Suspect Account IFSC Code
+            </label>
+            <input
+              type="text"
+              placeholder="e.g. PYTM0123456"
+              value={profile.suspectBankIfsc || ""}
+              onChange={(e) => onProfileChange({ ...profile, suspectBankIfsc: e.target.value.toUpperCase() })}
+              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-bold text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+            />
+          </div>
+
+          <div>
+            <label className="text-slate-600 font-medium block mb-1">
+              Victim Bank Name
+            </label>
+            <select
+              value={profile.victimBank}
+              onChange={(e) => onProfileChange({ ...profile, victimBank: e.target.value })}
+              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+            >
+              <option value="State Bank of India (SBI)">State Bank of India (SBI)</option>
+              <option value="HDFC Bank">HDFC Bank</option>
+              <option value="ICICI Bank">ICICI Bank</option>
+              <option value="Axis Bank">Axis Bank</option>
+              <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
+              <option value="Punjab National Bank (PNB)">Punjab National Bank (PNB)</option>
+              <option value="Bank of Baroda">Bank of Baroda</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-slate-600 font-medium block mb-1">
+              Victim Account Number
+            </label>
+            <input
+              type="text"
+              placeholder="e.g. 50100432198765"
+              value={profile.victimAccountNo || (profile.victimAccountMasked && profile.victimAccountMasked !== "XXXX-XXXX-0000" ? profile.victimAccountMasked : "")}
+              onChange={(e) => onProfileChange({
+                ...profile,
+                victimAccountNo: e.target.value,
+                victimAccountMasked: e.target.value ? e.target.value.replace(/\d(?=\d{4})/g, "X") : profile.victimAccountMasked
+              })}
+              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+            />
+          </div>
+
+          <div>
+            <label className="text-slate-600 font-medium block mb-1">
+              Victim Account IFSC Code
+            </label>
+            <input
+              type="text"
+              placeholder="e.g. SBIN0001234"
+              value={profile.victimBankIfsc || ""}
+              onChange={(e) => onProfileChange({ ...profile, victimBankIfsc: e.target.value.toUpperCase() })}
+              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-bold text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
             />
           </div>
 
@@ -171,25 +246,6 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
               onChange={(e) => onProfileChange({ ...profile, victimPhone: e.target.value })}
               className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
             />
-          </div>
-
-          <div>
-            <label className="text-slate-600 font-medium block mb-1">
-              Victim Bank Name
-            </label>
-            <select
-              value={profile.victimBank}
-              onChange={(e) => onProfileChange({ ...profile, victimBank: e.target.value })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
-            >
-              <option value="State Bank of India (SBI)">State Bank of India (SBI)</option>
-              <option value="HDFC Bank">HDFC Bank</option>
-              <option value="ICICI Bank">ICICI Bank</option>
-              <option value="Axis Bank">Axis Bank</option>
-              <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
-              <option value="Punjab National Bank (PNB)">Punjab National Bank (PNB)</option>
-              <option value="Bank of Baroda">Bank of Baroda</option>
-            </select>
           </div>
         </div>
       </div>
