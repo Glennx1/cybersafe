@@ -9,10 +9,12 @@ const LONG_PRESS_DURATION_MS = 2000;
 
 interface DisguisedCalculatorProps {
   onUnlockNormalApp: () => void;
+  onClose?: () => void;
 }
 
 export const DisguisedCalculator: React.FC<DisguisedCalculatorProps> = ({
-  onUnlockNormalApp
+  onUnlockNormalApp,
+  onClose
 }) => {
   const [display, setDisplay] = useState("0");
   const [prevValue, setPrevValue] = useState<number | null>(null);
@@ -32,6 +34,15 @@ export const DisguisedCalculator: React.FC<DisguisedCalculatorProps> = ({
 
   // Long press timer ref for C button
   const clearTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Dynamically set title to "Calculator" while overlay is mounted, then revert
+  useEffect(() => {
+    const originalTitle = document.title;
+    document.title = "Calculator";
+    return () => {
+      document.title = originalTitle || "CyberRakshak 1930 • Citizen Cyber Defense Terminal";
+    };
+  }, []);
 
   useEffect(() => {
     // Check if one-time advisory was already dismissed

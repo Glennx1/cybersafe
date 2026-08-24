@@ -57,9 +57,8 @@ export default function Home() {
   // Authenticated User State (starts as null)
   const [currentUser, setCurrentUser] = useState<{ id: string; phone: string; name: string } | null>(null);
 
-  // Covert Calculator Mode view control
-  // By default, renders the functional stock phone calculator as public front-door
-  const [isCalculatorView, setIsCalculatorView] = useState(true);
+  // Covert Calculator Mode overlay control (defaults to false so real site loads first)
+  const [showCalculatorOverlay, setShowCalculatorOverlay] = useState(false);
 
   // Unmerged Covert Notes detected on login
   const [pendingCovertSessions, setPendingCovertSessions] = useState<CovertSession[]>([]);
@@ -256,95 +255,72 @@ export default function Home() {
   };
 
   return (
-    <>
-      {/* === CASE 0: DISGUISED PWA PUBLIC FRONT-DOOR (CALCULATOR) === */}
-      {isCalculatorView && !currentUser ? (
-        <DisguisedCalculator
-          onUnlockNormalApp={() => setIsCalculatorView(false)}
+    <main className="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 font-sans">
+        {/* Emergency Sticky Header */}
+        <Header
+          language={language}
+          onLanguageChange={setLanguage}
+          flowType={flowType}
+          currentStep={currentStep}
+          onStepClick={(step) => {
+            setIsSubmitted(false);
+            setCurrentStep(step);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          transactionTime={profile.transactionTime}
+          currentUser={currentUser}
+          onOpenAuth={() => setShowAuthModal(true)}
+          onOpenSavedCases={() => setShowSavedCasesModal(true)}
+          onLogout={() => setCurrentUser(null)}
         />
-      ) : (
-        <main className="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 font-sans">
-          {/* Emergency Sticky Header */}
-          <Header
-            language={language}
-            onLanguageChange={setLanguage}
-            flowType={flowType}
-            currentStep={currentStep}
-            onStepClick={(step) => {
-              setIsSubmitted(false);
-              setCurrentStep(step);
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            transactionTime={profile.transactionTime}
-            currentUser={currentUser}
-            onOpenAuth={() => setShowAuthModal(true)}
-            onOpenSavedCases={() => setShowSavedCasesModal(true)}
-            onLogout={() => {
-              setCurrentUser(null);
-              setIsCalculatorView(true);
-            }}
-          />
 
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1">
-            {/* === CASE A: NOT LOGGED IN -> REQUIRE SIGN IN FIRST === */}
-            {!currentUser ? (
-              <div className="py-12 flex flex-col items-center justify-center animate-in fade-in">
-                <div className="bg-white border border-slate-200 rounded-3xl shadow-xl max-w-lg w-full p-8 sm:p-10 relative">
-                  {/* Discreet switch back to calculator */}
-                  <div className="flex justify-end mb-2">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1">
+          {/* === CASE A: NOT LOGGED IN -> REQUIRE SIGN IN FIRST === */}
+          {!currentUser ? (
+            <div className="py-12 flex flex-col items-center justify-center animate-in fade-in">
+              <div className="bg-white border border-slate-200 rounded-3xl shadow-xl max-w-lg w-full p-8 sm:p-10 relative">
+                <div className="text-center mb-6">
+                  <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center mx-auto mb-4 shadow-xs">
+                    <Shield className="w-7 h-7" />
+                  </div>
+                  <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+                    Sign in to CyberRakshak 1930
+                  </h1>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                    Access your secure dashboard to file cyber incidents, generate freeze notices, and manage cases.
+                  </p>
+                </div>
+
+                {/* Demo Credentials Box */}
+                <div className="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 mb-6 text-xs text-slate-700">
+                  <div className="flex items-center justify-between font-bold text-indigo-900 mb-2">
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+                      Demo Credentials Ready
+                    </span>
                     <button
                       type="button"
-                      onClick={() => setIsCalculatorView(true)}
-                      className="text-[11px] text-slate-400 hover:text-slate-600 flex items-center gap-1 font-medium"
-                      title="Return to disguised calculator mode"
+                      onClick={() => {
+                        setLoginPhone("9999999999");
+                        setLoginPassword("password123");
+                        setLoginError(null);
+                      }}
+                      className="text-xs text-indigo-600 hover:text-indigo-800 font-bold underline"
                     >
-                      <EyeOff className="w-3.5 h-3.5" />
-                      <span>Calculator View</span>
+                      Auto-Fill
                     </button>
                   </div>
-
-                  <div className="text-center mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center mx-auto mb-4 shadow-xs">
-                      <Shield className="w-7 h-7" />
+                  <div className="text-xs text-slate-600 grid grid-cols-2 gap-2 bg-white/80 p-2.5 rounded-xl border border-indigo-100/60">
+                    <div>
+                      <span className="text-[10px] text-slate-400 block uppercase">Phone</span>
+                      <strong className="text-slate-900 font-mono">9999999999</strong>
                     </div>
-                    <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-                      Sign in to CyberRakshak 1930
-                    </h1>
-                    <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                      Access your secure dashboard to file cyber incidents, generate freeze notices, and manage cases.
-                    </p>
-                  </div>
-
-                  {/* Demo Credentials Box */}
-                  <div className="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 mb-6 text-xs text-slate-700">
-                    <div className="flex items-center justify-between font-bold text-indigo-900 mb-2">
-                      <span className="flex items-center gap-1.5">
-                        <CheckCircle2 className="w-4 h-4 text-indigo-600" />
-                        Demo Credentials Ready
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setLoginPhone("9999999999");
-                          setLoginPassword("password123");
-                          setLoginError(null);
-                        }}
-                        className="text-xs text-indigo-600 hover:text-indigo-800 font-bold underline"
-                      >
-                        Auto-Fill
-                      </button>
-                    </div>
-                    <div className="text-xs text-slate-600 grid grid-cols-2 gap-2 bg-white/80 p-2.5 rounded-xl border border-indigo-100/60">
-                      <div>
-                        <span className="text-[10px] text-slate-400 block uppercase">Phone</span>
-                        <strong className="text-slate-900 font-mono">9999999999</strong>
-                      </div>
-                      <div>
-                        <span className="text-[10px] text-slate-400 block uppercase">Password</span>
-                        <strong className="text-slate-900 font-mono">password123</strong>
-                      </div>
+                    <div>
+                      <span className="text-[10px] text-slate-400 block uppercase">Password</span>
+                      <strong className="text-slate-900 font-mono">password123</strong>
                     </div>
                   </div>
+                </div>
 
               {loginError && (
                 <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs">
@@ -817,8 +793,49 @@ export default function Home() {
           onSelectSession={handleResumeSession}
         />
       )}
-    </main>
+
+      {/* Discreet Floating Action Button (Bottom-Right, subtle icon) */}
+      {!showCalculatorOverlay && (
+        <div className="fixed bottom-5 right-5 z-40">
+          <button
+            type="button"
+            onClick={() => setShowCalculatorOverlay(true)}
+            className="w-10 h-10 rounded-full bg-slate-800/80 hover:bg-slate-900 text-slate-300 hover:text-white shadow-lg border border-slate-700/60 flex items-center justify-center transition-all hover:scale-105 active:scale-95 backdrop-blur-xs"
+            title="Discreet Utility"
+            aria-label="Quick Utility"
+          >
+            {/* Subtle generic grid / calc icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="opacity-70"
+            >
+              <rect width="18" height="18" x="3" y="3" rx="2" />
+              <line x1="8" x2="8" y1="3" y2="21" />
+              <line x1="16" x2="16" y1="3" y2="21" />
+              <line x1="3" x2="21" y1="8" y2="8" />
+              <line x1="3" x2="21" y1="16" y2="16" />
+            </svg>
+          </button>
+        </div>
       )}
-    </>
+
+      {/* Full-Screen Disguised Calculator Modal Overlay */}
+      {showCalculatorOverlay && (
+        <div className="fixed inset-0 z-50 bg-neutral-950 flex flex-col animate-in fade-in">
+          <DisguisedCalculator
+            onUnlockNormalApp={() => setShowCalculatorOverlay(false)}
+            onClose={() => setShowCalculatorOverlay(false)}
+          />
+        </div>
+      )}
+    </main>
   );
 }

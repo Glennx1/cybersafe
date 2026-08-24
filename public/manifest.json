@@ -1,10 +1,11 @@
 {
-  "name": "Calculator",
-  "short_name": "Calculator",
+  "name": "CyberRakshak 1930",
+  "short_name": "CyberRakshak",
+  "description": "Citizen Cyber Defense Terminal & Anti-Fraud Copilot",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#171717",
-  "theme_color": "#171717",
+  "background_color": "#0f172a",
+  "theme_color": "#4f46e5",
   "icons": [
     {
       "src": "/calculator-icon.svg",
