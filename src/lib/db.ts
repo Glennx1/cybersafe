@@ -16,7 +16,11 @@ export type LedgerEventType =
   | 'case_updated' 
   | 'evidence_uploaded' 
   | 'status_changed' 
-  | 'document_generated';
+  | 'document_generated'
+  | 'user_initiated_1930_call'
+  | 'user_emailed_bank'
+  | 'user_copied_ncrp_statement'
+  | 'user_shared_document';
 
 export interface CaseLedgerEntry {
   caseId: string;

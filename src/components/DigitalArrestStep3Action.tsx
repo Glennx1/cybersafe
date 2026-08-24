@@ -1,7 +1,12 @@
-"use client";
-
 import React, { useState } from "react";
-import { generateSection63BsaCertificatePdf } from "@/lib/pdfGenerator";
+import {
+  generateSection63BsaCertificatePdf,
+  createDigitalArrestFirDoc,
+  generateDigitalArrestFirPdf,
+  createSection63BsaCertificateDoc,
+  sharePdfToWhatsApp
+} from "@/lib/pdfGenerator";
+import { logCaseAction } from "@/lib/actionLogger";
 import {
   Download,
   Phone,
@@ -19,7 +24,8 @@ import {
   Copy,
   Check,
   Building2,
-  AlertTriangle
+  AlertTriangle,
+  Share2
 } from "lucide-react";
 import { IncidentProfile, Language } from "@/lib/types";
 
@@ -37,12 +43,35 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
   onBack,
 }) => {
   const [copiedChakshu, setCopiedChakshu] = useState(false);
+  const [sharingFir, setSharingFir] = useState(false);
+  const [shareSuccess, setShareSuccess] = useState(false);
 
   const handleCopyChakshuDetails = () => {
     const text = `SUSPECT IMPERSONATOR DETAILS FOR CHAKSHU BLOCK:\n- Caller ID / WhatsApp: ${profile.scammerCallerId || "Unknown"}\n- Impersonated Official: ${profile.impersonatedAgency || "CBI / Police"}\n- Extortion Demand: Rs. ${(profile.extortionDemandAmount || 250000).toLocaleString("en-IN")}\n- Crime Category: Fake Digital Arrest / Cyber Extortion (Sec 319 BNS)`;
     navigator.clipboard.writeText(text);
     setCopiedChakshu(true);
     setTimeout(() => setCopiedChakshu(false), 2500);
+  };
+
+  const handleShareDigitalArrestFir = async () => {
+    setSharingFir(true);
+    const doc = createDigitalArrestFirDoc(profile);
+    const fileName = `Digital_Arrest_FIR_Complaint_${profile.id}.pdf`;
+    const title = `Digital Arrest Criminal Complaint - ${profile.id}`;
+    const text = `Formal criminal complaint regarding cyber extortion and impersonation of ${profile.impersonatedAgency || "police officials"} (BNS 204, 308, 319).`;
+
+    logCaseAction(profile.id, "user_shared_document", {
+      docType: "digital_arrest_fir",
+      fileName,
+      channel: "whatsapp_web_share"
+    });
+
+    const shared = await sharePdfToWhatsApp(doc, fileName, title, text);
+    if (shared) {
+      setShareSuccess(true);
+      setTimeout(() => setShareSuccess(false), 3000);
+    }
+    setSharingFir(false);
   };
 
   const chakshuUrl = "https://sancharsaathi.gov.in/sfc/";
@@ -124,13 +153,26 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
             </p>
           </div>
           <div className="space-y-2">
-            <button
-              onClick={onDownloadDigitalArrestFir}
-              className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>Download Police Complaint PDF</span>
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleShareDigitalArrestFir}
+                disabled={sharingFir}
+                className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+                <span>{shareSuccess ? "Shared to WhatsApp!" : "Share via WhatsApp"}</span>
+              </button>
+
+              <button
+                onClick={onDownloadDigitalArrestFir}
+                className="px-3.5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
+                title="Download PDF"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download</span>
+              </button>
+            </div>
 
             {(profile.serverEvidenceHash || profile.evidenceHash) && (
               <button

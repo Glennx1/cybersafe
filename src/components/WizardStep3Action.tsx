@@ -23,6 +23,7 @@ import {
 import { IncidentProfile, ForensicAuditReport, DispatchPayload, Language } from "@/lib/types";
 import { BankEmailDispatchModal } from "./BankEmailDispatchModal";
 import { CyberFirRegistrationModal } from "./CyberFirRegistrationModal";
+import { OneTapActionPanel } from "./OneTapActionPanel";
 
 interface WizardStep3ActionProps {
   profile: IncidentProfile;
@@ -109,33 +110,40 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
         </div>
       </div>
 
-      {/* 2. Core Actions Grid */}
+      {/* 2. One-Tap Action Deep Link Matrix */}
+      <OneTapActionPanel
+        profile={profile}
+        auditReport={auditReport}
+        onOpenTeleScript={onOpenTeleScript}
+      />
+
+      {/* 3. Detailed Guides Modal Launchers */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         {/* Action 1: Register Cyber Police FIR */}
-        <div className="bg-white border-2 border-indigo-500/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+        <div className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
           <div>
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold border border-indigo-100">
                 <Scale className="w-5 h-5" />
               </div>
               <span className="text-[11px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">
-                Primary Legal Action
+                Full FIR Guide
               </span>
             </div>
             <h3 className="font-bold text-base text-slate-900 mb-1">
-              Register Cyber Police FIR
+              Complete Cyber Police FIR Workflow
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed mb-4">
-              File your formal police complaint online via NCRP (cybercrime.gov.in) or download the pre-filled signed FIR Dossier for your local Cyber Crime Police Station.
+              Explore step-by-step guidance for submitting your official complaint online or filing at your local station with signed annexures.
             </p>
           </div>
           <button
             type="button"
             onClick={() => setIsFirModalOpen(true)}
-            className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
+            className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
           >
             <FileText className="w-4 h-4" />
-            <span>Open Cyber FIR Registration Guide</span>
+            <span>Open Complete FIR Guide & Annexures</span>
           </button>
         </div>
 
@@ -147,14 +155,14 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
                 <Mail className="w-5 h-5" />
               </div>
               <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-                Stop Money Transfer
+                Notice Inspector
               </span>
             </div>
             <h3 className="font-bold text-base text-slate-900 mb-1">
-              Email Bank Fraud Desk
+              Bank Nodal Email Inspector
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed mb-4">
-              Send Section 91 BNSS lien requisition notice directly to the nodal officers of {profile.victimBank} and beneficiary bank to freeze recipient accounts.
+              View the full verbatim Section 91 BNSS legal text, copy individual paragraphs, and look up nodal escalation telephone numbers.
             </p>
           </div>
           <button
@@ -163,7 +171,7 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
             className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
           >
             <Mail className="w-4 h-4" />
-            <span>Email Bank Fraud Desk</span>
+            <span>Inspect Full Bank Notice & Escalations</span>
           </button>
         </div>
       </div>

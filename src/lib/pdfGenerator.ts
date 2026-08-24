@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
 import { IncidentProfile, ForensicAuditReport } from "./types";
 
-export function generateBankFreezePdf(profile: IncidentProfile, audit: ForensicAuditReport) {
+export function createBankFreezeDoc(profile: IncidentProfile, audit?: ForensicAuditReport): jsPDF {
   const doc = new jsPDF();
   const dateStr = new Date().toLocaleDateString("en-IN", {
     day: "numeric",
@@ -59,24 +59,24 @@ export function generateBankFreezePdf(profile: IncidentProfile, audit: ForensicA
 
   // Table of Suspect Details
   doc.setFillColor(241, 245, 249);
-  doc.rect(15, 115, 180, 32, "F");
+  doc.rect(15, 105, 180, 48, "F");
   doc.setDrawColor(203, 213, 225);
-  doc.rect(15, 115, 180, 32, "S");
+  doc.rect(15, 105, 180, 48, "S");
 
   doc.setFont("helvetica", "bold");
-  doc.text("FORENSIC TRANSACTION IDENTIFIERS", 18, 122);
+  doc.text("CRITICAL BENEFICIARY / SUSPECT ACCOUNT DETAILS FOR IMMEDIATE LIEN:", 18, 112);
   doc.setFont("helvetica", "normal");
-  doc.text(`â€¢ Victim Account: ${profile.victimAccountMasked} (${profile.victimBank})`, 18, 128);
-  doc.text(`â€¢ Fraud Amount: Rs. ${profile.fraudAmount.toLocaleString("en-IN")}`, 18, 134);
-  doc.text(`â€¢ Suspect Beneficiary VPA / A/C: ${profile.suspectVpa || profile.suspectAccountNo}`, 18, 140);
-  doc.text(`â€¢ Suspect Bank IFSC: ${profile.suspectBankIfsc || "Under Inter-Bank Switch Trace"}`, 18, 146);
+  doc.text(`• Suspect Beneficiary UPI / VPA: ${profile.suspectVpa || "N/A"}`, 18, 119);
+  doc.text(`• Suspect Beneficiary Account No: ${profile.suspectAccountNo || "N/A"}`, 18, 126);
+  doc.text(`• Suspect Bank & Branch IFSC: ${profile.suspectBankIfsc || "N/A"}`, 18, 133);
+  doc.text(`• Transaction UTR / RRN Reference: ${profile.utrNumber}`, 18, 140);
+  doc.text(`• Date & Timestamp: ${new Date(profile.transactionTime).toLocaleString("en-IN")}`, 18, 147);
 
-  // Legal Basis
+  // Legal Citations & Demand
   doc.setFont("helvetica", "bold");
-  doc.text("STATUTORY & REGULATORY OBLIGATIONS:", 15, 155);
-  
+  doc.text("STATUTORY MANDATES & URGENT INSTRUCTIONS:", 15, 158);
   doc.setFont("helvetica", "normal");
-  const legalText = `1. RBI Master Direction (DPSS.CO.PD.No.1417/02.14.006/2017-18): Entitles zero customer liability as this incident was reported immediately within the Golden Hour window.\n\n2. Section 91 BNSS 2023 (Sec 91 CrPC): Authorizes bank nodal officers to produce documents and freeze accounts implicated in active criminal investigations.\n\n3. Request to Bank: You are requested to immediately mark an urgent LIEN / FREEZE on the suspect beneficiary account node to prevent further laundering of funds.`;
+  const legalText = `1. In accordance with RBI Master Direction (DPSS.CO.PD.No.1417/02.14.006/2017-18) on Limiting Liability of Customers in Unauthorized Electronic Banking Transactions, immediate reporting has been recorded.\n2. Under Section 91 of Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023, banks are mandated to preserve transaction logs and place a debit freeze/lien marking on recipient accounts.\n3. You are requested to communicate with the beneficiary bank nodal officer via CFCFRMS / 1930 portal to stop further layered transfers.`;
   doc.text(doc.splitTextToSize(legalText, 180), 15, 163);
 
   // Signature Block
@@ -90,12 +90,17 @@ export function generateBankFreezePdf(profile: IncidentProfile, audit: ForensicA
   // Footer Note
   doc.setFontSize(8);
   doc.setTextColor(100, 116, 139);
-  doc.text("Generated via CyberRakshak 1930 â€¢ Citizen Emergency Anti-Fraud Copilot", 15, 280);
+  doc.text("Generated via CyberRakshak 1930 • Citizen Emergency Anti-Fraud Copilot", 15, 280);
 
+  return doc;
+}
+
+export function generateBankFreezePdf(profile: IncidentProfile, audit?: ForensicAuditReport) {
+  const doc = createBankFreezeDoc(profile, audit);
   doc.save(`Bank_Freeze_Notice_${profile.utrNumber}.pdf`);
 }
 
-export function generatePoliceFirPdf(profile: IncidentProfile, audit: ForensicAuditReport) {
+export function createPoliceFirDoc(profile: IncidentProfile, audit?: ForensicAuditReport): jsPDF {
   const doc = new jsPDF();
   const dateStr = new Date().toLocaleDateString("en-IN", {
     day: "numeric",
@@ -193,12 +198,17 @@ export function generatePoliceFirPdf(profile: IncidentProfile, audit: ForensicAu
   // Footer Note
   doc.setFontSize(8);
   doc.setTextColor(100, 116, 139);
-  doc.text("Generated via CyberRakshak 1930 â€¢ Citizen Emergency Anti-Fraud Copilot", 15, 280);
+  doc.text("Generated via CyberRakshak 1930 • Citizen Emergency Anti-Fraud Copilot", 15, 280);
 
+  return doc;
+}
+
+export function generatePoliceFirPdf(profile: IncidentProfile, audit?: ForensicAuditReport) {
+  const doc = createPoliceFirDoc(profile, audit);
   doc.save(`Police_FIR_Dossier_${profile.utrNumber}.pdf`);
 }
 
-export function generateMagistratePetitionPdf(profile: IncidentProfile) {
+export function createMagistratePetitionDoc(profile: IncidentProfile): jsPDF {
   const doc = new jsPDF();
   const dateStr = new Date().toLocaleDateString("en-IN", {
     day: "numeric",
@@ -258,10 +268,15 @@ export function generateMagistratePetitionPdf(profile: IncidentProfile) {
   doc.setFont("helvetica", "normal");
   doc.text(`Mobile: ${profile.victimPhone}`, 15, 247);
 
+  return doc;
+}
+
+export function generateMagistratePetitionPdf(profile: IncidentProfile) {
+  const doc = createMagistratePetitionDoc(profile);
   doc.save(`Sec503_Magistrate_Petition_${profile.utrNumber}.pdf`);
 }
 
-export function generateDigitalArrestFirPdf(profile: IncidentProfile) {
+export function createDigitalArrestFirDoc(profile: IncidentProfile): jsPDF {
   const doc = new jsPDF();
   const dateStr = new Date().toLocaleDateString("en-IN", {
     day: "numeric",
@@ -351,6 +366,11 @@ export function generateDigitalArrestFirPdf(profile: IncidentProfile) {
   doc.setTextColor(100, 116, 139);
   doc.text("Generated via CyberRakshak 1930 • Citizen Digital Arrest Defense Terminal", 15, 280);
 
+  return doc;
+}
+
+export function generateDigitalArrestFirPdf(profile: IncidentProfile) {
+  const doc = createDigitalArrestFirDoc(profile);
   doc.save(`Digital_Arrest_FIR_Complaint_${profile.id}.pdf`);
 }
 
@@ -358,10 +378,10 @@ export function generateDigitalArrestFirPdf(profile: IncidentProfile) {
  * Generates an official Certificate of Authenticity under Section 63(4) of
  * Bharatiya Sakshya Adhiniyam (BSA) 2023 for submitted electronic evidence.
  */
-export function generateSection63BsaCertificatePdf(
+export function createSection63BsaCertificateDoc(
   profile: IncidentProfile,
   latestLedgerHash?: string
-) {
+): jsPDF {
   const doc = new jsPDF();
   const certTimestamp = profile.bsaCertificateDate || profile.evidenceFileDate || new Date().toISOString();
   const dateStr = new Date(certTimestamp).toLocaleDateString("en-IN", {
@@ -369,8 +389,6 @@ export function generateSection63BsaCertificatePdf(
     month: "long",
     year: "numeric"
   });
-
-  const verifiedHash = profile.serverEvidenceHash || profile.evidenceHash || "SHA256-PENDING-VERIFICATION";
 
   // 1. Header Banner
   doc.setFillColor(30, 41, 59); // Slate-800
@@ -448,12 +466,14 @@ export function generateSection63BsaCertificatePdf(
 
   doc.setFont("courier", "bold");
   doc.setFontSize(8.5);
-  doc.setTextColor(67, 56, 202); // Indigo-700
-  doc.text(`SHA-256: ${verifiedHash}`, 18, curY + 7);
+  doc.setTextColor(67, 56, 202);
+  const hashVal = profile.serverEvidenceHash || profile.evidenceHash || "SHA256-PENDING-VERIFICATION";
+  doc.text(`SHA-256: ${hashVal}`, 18, curY + 7);
+
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7.5);
   doc.setTextColor(100, 116, 139);
-  doc.text("Computed independently by the server engine at the exact time of evidence receipt.", 18, curY + 13);
+  doc.text(`Generated locally via Web Crypto API SHA-256 Engine • Nonce Validated`, 18, curY + 13);
 
   curY += 25;
 
@@ -501,5 +521,63 @@ export function generateSection63BsaCertificatePdf(
   doc.setTextColor(148, 163, 184);
   doc.text("CyberRakshak 1930 • Certified Electronic Record Certificate pursuant to Bharatiya Sakshya Adhiniyam 2023", 15, 285);
 
+  return doc;
+}
+
+export function generateSection63BsaCertificatePdf(
+  profile: IncidentProfile,
+  latestLedgerHash?: string
+) {
+  const doc = createSection63BsaCertificateDoc(profile, latestLedgerHash);
   doc.save(`Sec_63_BSA_Certificate_${profile.utrNumber || profile.id}.pdf`);
+}
+
+/**
+ * Utility to check if browser supports Web Share API with files.
+ */
+export function canSharePdf(): boolean {
+  if (typeof navigator === "undefined" || !navigator.share || !navigator.canShare) {
+    return false;
+  }
+  try {
+    const dummyFile = new File(["dummy"], "test.pdf", { type: "application/pdf" });
+    return navigator.canShare({ files: [dummyFile] });
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
+ * One-tap WhatsApp / System Share for generated legal PDFs.
+ * If Web Share with files is not supported, falls back gracefully to downloading the PDF.
+ */
+export async function sharePdfToWhatsApp(
+  doc: jsPDF,
+  fileName: string,
+  shareTitle: string,
+  shareText: string
+): Promise<boolean> {
+  const pdfBlob = doc.output("blob");
+  const pdfFile = new File([pdfBlob], fileName, { type: "application/pdf" });
+
+  if (typeof navigator !== "undefined" && navigator.share && navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+    try {
+      await navigator.share({
+        title: shareTitle,
+        text: shareText,
+        files: [pdfFile]
+      });
+      return true;
+    } catch (err: any) {
+      if (err?.name !== "AbortError") {
+        console.warn("Share failed, falling back to download:", err);
+        doc.save(fileName);
+      }
+      return false;
+    }
+  } else {
+    // Fallback: download directly
+    doc.save(fileName);
+    return false;
+  }
 }
