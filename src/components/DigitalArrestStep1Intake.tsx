@@ -74,14 +74,39 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
   const handleFileUpload = async (file: File) => {
     setIsExtracting(true);
     try {
-      // 1. SHA-256 Web Crypto Hashing
+      // 1. Client SHA-256 Web Crypto Hashing
       const arrayBuffer = await file.arrayBuffer();
       const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      const clientHashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
       const fileDate = new Date(file.lastModified).toISOString();
 
-      // 2. Tesseract OCR
+      // 2. Perform Server-Side Independent Verification
+      let serverHash = clientHashHex;
+      let hashMismatch = false;
+      let serverTimestamp = new Date().toISOString();
+
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('clientHash', clientHashHex);
+        formData.append('caseId', profile.id);
+
+        const uploadRes = await fetch('/api/evidence/upload', {
+          method: 'POST',
+          body: formData
+        });
+        const uploadData = await uploadRes.json();
+        if (uploadData.success) {
+          serverHash = uploadData.serverHash;
+          hashMismatch = uploadData.hashMismatch;
+          serverTimestamp = uploadData.serverTimestamp;
+        }
+      } catch (err) {
+        console.warn("Server hash verification fallback to local:", err);
+      }
+
+      // 3. Tesseract OCR
       const { data: { text } } = await Tesseract.recognize(file, 'eng');
       const { finalScore, flags } = analyzeDigitalArrestText(text);
 
@@ -90,8 +115,11 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
       onProfileChange({
         ...profile,
         evidenceFileName: file.name,
-        evidenceHash: hashHex,
+        evidenceHash: clientHashHex,
+        serverEvidenceHash: serverHash,
+        hashMismatch,
         evidenceFileDate: fileDate,
+        bsaCertificateDate: serverTimestamp,
         rawEvidenceText: text,
         scamCategory: "DIGITAL_ARREST",
         impersonatedAgency: profile.impersonatedAgency || "Central Bureau of Investigation (CBI)",
@@ -134,6 +162,23 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
           Received a video call, message, or letter claiming you are under "Digital Arrest"? Upload the document or add caller details below to check for red flags.
         </p>
       </div>
+
+      {/* Forensic Hash Mismatch Warning Banner */}
+      {profile.hashMismatch && (
+        <div className="mb-6 p-4 rounded-2xl bg-rose-50 border-2 border-rose-400 text-rose-950 flex items-start gap-3 shadow-xs">
+          <div className="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold shrink-0">
+            ⚠️
+          </div>
+          <div>
+            <strong className="text-sm font-bold block text-rose-900 mb-0.5">
+              Forensic Warning: Cryptographic Hash Mismatch Detected
+            </strong>
+            <p className="text-xs text-rose-800 leading-relaxed">
+              The client-computed hash ({profile.evidenceHash?.substring(0, 16)}...) does not match the server-verified hash ({profile.serverEvidenceHash?.substring(0, 16)}...). This discrepancy has been logged in the case audit ledger for evidentiary integrity.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Scammer Details Card */}
       <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">

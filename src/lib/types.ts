@@ -25,9 +25,13 @@ export interface IncidentProfile {
   suspectAccountNo: string;
   scamCategory: ScamCategory;
   rawEvidenceText: string;
+  // Section 63 BSA 2023 Forensic Telemetry
   evidenceFileName?: string;
-  evidenceHash?: string;
+  evidenceHash?: string; // Client-computed hash
+  serverEvidenceHash?: string; // Server-verified hash
+  hashMismatch?: boolean; // Flagged if client and server hashes differ
   evidenceFileDate?: string;
+  bsaCertificateDate?: string;
   cityState: string;
 
   // Digital Arrest specific telemetry

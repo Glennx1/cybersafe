@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { generateSection63BsaCertificatePdf } from "@/lib/pdfGenerator";
 import {
   Download,
   Phone,
@@ -122,13 +123,27 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
               Download a pre-formatted legal complaint citing Impersonation of Public Servant and Extortion ready for your local police cyber cell or 1930 portal.
             </p>
           </div>
-          <button
-            onClick={onDownloadDigitalArrestFir}
-            className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
-          >
-            <Download className="w-3.5 h-3.5" />
-            <span>Download Police Complaint PDF</span>
-          </button>
+          <div className="space-y-2">
+            <button
+              onClick={onDownloadDigitalArrestFir}
+              className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Download Police Complaint PDF</span>
+            </button>
+
+            {(profile.serverEvidenceHash || profile.evidenceHash) && (
+              <button
+                type="button"
+                onClick={() => generateSection63BsaCertificatePdf(profile)}
+                className="w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-emerald-200 transition-all active:scale-95"
+                title="Section 63(4) BSA 2023 Certificate of Authenticity for submitted evidence"
+              >
+                <Download className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Download Sec 63 BSA Certificate</span>
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Action 2: DoT Chakshu SIM Blocking */}

@@ -18,7 +18,7 @@ import {
   Printer
 } from "lucide-react";
 import { IncidentProfile, ForensicAuditReport } from "@/lib/types";
-import { generatePoliceFirPdf } from "@/lib/pdfGenerator";
+import { generatePoliceFirPdf, generateSection63BsaCertificatePdf } from "@/lib/pdfGenerator";
 
 interface CyberFirRegistrationModalProps {
   isOpen: boolean;
@@ -193,14 +193,28 @@ export const CyberFirRegistrationModal: React.FC<CyberFirRegistrationModalProps>
 
         {/* Modal Action Buttons */}
         <div className="pt-4 border-t border-slate-100 mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
-          <button
-            type="button"
-            onClick={() => generatePoliceFirPdf(profile, auditReport)}
-            className="w-full sm:w-auto px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border border-slate-200 transition-all active:scale-95"
-          >
-            <Download className="w-4 h-4 text-indigo-600" />
-            <span>Download Signed FIR PDF</span>
-          </button>
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <button
+              type="button"
+              onClick={() => generatePoliceFirPdf(profile, auditReport)}
+              className="w-full sm:w-auto px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border border-slate-200 transition-all active:scale-95"
+            >
+              <Download className="w-4 h-4 text-indigo-600" />
+              <span>Download Signed FIR PDF</span>
+            </button>
+
+            {(profile.serverEvidenceHash || profile.evidenceHash) && (
+              <button
+                type="button"
+                onClick={() => generateSection63BsaCertificatePdf(profile)}
+                className="w-full sm:w-auto px-3.5 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-emerald-200 transition-all active:scale-95"
+                title="Section 63(4) BSA 2023 Certificate of Authenticity for submitted evidence"
+              >
+                <Download className="w-4 h-4 text-emerald-700" />
+                <span>Sec 63 BSA Cert PDF</span>
+              </button>
+            )}
+          </div>
 
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <a

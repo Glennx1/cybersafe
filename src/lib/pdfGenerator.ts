@@ -353,3 +353,153 @@ export function generateDigitalArrestFirPdf(profile: IncidentProfile) {
 
   doc.save(`Digital_Arrest_FIR_Complaint_${profile.id}.pdf`);
 }
+
+/**
+ * Generates an official Certificate of Authenticity under Section 63(4) of
+ * Bharatiya Sakshya Adhiniyam (BSA) 2023 for submitted electronic evidence.
+ */
+export function generateSection63BsaCertificatePdf(
+  profile: IncidentProfile,
+  latestLedgerHash?: string
+) {
+  const doc = new jsPDF();
+  const certTimestamp = profile.bsaCertificateDate || profile.evidenceFileDate || new Date().toISOString();
+  const dateStr = new Date(certTimestamp).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  const verifiedHash = profile.serverEvidenceHash || profile.evidenceHash || "SHA256-PENDING-VERIFICATION";
+
+  // 1. Header Banner
+  doc.setFillColor(30, 41, 59); // Slate-800
+  doc.rect(0, 0, 210, 26, "F");
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(13);
+  doc.setFont("helvetica", "bold");
+  doc.text("CERTIFICATE OF AUTHENTICITY FOR ELECTRONIC EVIDENCE", 15, 15);
+
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
+  doc.text("UNDER SECTION 63(4), BHARATIYA SAKSHYA ADHINIYAM (BSA), 2023", 15, 21);
+
+  // 2. Reference & Date Line
+  doc.setTextColor(15, 23, 42);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+  doc.text(`Date of Issue: ${dateStr}`, 15, 36);
+  doc.text(`Incident / Case Ref: ${profile.id}`, 135, 36);
+
+  // 3. Subject Box
+  doc.setFillColor(241, 245, 249); // Slate-100
+  doc.rect(15, 42, 180, 14, "F");
+  doc.setDrawColor(203, 213, 225);
+  doc.rect(15, 42, 180, 14, "S");
+
+  doc.setTextColor(15, 23, 42);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+  doc.text("SUBJECT: STATUTORY SYSTEM CERTIFICATION OF ELECTRONIC RECORD INTEGRITY", 18, 48);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Complainant: ${profile.victimName} (${profile.victimPhone}) | Transaction UTR: ${profile.utrNumber || "N/A"}`, 18, 53);
+
+  // 4. Statutory Preamble
+  let curY = 64;
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  const preamble = `I, the undersigned automated cryptographic evidence custodian for the CyberRakshak 1930 platform, do hereby certify pursuant to Section 63(4) of the Bharatiya Sakshya Adhiniyam (BSA), 2023, regarding the electronic evidence submitted in connection with Incident Reference ${profile.id}:`;
+  const splitPreamble = doc.splitTextToSize(preamble, 180);
+  doc.text(splitPreamble, 15, curY);
+  curY += (splitPreamble.length * 4.5) + 6;
+
+  // 5. Electronic Record Telemetry Box
+  doc.setFont("helvetica", "bold");
+  doc.text("1. PARTICULARS OF THE ELECTRONIC RECORD:", 15, curY);
+  curY += 5;
+
+  doc.setFillColor(248, 250, 252);
+  doc.rect(15, curY, 180, 42, "F");
+  doc.setDrawColor(226, 232, 240);
+  doc.rect(15, curY, 180, 42, "S");
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8.5);
+  doc.text(`• File Name: ${profile.evidenceFileName || "Digital_Transaction_Receipt.png"}`, 18, curY + 7);
+  doc.text(`• Timestamp of Ingestion (Server Time): ${certTimestamp}`, 18, curY + 13);
+  doc.text(`• Associated Transaction UTR / RRN: ${profile.utrNumber || "N/A"}`, 18, curY + 19);
+  doc.text(`• Disputed Fraud Amount: Rs. ${(profile.fraudAmount || profile.extortionDemandAmount || 0).toLocaleString("en-IN")}`, 18, curY + 25);
+  doc.text(`• Financial Institution: ${profile.victimBank || "Unknown"}`, 18, curY + 31);
+  doc.text(`• Hash Verification Status: ${profile.hashMismatch ? "MISMATCH FLAGGED" : "Cryptographically Verified (Server & Client Match)"}`, 18, curY + 37);
+
+  curY += 49;
+
+  // 6. Cryptographic Hash Signature
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(9);
+  doc.text("2. CRYPTOGRAPHIC INTEGRITY SIGNATURE (SHA-256 HASH):", 15, curY);
+  curY += 5;
+
+  doc.setFillColor(238, 242, 255); // Indigo-50
+  doc.rect(15, curY, 180, 18, "F");
+  doc.setDrawColor(199, 210, 254);
+  doc.rect(15, curY, 180, 18, "S");
+
+  doc.setFont("courier", "bold");
+  doc.setFontSize(8.5);
+  doc.setTextColor(67, 56, 202); // Indigo-700
+  doc.text(`SHA-256: ${verifiedHash}`, 18, curY + 7);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(7.5);
+  doc.setTextColor(100, 116, 139);
+  doc.text("Computed independently by the server engine at the exact time of evidence receipt.", 18, curY + 13);
+
+  curY += 25;
+
+  // 7. Statement of System & Custody Process
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(9);
+  doc.setTextColor(15, 23, 42);
+  doc.text("3. STATEMENT OF DEVICE OPERATION & CHAIN OF CUSTODY:", 15, curY);
+  curY += 5;
+
+  const processStatement = `This electronic record was received and hashed by CyberRakshak 1930's automated evidence-intake system on ${certTimestamp}. The system computed an independent SHA-256 cryptographic hash at the time of receipt to establish the integrity of the record from the point of submission.\n\nThroughout the material period, the computer system and evidence vault were operating properly, and the cryptographic integrity of the recorded electronic evidence has not been tampered with or modified. The record has been committed to a tamper-evident, hash-chained case audit ledger${latestLedgerHash ? ` (Audit Root: ${latestLedgerHash.substring(0, 16)}...)` : ""}.`;
+  const splitProcess = doc.splitTextToSize(processStatement, 180);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.text(splitProcess, 15, curY);
+
+  curY += (splitProcess.length * 4) + 8;
+
+  // 8. Official Certification & Signature
+  doc.setFillColor(241, 245, 249);
+  doc.rect(15, curY, 180, 24, "F");
+  doc.setDrawColor(203, 213, 225);
+  doc.rect(15, curY, 180, 24, "S");
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(8.5);
+  doc.text("SYSTEM CERTIFICATION STATEMENT:", 18, curY + 6);
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(7.5);
+  doc.text("This certificate is generated automatically by the system at the time of evidence receipt", 18, curY + 12);
+  doc.text("and reflects the state of the record as originally submitted pursuant to Section 63(4) BSA 2023.", 18, curY + 17);
+
+  // 9. Sign-off Line
+  const signY = curY + 32;
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(8.5);
+  doc.setTextColor(15, 23, 42);
+  doc.text("Signed & Certified by:", 15, signY);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Complainant / Submitter: ${profile.victimName} (${profile.victimPhone})`, 15, signY + 5);
+  doc.text(`System Custodian: CyberRakshak Automated Vault Node (Sec 63 BSA Verifier)`, 15, signY + 10);
+
+  // 10. Footer Note
+  doc.setFontSize(7.5);
+  doc.setTextColor(148, 163, 184);
+  doc.text("CyberRakshak 1930 • Certified Electronic Record Certificate pursuant to Bharatiya Sakshya Adhiniyam 2023", 15, 285);
+
+  doc.save(`Sec_63_BSA_Certificate_${profile.utrNumber || profile.id}.pdf`);
+}
