@@ -1,9 +1,11 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CyberRakshak 1930 • Citizen Cyber Defense Terminal",
-  description: "Zero-form emergency anti-fraud copilot & statutory legal action system for Helpline 1930 & I4C",
+  title: "Calculator",
+  description: "Standard Calculator",
+  manifest: "/manifest.json",
+  themeColor: "#171717"
 };
 
 export default function RootLayout({
@@ -14,6 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Calculator" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

@@ -13,6 +13,8 @@ import { IncidentTracker } from "@/components/IncidentTracker";
 import { EmergencyVoiceGuide } from "@/components/EmergencyVoiceGuide";
 import { AuthModal } from "@/components/AuthModal";
 import { SavedCasesModal } from "@/components/SavedCasesModal";
+import { DisguisedCalculator } from "@/components/DisguisedCalculator";
+import { getUnmergedCovertSessions, clearCovertSession, CovertSession } from "@/lib/covertStore";
 import { UserSessionRecord } from "@/lib/db";
 import {
   Language,
@@ -23,7 +25,7 @@ import {
 } from "@/lib/types";
 import { runForensicAudit, generateDispatchPayload } from "@/lib/forensicEngine";
 import { generateBankFreezePdf, generatePoliceFirPdf, generateMagistratePetitionPdf, generateDigitalArrestFirPdf } from "@/lib/pdfGenerator";
-import { Shield, Sparkles, Code2, X, Zap, ShieldAlert, CheckCircle2, ArrowRight, Radio } from "lucide-react";
+import { Shield, Sparkles, Code2, X, Zap, ShieldAlert, CheckCircle2, ArrowRight, Radio, EyeOff, FileText } from "lucide-react";
 import confetti from "canvas-confetti";
 
 export default function Home() {
@@ -49,11 +51,20 @@ export default function Home() {
   };
 
   const [language, setLanguage] = useState<Language>("en");
-  const [flowType, setFlowType] = useState<FlowType>("financial_fraud");
+  const [flowType, setFlowType] = useState<FlowType>("digital_arrest");
   const [currentStep, setCurrentStep] = useState<number>(1);
 
-  // Authenticated User State (starts as null to require sign-in first)
+  // Authenticated User State (starts as null)
   const [currentUser, setCurrentUser] = useState<{ id: string; phone: string; name: string } | null>(null);
+
+  // Covert Calculator Mode view control
+  // By default, renders the functional stock phone calculator as public front-door
+  const [isCalculatorView, setIsCalculatorView] = useState(true);
+
+  // Unmerged Covert Notes detected on login
+  const [pendingCovertSessions, setPendingCovertSessions] = useState<CovertSession[]>([]);
+  const [showCovertMergeModal, setShowCovertMergeModal] = useState(false);
+  const [selectedMergeFlow, setSelectedMergeFlow] = useState<FlowType>("digital_arrest");
 
   const [profile, setProfile] = useState<IncidentProfile>(emptyProfile);
   const [auditReport, setAuditReport] = useState<ForensicAuditReport>(runForensicAudit(emptyProfile));
@@ -71,6 +82,18 @@ export default function Home() {
   const [loginPassword, setLoginPassword] = useState("password123");
   const [loginError, setLoginError] = useState<string | null>(null);
   const [loginLoading, setLoginLoading] = useState(false);
+
+  // Check for unsynced covert sessions on user login
+  useEffect(() => {
+    if (currentUser) {
+      getUnmergedCovertSessions().then((sessions) => {
+        if (sessions && sessions.length > 0) {
+          setPendingCovertSessions(sessions);
+          setShowCovertMergeModal(true);
+        }
+      });
+    }
+  }, [currentUser]);
 
   const handleInitialLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,6 +125,42 @@ export default function Home() {
     } finally {
       setLoginLoading(false);
     }
+  };
+
+  const handleAcceptCovertMerge = async () => {
+    if (pendingCovertSessions.length === 0) return;
+    const sessionToMerge = pendingCovertSessions[0];
+
+    const notesSummary = sessionToMerge.notes
+      .map((n, i) => `[Note ${i + 1} @ ${new Date(n.deviceTimestamp).toLocaleTimeString()}]: ${n.text}`)
+      .join("\n");
+
+    const syncedAt = new Date().toISOString();
+
+    setFlowType(selectedMergeFlow);
+    setProfile(prev => ({
+      ...prev,
+      rawEvidenceText: notesSummary,
+      covertSessionId: sessionToMerge.id,
+      covertNotes: sessionToMerge.notes,
+      covertSyncedAt: syncedAt,
+      scamCategory: selectedMergeFlow === "digital_arrest" ? "DIGITAL_ARREST" : "UPI_PHISHING"
+    }));
+
+    // Clear IndexedDB session
+    await clearCovertSession(sessionToMerge.id);
+    setShowCovertMergeModal(false);
+    setPendingCovertSessions([]);
+    setCurrentStep(1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleDismissCovertMerge = async () => {
+    if (pendingCovertSessions.length > 0) {
+      await clearCovertSession(pendingCovertSessions[0].id);
+    }
+    setShowCovertMergeModal(false);
+    setPendingCovertSessions([]);
   };
 
   // Re-calculate audit report & Auto-save to Local Database
@@ -197,72 +256,95 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 font-sans">
-      {/* Emergency Sticky Header */}
-      <Header
-        language={language}
-        onLanguageChange={setLanguage}
-        flowType={flowType}
-        currentStep={currentStep}
-        onStepClick={(step) => {
-          setIsSubmitted(false);
-          setCurrentStep(step);
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }}
-        transactionTime={profile.transactionTime}
-        currentUser={currentUser}
-        onOpenAuth={() => setShowAuthModal(true)}
-        onOpenSavedCases={() => setShowSavedCasesModal(true)}
-        onLogout={() => setCurrentUser(null)}
-      />
+    <>
+      {/* === CASE 0: DISGUISED PWA PUBLIC FRONT-DOOR (CALCULATOR) === */}
+      {isCalculatorView && !currentUser ? (
+        <DisguisedCalculator
+          onUnlockNormalApp={() => setIsCalculatorView(false)}
+        />
+      ) : (
+        <main className="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 font-sans">
+          {/* Emergency Sticky Header */}
+          <Header
+            language={language}
+            onLanguageChange={setLanguage}
+            flowType={flowType}
+            currentStep={currentStep}
+            onStepClick={(step) => {
+              setIsSubmitted(false);
+              setCurrentStep(step);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            transactionTime={profile.transactionTime}
+            currentUser={currentUser}
+            onOpenAuth={() => setShowAuthModal(true)}
+            onOpenSavedCases={() => setShowSavedCasesModal(true)}
+            onLogout={() => {
+              setCurrentUser(null);
+              setIsCalculatorView(true);
+            }}
+          />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1">
-        {/* === CASE A: NOT LOGGED IN -> REQUIRE SIGN IN FIRST === */}
-        {!currentUser ? (
-          <div className="py-12 flex flex-col items-center justify-center animate-in fade-in">
-            <div className="bg-white border border-slate-200 rounded-3xl shadow-xl max-w-lg w-full p-8 sm:p-10 relative">
-              <div className="text-center mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center mx-auto mb-4 shadow-xs">
-                  <Shield className="w-7 h-7" />
-                </div>
-                <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-                  Sign in to CyberRakshak 1930
-                </h1>
-                <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                  Access your secure dashboard to file cyber incidents, generate freeze notices, and manage cases.
-                </p>
-              </div>
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1">
+            {/* === CASE A: NOT LOGGED IN -> REQUIRE SIGN IN FIRST === */}
+            {!currentUser ? (
+              <div className="py-12 flex flex-col items-center justify-center animate-in fade-in">
+                <div className="bg-white border border-slate-200 rounded-3xl shadow-xl max-w-lg w-full p-8 sm:p-10 relative">
+                  {/* Discreet switch back to calculator */}
+                  <div className="flex justify-end mb-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsCalculatorView(true)}
+                      className="text-[11px] text-slate-400 hover:text-slate-600 flex items-center gap-1 font-medium"
+                      title="Return to disguised calculator mode"
+                    >
+                      <EyeOff className="w-3.5 h-3.5" />
+                      <span>Calculator View</span>
+                    </button>
+                  </div>
 
-              {/* Demo Credentials Box */}
-              <div className="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 mb-6 text-xs text-slate-700">
-                <div className="flex items-center justify-between font-bold text-indigo-900 mb-2">
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-indigo-600" />
-                    Demo Credentials Ready
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLoginPhone("9999999999");
-                      setLoginPassword("password123");
-                      setLoginError(null);
-                    }}
-                    className="text-xs text-indigo-600 hover:text-indigo-800 font-bold underline"
-                  >
-                    Auto-Fill
-                  </button>
-                </div>
-                <div className="text-xs text-slate-600 grid grid-cols-2 gap-2 bg-white/80 p-2.5 rounded-xl border border-indigo-100/60">
-                  <div>
-                    <span className="text-[10px] text-slate-400 block uppercase">Phone</span>
-                    <strong className="text-slate-900 font-mono">9999999999</strong>
+                  <div className="text-center mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center mx-auto mb-4 shadow-xs">
+                      <Shield className="w-7 h-7" />
+                    </div>
+                    <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+                      Sign in to CyberRakshak 1930
+                    </h1>
+                    <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                      Access your secure dashboard to file cyber incidents, generate freeze notices, and manage cases.
+                    </p>
                   </div>
-                  <div>
-                    <span className="text-[10px] text-slate-400 block uppercase">Password</span>
-                    <strong className="text-slate-900 font-mono">password123</strong>
+
+                  {/* Demo Credentials Box */}
+                  <div className="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 mb-6 text-xs text-slate-700">
+                    <div className="flex items-center justify-between font-bold text-indigo-900 mb-2">
+                      <span className="flex items-center gap-1.5">
+                        <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+                        Demo Credentials Ready
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setLoginPhone("9999999999");
+                          setLoginPassword("password123");
+                          setLoginError(null);
+                        }}
+                        className="text-xs text-indigo-600 hover:text-indigo-800 font-bold underline"
+                      >
+                        Auto-Fill
+                      </button>
+                    </div>
+                    <div className="text-xs text-slate-600 grid grid-cols-2 gap-2 bg-white/80 p-2.5 rounded-xl border border-indigo-100/60">
+                      <div>
+                        <span className="text-[10px] text-slate-400 block uppercase">Phone</span>
+                        <strong className="text-slate-900 font-mono">9999999999</strong>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-slate-400 block uppercase">Password</span>
+                        <strong className="text-slate-900 font-mono">password123</strong>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
               {loginError && (
                 <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs">
@@ -619,6 +701,104 @@ export default function Home() {
         </div>
       )}
 
+      {/* Covert Session Post-Crisis Merge Modal */}
+      {showCovertMergeModal && pendingCovertSessions.length > 0 && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in"
+          onClick={() => setShowCovertMergeModal(false)}
+        >
+          <div
+            className="bg-white text-slate-800 border border-slate-200 rounded-3xl shadow-2xl max-w-lg w-full p-6 sm:p-7 max-h-[85vh] flex flex-col font-sans"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3 pb-3 border-b border-slate-100 mb-4">
+              <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold">
+                <FileText className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-900">
+                  Unsaved Covert Notes Found
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Notes captured on this device on {new Date(pendingCovertSessions[0].startedAt).toLocaleString("en-IN")}
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4 text-xs text-slate-600 mb-6">
+              <p className="leading-relaxed">
+                We found <strong>{pendingCovertSessions[0].notes.length} note(s)</strong> captured during a covert session on this device. Would you like to start a case from them?
+              </p>
+
+              {/* Notes Preview Box */}
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 max-h-40 overflow-y-auto space-y-2 font-mono text-[11px]">
+                {pendingCovertSessions[0].notes.map((note, idx) => (
+                  <div key={note.id} className="pb-1.5 border-b border-slate-200/60 last:border-none last:pb-0">
+                    <div className="text-[10px] text-slate-400 font-sans">
+                      Note #{idx + 1} • {new Date(note.deviceTimestamp).toLocaleTimeString()} (Device Timestamp)
+                    </div>
+                    <div className="text-slate-800 font-bold mt-0.5">{note.text}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Flow Selector */}
+              <div>
+                <label className="font-bold text-slate-700 block mb-1.5">
+                  Select Incident Flow to Open:
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedMergeFlow("digital_arrest")}
+                    className={`p-2.5 rounded-xl border text-xs font-bold text-left transition-all ${
+                      selectedMergeFlow === "digital_arrest"
+                        ? "bg-indigo-50/80 border-indigo-500 text-indigo-950 shadow-xs"
+                        : "bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300"
+                    }`}
+                  >
+                    <span className="block font-bold">Digital Arrest (Default)</span>
+                    <span className="text-[10px] text-slate-500 font-normal">Fake video calls & extortion</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedMergeFlow("financial_fraud")}
+                    className={`p-2.5 rounded-xl border text-xs font-bold text-left transition-all ${
+                      selectedMergeFlow === "financial_fraud"
+                        ? "bg-indigo-50/80 border-indigo-500 text-indigo-950 shadow-xs"
+                        : "bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300"
+                    }`}
+                  >
+                    <span className="block font-bold">Financial Cyber Theft</span>
+                    <span className="text-[10px] text-slate-500 font-normal">UPI, bank, card fraud</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+              <button
+                type="button"
+                onClick={handleDismissCovertMerge}
+                className="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800"
+              >
+                Discard Notes
+              </button>
+              <button
+                type="button"
+                onClick={handleAcceptCovertMerge}
+                className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs transition-all active:scale-95 flex items-center gap-1.5"
+              >
+                <span>Import & Start Case</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Account Login Modal */}
       <AuthModal
         isOpen={showAuthModal}
@@ -638,5 +818,7 @@ export default function Home() {
         />
       )}
     </main>
+      )}
+    </>
   );
 }

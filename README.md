@@ -1,4 +1,4 @@
-﻿# 🛡️ CyberRakshak 1930 — Citizen Cyber Defense Terminal
+# 🛡️ CyberRakshak 1930 — Citizen Cyber Defense Terminal
 
 An on-device, zero-form emergency cyber fraud response & statutory legal action copilot for **Helpline 1930** and **cybercrime.gov.in**.
 
@@ -38,6 +38,21 @@ npm test
 npm run build
 npm run start
 ```
+
+---
+
+## 📱 Covert Help Mode & PWA Disguise
+
+CyberRakshak 1930 features an unauthenticated **Covert Help Mode** designed for single-device emergency situations (e.g. an active Digital Arrest extortion call):
+
+- **Disguised PWA Front-Door**: The application manifests as a fully functional, standard phone **Calculator** in standalone display mode (hiding browser address bars when added to the home screen).
+- **Silent Unlock Sequence**: Typing **`1930`** followed by **`=`** secretly activates the offline covert note-logging vault without visual UI alterations.
+- **Sub-10s Quick Note Capture**: Tap `M+` or the discreet indicator to quickly log numbers, caller handles, or amounts into offline **IndexedDB** with local device timestamps (zero network calls during the call).
+- **Access Normal App**: Press and hold the **`C`** (Clear) button for **2 seconds** to navigate to the normal phone + password login screen.
+- **Post-Crisis Merge**: On subsequent normal login, the app automatically detects unsynced covert notes and offers a 1-click import into a new case draft with honest evidentiary labeling (original device timestamps + server sync time).
+
+> [!CAUTION]
+> **Remote-Access Advisory**: If the scammer has coerced the victim into installing screen-sharing software (*AnyDesk, TeamViewer, QuickSupport, RustDesk*), they can view the victim's screen in real time. In such situations, victims must **not** use the infected device to seek help, and should instead use a secondary device or alert someone nearby.
 
 ---
 

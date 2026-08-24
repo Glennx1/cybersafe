@@ -40,6 +40,11 @@ export interface IncidentProfile {
   extortionDemandAmount?: number;
   forgeryConfidence?: number;
   forgeryFlags?: string[];
+
+  // Covert Capture Metadata
+  covertSessionId?: string;
+  covertNotes?: Array<{ text: string; deviceTimestamp: string }>;
+  covertSyncedAt?: string;
 }
 
 export interface ForensicVector {
