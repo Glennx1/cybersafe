@@ -13,12 +13,14 @@ export interface CovertSession {
   id: string;
   startedAt: string; // ISO string from local device clock
   notes: CovertNote[];
+  audioBlob?: Blob;
+  audioDurationSeconds?: number;
   status: 'ACTIVE' | 'MERGED';
 }
 
 const DB_NAME = 'cybersafe_covert_vault';
 const STORE_NAME = 'covert_sessions';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 function openCovertDb(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -111,7 +113,40 @@ export async function appendCovertNote(text: string): Promise<CovertSession> {
 }
 
 /**
- * Checks if there are any unmerged active covert sessions.
+ * Saves a recorded audio blob to the active covert session in IndexedDB.
+ */
+export async function saveCovertAudioBlob(blob: Blob, durationSeconds: number): Promise<CovertSession> {
+  const db = await openCovertDb();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+    const getAllReq = store.getAll();
+
+    getAllReq.onsuccess = () => {
+      const all: CovertSession[] = getAllReq.result || [];
+      let active = all.find((s) => s.status === 'ACTIVE');
+
+      if (!active) {
+        active = {
+          id: `COVERT-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+          startedAt: new Date().toISOString(),
+          notes: [],
+          status: 'ACTIVE'
+        };
+      }
+
+      active.audioBlob = blob;
+      active.audioDurationSeconds = durationSeconds;
+      store.put(active);
+      resolve(active);
+    };
+
+    getAllReq.onerror = () => reject(getAllReq.error);
+  });
+}
+
+/**
+ * Checks if there are any unmerged active covert sessions (with notes or audio).
  */
 export async function getUnmergedCovertSessions(): Promise<CovertSession[]> {
   try {
@@ -123,7 +158,9 @@ export async function getUnmergedCovertSessions(): Promise<CovertSession[]> {
 
       getAllReq.onsuccess = () => {
         const all: CovertSession[] = getAllReq.result || [];
-        const unmerged = all.filter((s) => s.status === 'ACTIVE' && s.notes.length > 0);
+        const unmerged = all.filter(
+          (s) => s.status === 'ACTIVE' && (s.notes.length > 0 || !!s.audioBlob)
+        );
         resolve(unmerged);
       };
 

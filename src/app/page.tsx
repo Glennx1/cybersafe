@@ -13,7 +13,7 @@ import { IncidentTracker } from "@/components/IncidentTracker";
 import { EmergencyVoiceGuide } from "@/components/EmergencyVoiceGuide";
 import { AuthModal } from "@/components/AuthModal";
 import { SavedCasesModal } from "@/components/SavedCasesModal";
-import { DisguisedCalculator } from "@/components/DisguisedCalculator";
+import { LiveCaptureOverlay } from "@/components/LiveCaptureOverlay";
 import { getUnmergedCovertSessions, clearCovertSession, CovertSession } from "@/lib/covertStore";
 import { UserSessionRecord } from "@/lib/db";
 import {
@@ -25,7 +25,7 @@ import {
 } from "@/lib/types";
 import { runForensicAudit, generateDispatchPayload } from "@/lib/forensicEngine";
 import { generateBankFreezePdf, generatePoliceFirPdf, generateMagistratePetitionPdf, generateDigitalArrestFirPdf } from "@/lib/pdfGenerator";
-import { Shield, Sparkles, Code2, X, Zap, ShieldAlert, CheckCircle2, ArrowRight, Radio, EyeOff, FileText } from "lucide-react";
+import { Shield, Sparkles, Code2, X, Zap, ShieldAlert, CheckCircle2, ArrowRight, Radio, EyeOff, FileText, Mic, AlertCircle } from "lucide-react";
 import confetti from "canvas-confetti";
 
 export default function Home() {
@@ -57,8 +57,8 @@ export default function Home() {
   // Authenticated User State (starts as null)
   const [currentUser, setCurrentUser] = useState<{ id: string; phone: string; name: string } | null>(null);
 
-  // Covert Calculator Mode overlay control (defaults to false so real site loads first)
-  const [showCalculatorOverlay, setShowCalculatorOverlay] = useState(false);
+  // Live Emergency Audio & Quick Note Capture Overlay control
+  const [showLiveCaptureOverlay, setShowLiveCaptureOverlay] = useState(false);
 
   // Unmerged Covert Notes detected on login
   const [pendingCovertSessions, setPendingCovertSessions] = useState<CovertSession[]>([]);
@@ -134,12 +134,18 @@ export default function Home() {
       .map((n, i) => `[Note ${i + 1} @ ${new Date(n.deviceTimestamp).toLocaleTimeString()}]: ${n.text}`)
       .join("\n");
 
+    const audioNotice = sessionToMerge.audioBlob
+      ? `\n[Live Emergency Audio Recording Attached: ${sessionToMerge.audioDurationSeconds || 0}s duration]`
+      : "";
+
+    const fullEvidenceText = `${notesSummary}${audioNotice}`.trim();
     const syncedAt = new Date().toISOString();
 
     setFlowType(selectedMergeFlow);
     setProfile(prev => ({
       ...prev,
-      rawEvidenceText: notesSummary,
+      rawEvidenceText: fullEvidenceText,
+      evidenceFileName: sessionToMerge.audioBlob ? `Live_Scam_Recording_${sessionToMerge.id}.webm` : prev.evidenceFileName,
       covertSessionId: sessionToMerge.id,
       covertNotes: sessionToMerge.notes,
       covertSyncedAt: syncedAt,
@@ -794,48 +800,45 @@ export default function Home() {
         />
       )}
 
-      {/* Discreet Floating Action Button (Bottom-Right, subtle icon) */}
-      {!showCalculatorOverlay && (
-        <div className="fixed bottom-5 right-5 z-40">
+      {/* Floating Action: 'Being scammed right now? Record live.' */}
+      {!showLiveCaptureOverlay && (
+        <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-2 animate-in fade-in">
+          {/* Unobtrusive Calm Pill Label */}
+          {!currentUser && (
+            <button
+              type="button"
+              onClick={() => setShowLiveCaptureOverlay(true)}
+              className="bg-white/95 hover:bg-white text-slate-800 border border-slate-200/90 shadow-md px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 backdrop-blur-xs group"
+            >
+              <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping shrink-0" />
+              <span>Being scammed right now? <strong className="text-indigo-600 group-hover:underline">Record live</strong></span>
+            </button>
+          )}
+
+          {/* Floating Live Capture Trigger Button */}
           <button
             type="button"
-            onClick={() => setShowCalculatorOverlay(true)}
-            className="w-10 h-10 rounded-full bg-slate-800/80 hover:bg-slate-900 text-slate-300 hover:text-white shadow-lg border border-slate-700/60 flex items-center justify-center transition-all hover:scale-105 active:scale-95 backdrop-blur-xs"
-            title="Discreet Utility"
-            aria-label="Quick Utility"
+            onClick={() => setShowLiveCaptureOverlay(true)}
+            className="h-12 px-4 rounded-full bg-slate-900 hover:bg-slate-800 text-white shadow-xl border border-slate-700/80 flex items-center gap-2 transition-all hover:scale-105 active:scale-95 backdrop-blur-xs group"
+            title="Start live emergency recording & quick evidence capture"
+            aria-label="Record live scam call"
           >
-            {/* Subtle generic grid / calc icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="opacity-70"
-            >
-              <rect width="18" height="18" x="3" y="3" rx="2" />
-              <line x1="8" x2="8" y1="3" y2="21" />
-              <line x1="16" x2="16" y1="3" y2="21" />
-              <line x1="3" x2="21" y1="8" y2="8" />
-              <line x1="3" x2="21" y1="16" y2="16" />
-            </svg>
+            <div className="w-3 h-3 rounded-full bg-rose-500 animate-pulse shrink-0" />
+            <Mic className="w-4 h-4 text-rose-400 group-hover:text-rose-300" />
+            <span className="text-xs font-bold font-sans">Record Live</span>
           </button>
         </div>
       )}
 
-      {/* Full-Screen Disguised Calculator Modal Overlay */}
-      {showCalculatorOverlay && (
-        <div className="fixed inset-0 z-50 bg-neutral-950 flex flex-col animate-in fade-in">
-          <DisguisedCalculator
-            onUnlockNormalApp={() => setShowCalculatorOverlay(false)}
-            onClose={() => setShowCalculatorOverlay(false)}
-          />
-        </div>
-      )}
+      {/* Direct-to-Capture Live Recording & Note Vault Modal Overlay */}
+      <LiveCaptureOverlay
+        isOpen={showLiveCaptureOverlay}
+        onClose={() => setShowLiveCaptureOverlay(false)}
+        onNavigateToLogin={() => {
+          setShowLiveCaptureOverlay(false);
+          setShowAuthModal(true);
+        }}
+      />
     </main>
   );
 }

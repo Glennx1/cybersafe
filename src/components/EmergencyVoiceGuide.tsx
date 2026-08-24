@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import { Volume2, VolumeX, Sparkles } from "lucide-react";
@@ -55,13 +55,13 @@ export const EmergencyVoiceGuide: React.FC<EmergencyVoiceGuideProps> = ({
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-40">
+    <div className="fixed bottom-5 left-5 z-40">
       <button
         onClick={handleVoiceSpeak}
-        className={`px-4 py-2.5 rounded-full shadow-2xl border flex items-center gap-2.5 transition-all hover:scale-105 active:scale-95 ${
+        className={`px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-full shadow-xl border flex items-center gap-2 transition-all hover:scale-105 active:scale-95 backdrop-blur-xs ${
           isSpeaking
             ? "bg-rose-600 text-white border-rose-500 ring-4 ring-rose-500/30"
-            : "bg-slate-950 text-white border-slate-800 hover:bg-slate-900"
+            : "bg-slate-900/90 text-white border-slate-700/80 hover:bg-slate-900"
         }`}
         title="Listen to Vernacular Audio Guidance"
       >
