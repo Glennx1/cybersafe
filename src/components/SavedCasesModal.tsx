@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { X, FolderClock, ArrowRight, ShieldAlert, Zap, Calendar, CheckCircle2, FileText, Download } from "lucide-react";
 import { UserSessionRecord } from "@/lib/db";
 import { generateBankFreezePdf, generatePoliceFirPdf, generateMagistratePetitionPdf, generateDigitalArrestFirPdf } from "@/lib/pdfGenerator";
+import { CaseLedgerBadge } from "./CaseLedgerBadge";
 
 interface SavedCasesModalProps {
   isOpen: boolean;
@@ -105,13 +106,16 @@ export const SavedCasesModal: React.FC<SavedCasesModalProps> = ({
                       </div>
                     </div>
 
-                    <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
-                      sess.status === "DISPATCHED"
-                        ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                        : "bg-indigo-50 text-indigo-700 border-indigo-200"
-                    }`}>
-                      {sess.status === "DISPATCHED" ? "Dispatched" : "Saved Draft"}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <CaseLedgerBadge caseId={sess.id} />
+                      <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
+                        sess.status === "DISPATCHED"
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                          : "bg-indigo-50 text-indigo-700 border-indigo-200"
+                      }`}>
+                        {sess.status === "DISPATCHED" ? "Dispatched" : "Saved Draft"}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { CheckCircle2, Loader2, RefreshCw, Shield, ArrowRight, Building, Lock, FileText, Check } from "lucide-react";
 import { DispatchPayload, IncidentProfile } from "@/lib/types";
+import { CaseLedgerBadge } from "./CaseLedgerBadge";
 
 interface IncidentTrackerProps {
   payload: DispatchPayload | null;
@@ -71,9 +72,12 @@ export const IncidentTracker: React.FC<IncidentTrackerProps> = ({
             <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
               Incident Status & Account Freeze Progress
             </h2>
-            <p className="text-xs text-slate-500 mt-1">
-              Case ID: <strong className="font-mono text-slate-800">{profile.id}</strong> • Transaction UTR: <strong className="font-mono text-slate-800">{profile.utrNumber || "N/A"}</strong>
-            </p>
+            <div className="flex flex-wrap items-center gap-2 mt-1.5">
+              <p className="text-xs text-slate-500">
+                Case ID: <strong className="font-mono text-slate-800">{profile.id}</strong> • Transaction UTR: <strong className="font-mono text-slate-800">{profile.utrNumber || "N/A"}</strong>
+              </p>
+              <CaseLedgerBadge caseId={profile.id} />
+            </div>
           </div>
 
           <div className="bg-slate-50 p-3 sm:px-4 sm:py-2.5 rounded-2xl border border-slate-200 text-left sm:text-right shrink-0">

@@ -6,6 +6,13 @@
       "password": "password123",
       "name": "Citizen Demo User",
       "createdAt": "2026-08-23T17:01:46.194Z"
+    },
+    {
+      "id": "USR-1787507935222-680",
+      "phone": "123456789",
+      "password": "123",
+      "name": "cha cha",
+      "createdAt": "2026-08-23T17:58:55.222Z"
     }
   ],
   "sessions": [
@@ -385,7 +392,7 @@
     },
     {
       "id": "INC-1787505313358",
-      "userId": "USR-DEFAULT-001",
+      "userId": "USR-1787507935222-680",
       "flowType": "financial_fraud",
       "profile": {
         "id": "INC-1787505313358",
@@ -418,7 +425,7 @@
       "auditReport": {
         "overallCompletenessScore": 100,
         "isGoldenHourValid": true,
-        "minutesElapsed": 42,
+        "minutesElapsed": 43,
         "rbiZeroLiabilityEligible": true,
         "rbiRuleCitation": "RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18",
         "applicableBnsSections": [
@@ -444,7 +451,7 @@
             "label": "Golden 2-Hour Recovery Window",
             "score": 100,
             "status": "PASSED",
-            "details": "Incident reported within Golden Window (42 mins ago). High Fund Lock Probability (>80%).",
+            "details": "Incident reported within Golden Window (43 mins ago). High Fund Lock Probability (>80%).",
             "iconName": "Clock"
           },
           {
@@ -471,18 +478,18 @@
         ]
       },
       "payload": {
-        "ackToken": "I4C-NCRP-2026-FFB25B",
-        "timestamp": "2026-08-23T17:57:48.292Z",
-        "helplineReference": "1930-TICKET-823141",
+        "ackToken": "I4C-NCRP-2026-4DFFE4",
+        "timestamp": "2026-08-23T17:58:55.229Z",
+        "helplineReference": "1930-TICKET-305072",
         "i4cNodeTarget": "NATIONAL_CYBER_CRIME_REPORTING_PORTAL_SANDBOX_V2",
         "utrChecksum": "SHA256:345678901234-VERIFIED",
-        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-FFB25B",
+        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-4DFFE4",
         "status": "SUBMITTED"
       },
       "isSubmitted": false,
       "status": "AUDITED",
       "createdAt": "2026-08-23T17:15:15.175Z",
-      "updatedAt": "2026-08-23T17:57:48.319Z"
+      "updatedAt": "2026-08-23T17:58:55.389Z"
     }
   ]
 }

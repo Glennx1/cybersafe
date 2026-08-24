@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { IncidentProfile, ForensicAuditReport, DispatchPayload, FlowType } from './types';
 
 export interface User {
@@ -8,6 +9,23 @@ export interface User {
   password: string; // Stored securely
   name: string;
   createdAt: string;
+}
+
+export type LedgerEventType = 
+  | 'case_created' 
+  | 'case_updated' 
+  | 'evidence_uploaded' 
+  | 'status_changed' 
+  | 'document_generated';
+
+export interface CaseLedgerEntry {
+  caseId: string;
+  sequenceNumber: number;
+  timestamp: string; // Server-generated ISO string
+  eventType: LedgerEventType;
+  payloadHash: string; // SHA-256 of the event's data
+  previousEntryHash: string;
+  entryHash: string; // SHA-256 of (previousEntryHash + eventType + payloadHash + timestamp)
 }
 
 export interface UserSessionRecord {
@@ -27,10 +45,28 @@ export interface UserSessionRecord {
 interface DatabaseSchema {
   users: User[];
   sessions: UserSessionRecord[];
+  ledger?: Record<string, CaseLedgerEntry[]>;
 }
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const DB_FILE = path.join(DATA_DIR, 'cybersafe_db.json');
+
+export function computeSha256(data: string | object): string {
+  const content = typeof data === 'string' ? data : JSON.stringify(data);
+  return crypto.createHash('sha256').update(content).digest('hex');
+}
+
+export function computeEntryHash(
+  previousEntryHash: string,
+  eventType: LedgerEventType,
+  payloadHash: string,
+  timestamp: string
+): string {
+  return crypto
+    .createHash('sha256')
+    .update(`${previousEntryHash}:${eventType}:${payloadHash}:${timestamp}`)
+    .digest('hex');
+}
 
 // Ensure data directory exists
 function ensureDb() {
@@ -49,7 +85,8 @@ function ensureDb() {
           createdAt: new Date().toISOString()
         }
       ],
-      sessions: []
+      sessions: [],
+      ledger: {}
     };
     fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
   }
@@ -59,18 +96,111 @@ function readDb(): DatabaseSchema {
   ensureDb();
   try {
     const data = fs.readFileSync(DB_FILE, 'utf-8');
-    return JSON.parse(data);
+    const parsed: DatabaseSchema = JSON.parse(data);
+    if (!parsed.ledger) {
+      parsed.ledger = {};
+    }
+    return parsed;
   } catch (e) {
     console.error('Error reading database file, recreating:', e);
     ensureDb();
     const data = fs.readFileSync(DB_FILE, 'utf-8');
-    return JSON.parse(data);
+    const parsed: DatabaseSchema = JSON.parse(data);
+    if (!parsed.ledger) {
+      parsed.ledger = {};
+    }
+    return parsed;
   }
 }
 
 function writeDb(data: DatabaseSchema) {
   ensureDb();
   fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+}
+
+// Ledger Append & Verification Functions
+export function getLedgerByCaseId(caseId: string): CaseLedgerEntry[] {
+  const db = readDb();
+  return db.ledger?.[caseId] || [];
+}
+
+export function appendLedgerEntry(
+  caseId: string,
+  eventType: LedgerEventType,
+  eventData: any
+): CaseLedgerEntry {
+  const db = readDb();
+  if (!db.ledger) {
+    db.ledger = {};
+  }
+  if (!db.ledger[caseId]) {
+    db.ledger[caseId] = [];
+  }
+
+  const chain = db.ledger[caseId];
+  const sequenceNumber = chain.length;
+  const timestamp = new Date().toISOString(); // Server-generated
+  const payloadHash = computeSha256(eventData);
+  const previousEntryHash = sequenceNumber === 0 
+    ? '0000000000000000000000000000000000000000000000000000000000000000' 
+    : chain[sequenceNumber - 1].entryHash;
+
+  const entryHash = computeEntryHash(previousEntryHash, eventType, payloadHash, timestamp);
+
+  const newEntry: CaseLedgerEntry = {
+    caseId,
+    sequenceNumber,
+    timestamp,
+    eventType,
+    payloadHash,
+    previousEntryHash,
+    entryHash
+  };
+
+  chain.push(newEntry);
+  writeDb(db);
+  return newEntry;
+}
+
+export function verifyLedger(caseId: string): { valid: boolean; brokenAtSequence?: number; count: number; reason?: string } {
+  const db = readDb();
+  const chain = db.ledger?.[caseId] || [];
+
+  if (chain.length === 0) {
+    return { valid: true, count: 0 };
+  }
+
+  let expectedPrevHash = '0000000000000000000000000000000000000000000000000000000000000000';
+
+  for (let i = 0; i < chain.length; i++) {
+    const entry = chain[i];
+
+    // Check sequence alignment
+    if (entry.sequenceNumber !== i) {
+      return { valid: false, brokenAtSequence: i, count: chain.length, reason: `Sequence gap at index ${i}` };
+    }
+
+    // Check previous hash link
+    if (entry.previousEntryHash !== expectedPrevHash) {
+      return { valid: false, brokenAtSequence: i, count: chain.length, reason: `Previous hash mismatch at sequence ${i}` };
+    }
+
+    // Recompute entry hash
+    const recomputedHash = computeEntryHash(
+      entry.previousEntryHash,
+      entry.eventType,
+      entry.payloadHash,
+      entry.timestamp
+    );
+
+    if (entry.entryHash !== recomputedHash) {
+      return { valid: false, brokenAtSequence: i, count: chain.length, reason: `Cryptographic hash validation failed at sequence ${i}` };
+    }
+
+    expectedPrevHash = entry.entryHash;
+  }
+
+  return { valid: true, count: chain.length };
 }
 
 // User CRUD
@@ -141,6 +271,9 @@ export function saveUserSession(sessionData: {
 
   if (existingIndex >= 0) {
     const existing = db.sessions[existingIndex];
+    const isStatusChanged = existing.status !== status;
+    const isEvidenceAdded = !existing.profile?.evidenceHash && !!sessionData.profile?.evidenceHash;
+
     const updated: UserSessionRecord = {
       ...existing,
       ...sessionData,
@@ -151,6 +284,22 @@ export function saveUserSession(sessionData: {
     };
     db.sessions[existingIndex] = updated;
     writeDb(db);
+
+    // Determine eventType for audit ledger
+    let eventType: LedgerEventType = 'case_updated';
+    if (isStatusChanged) {
+      eventType = 'status_changed';
+    } else if (isEvidenceAdded) {
+      eventType = 'evidence_uploaded';
+    }
+
+    appendLedgerEntry(sessionData.id, eventType, {
+      profile: sessionData.profile,
+      status,
+      isSubmitted: updated.isSubmitted,
+      auditCompletenessScore: sessionData.auditReport?.overallCompletenessScore
+    });
+
     return updated;
   } else {
     const newSession: UserSessionRecord = {
@@ -168,6 +317,17 @@ export function saveUserSession(sessionData: {
     };
     db.sessions.push(newSession);
     writeDb(db);
+
+    // Append initial genesis creation block to audit ledger
+    appendLedgerEntry(sessionData.id, 'case_created', {
+      userId: sessionData.userId,
+      flowType: sessionData.flowType,
+      profile: sessionData.profile,
+      status,
+      createdAt: now
+    });
+
     return newSession;
   }
 }
+
