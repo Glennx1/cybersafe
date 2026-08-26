@@ -189,10 +189,11 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
+            <label htmlFor="impersonated-agency-select" className="text-slate-600 font-medium block mb-1 cursor-pointer">
               Impersonated Agency
             </label>
             <select
+              id="impersonated-agency-select"
               value={profile.impersonatedAgency || "Central Bureau of Investigation (CBI)"}
               onChange={(e) => onProfileChange({ ...profile, impersonatedAgency: e.target.value })}
               className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-hidden focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
@@ -207,10 +208,11 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
+            <label htmlFor="caller-id-input" className="text-slate-600 font-medium block mb-1 cursor-pointer">
               Caller ID / WhatsApp / Skype Handle
             </label>
             <input
+              id="caller-id-input"
               type="text"
               placeholder="e.g. +91 98765 43210"
               value={profile.scammerCallerId || ""}
@@ -220,10 +222,11 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
+            <label htmlFor="extortion-amount-input" className="text-slate-600 font-medium block mb-1 cursor-pointer">
               Extortion Demand Amount (₹)
             </label>
             <input
+              id="extortion-amount-input"
               type="number"
               placeholder="e.g. 250000"
               value={profile.extortionDemandAmount || profile.fraudAmount || 250000}

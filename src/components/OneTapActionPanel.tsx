@@ -347,19 +347,20 @@ PRAYER:
           </div>
         </div>
 
-        {/* Fallback box if no mail client opens */}
+          {/* Fallback box if no mail client opens */}
         {showEmailFallback && (
-          <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-2 animate-in fade-in">
+          <div role="alert" className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-2 animate-in fade-in">
             <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" aria-hidden="true" />
               <span>No default mail app opened? Copy the official fraud-desk email: <strong className="font-mono">{fraudDeskEmail}</strong></span>
             </div>
             <button
               type="button"
               onClick={handleCopyBankEmail}
+              aria-label="Copy bank fraud desk email address"
               className="px-3 py-1 bg-amber-200 hover:bg-amber-300 text-amber-950 font-bold rounded-lg text-xs flex items-center justify-center gap-1 shrink-0"
             >
-              {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-700" aria-hidden="true" /> : <Copy className="w-3.5 h-3.5" aria-hidden="true" />}
               <span>{copiedEmail ? "Email Copied!" : "Copy Email"}</span>
             </button>
           </div>
@@ -371,7 +372,7 @@ PRAYER:
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shadow-xs shrink-0 mt-0.5">
-              <FileText className="w-5 h-5" />
+              <FileText className="w-5 h-5" aria-hidden="true" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -389,17 +390,18 @@ PRAYER:
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0" aria-live="polite">
             <button
               type="button"
               onClick={handleCopyNcrp}
+              aria-label="Copy legal complaint statement to clipboard"
               className={`px-5 py-3.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 ${
                 copiedNcrpStatement
                   ? "bg-emerald-600 text-white"
                   : "bg-slate-900 hover:bg-slate-800 text-white"
               }`}
             >
-              {copiedNcrpStatement ? <Check className="w-4 h-4 text-emerald-200" /> : <Copy className="w-4 h-4" />}
+              {copiedNcrpStatement ? <Check className="w-4 h-4 text-emerald-200" aria-hidden="true" /> : <Copy className="w-4 h-4" aria-hidden="true" />}
               <span>{copiedNcrpStatement ? "Statement Copied!" : "1. Copy Statement"}</span>
             </button>
 
@@ -410,7 +412,7 @@ PRAYER:
               className="px-5 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-95"
             >
               <span>2. Open cybercrime.gov.in</span>
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-4 h-4" aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -420,19 +422,19 @@ PRAYER:
       <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 hover:border-slate-300 transition-all">
         <div className="flex items-center gap-2 mb-3">
           <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs">
-            <Share2 className="w-4 h-4" />
+            <Share2 className="w-4 h-4" aria-hidden="true" />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-slate-900">
+            <h3 className="text-xs font-bold text-slate-900">
               One-Tap WhatsApp & Document Share (To Family, Lawyer, Police Contact)
-            </h4>
+            </h3>
             <p className="text-[11px] text-slate-500">
               Directly share digitally generated legal evidence PDFs without saving to disk first.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1" aria-live="polite">
           {/* Doc 1: Bank Lien Notice */}
           <div className="p-3 bg-white rounded-xl border border-slate-200 flex flex-col justify-between">
             <div className="mb-2">
@@ -444,18 +446,20 @@ PRAYER:
                 type="button"
                 onClick={() => handleShareDoc("freeze")}
                 disabled={sharingDoc === "freeze"}
+                aria-label="Share Bank Freeze Notice via WhatsApp"
                 className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
               >
-                <Share2 className="w-3.5 h-3.5" />
+                <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{shareSuccess === "freeze" ? "Shared!" : "Share via WhatsApp"}</span>
               </button>
               <button
                 type="button"
                 onClick={() => generateBankFreezePdf(profile, auditReport)}
+                aria-label="Download Bank Freeze Notice PDF"
                 className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg"
                 title="Download PDF"
               >
-                <Download className="w-3.5 h-3.5" />
+                <Download className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -471,18 +475,20 @@ PRAYER:
                 type="button"
                 onClick={() => handleShareDoc("fir")}
                 disabled={sharingDoc === "fir"}
+                aria-label="Share Police FIR Dossier via WhatsApp"
                 className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
               >
-                <Share2 className="w-3.5 h-3.5" />
+                <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{shareSuccess === "fir" ? "Shared!" : "Share via WhatsApp"}</span>
               </button>
               <button
                 type="button"
                 onClick={() => generatePoliceFirPdf(profile, auditReport)}
+                aria-label="Download Police FIR Dossier PDF"
                 className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg"
                 title="Download PDF"
               >
-                <Download className="w-3.5 h-3.5" />
+                <Download className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -498,18 +504,20 @@ PRAYER:
                 type="button"
                 onClick={() => handleShareDoc("court")}
                 disabled={sharingDoc === "court"}
+                aria-label="Share Court Refund Petition via WhatsApp"
                 className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
               >
-                <Share2 className="w-3.5 h-3.5" />
+                <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{shareSuccess === "court" ? "Shared!" : "Share via WhatsApp"}</span>
               </button>
               <button
                 type="button"
                 onClick={() => generateMagistratePetitionPdf(profile)}
+                aria-label="Download Court Refund Petition PDF"
                 className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg"
                 title="Download PDF"
               >
-                <Download className="w-3.5 h-3.5" />
+                <Download className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -525,18 +533,20 @@ PRAYER:
                 type="button"
                 onClick={() => handleShareDoc("bsa")}
                 disabled={sharingDoc === "bsa"}
+                aria-label="Share Section 63 BSA Certificate via WhatsApp"
                 className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
               >
-                <Share2 className="w-3.5 h-3.5" />
+                <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{shareSuccess === "bsa" ? "Shared!" : "Share via WhatsApp"}</span>
               </button>
               <button
                 type="button"
                 onClick={() => generateSection63BsaCertificatePdf(profile)}
+                aria-label="Download Section 63 BSA Certificate PDF"
                 className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg"
                 title="Download PDF"
               >
-                <Download className="w-3.5 h-3.5" />
+                <Download className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
             </div>
           </div>

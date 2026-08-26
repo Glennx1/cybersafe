@@ -109,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Right: Clean Step Sequence Track */}
-        <div className="flex items-center bg-slate-800/80 p-1 rounded-xl border border-slate-700 text-xs">
+        <nav aria-label="Incident Reporting Steps" className="flex items-center bg-slate-800/80 p-1 rounded-xl border border-slate-700 text-xs">
           {steps.map((step, idx) => {
             const isActive = currentStep === step.num;
             const isCompleted = currentStep > step.num;
@@ -117,7 +117,10 @@ export const Header: React.FC<HeaderProps> = ({
             return (
               <React.Fragment key={step.num}>
                 <button
+                  type="button"
                   onClick={() => onStepClick(step.num)}
+                  aria-current={isActive ? "step" : undefined}
+                  aria-label={`${step.label}${isCompleted ? " (Completed)" : isActive ? " (Current Step)" : ""}`}
                   className={`flex items-center gap-2 px-3 py-1.5 rounded-lg font-semibold transition-all ${
                     isActive
                       ? "bg-indigo-600 text-white shadow-sm"
@@ -127,6 +130,7 @@ export const Header: React.FC<HeaderProps> = ({
                   }`}
                 >
                   <span
+                    aria-hidden="true"
                     className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold ${
                       isCompleted
                         ? "bg-emerald-500 text-slate-950"
@@ -140,12 +144,12 @@ export const Header: React.FC<HeaderProps> = ({
                   <span className="hidden sm:inline text-xs">{step.label}</span>
                 </button>
                 {idx < steps.length - 1 && (
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-600 mx-0.5" />
+                  <ChevronRight aria-hidden="true" className="w-3.5 h-3.5 text-slate-600 mx-0.5" />
                 )}
               </React.Fragment>
             );
           })}
-        </div>
+        </nav>
       </div>
     </header>
   );

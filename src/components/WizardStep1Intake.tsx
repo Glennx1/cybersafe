@@ -193,12 +193,13 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
         <div className="bg-white border border-slate-200 rounded-2xl p-5 flex flex-col justify-between shadow-xs">
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+              <label htmlFor="raw-sms-input" className="text-xs font-bold text-slate-700 flex items-center gap-1.5 cursor-pointer">
                 <FileText className="w-4 h-4 text-indigo-600" />
                 <span>Or Paste SMS / Transaction Text</span>
               </label>
             </div>
             <textarea
+              id="raw-sms-input"
               rows={6}
               value={pastedText}
               onChange={(e) => handlePastedTextChange(e.target.value)}
@@ -207,7 +208,7 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
             />
           </div>
 
-          <div className="pt-3 flex items-center justify-between text-xs text-slate-600 border-t border-slate-100">
+          <div className="pt-3 flex items-center justify-between text-xs text-slate-600 border-t border-slate-100" aria-live="polite">
             <span>UTR: <strong className="text-slate-900 font-bold">{profile.utrNumber || "Not detected"}</strong></span>
             <span>Amount: <strong className="text-emerald-700 font-bold">₹{profile.fraudAmount.toLocaleString("en-IN")}</strong></span>
           </div>
@@ -216,13 +217,13 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
 
       {/* 3. Forensic Entity Manifest */}
       {(profile.serverEvidenceHash || profile.evidenceHash) && (
-        <div className="mb-8 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs animate-in fade-in">
+        <div className="mb-8 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs animate-in fade-in" aria-live="polite">
           <div className="flex items-center justify-between mb-3 pb-2.5 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <Eye className="w-4 h-4 text-indigo-600" />
-              <span className="text-xs font-bold text-slate-800">
+              <h3 className="text-xs font-bold text-slate-800">
                 Extracted Information & Section 63 BSA Hash
-              </span>
+              </h3>
             </div>
             <span className="text-xs bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full border border-emerald-200 font-medium">
               Server Verified
@@ -264,6 +265,7 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
       {/* 4. Bottom Action CTA */}
       <div className="text-center pt-2">
         <button
+          type="button"
           onClick={onNext}
           className="h-12 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm flex items-center gap-2 shadow-sm transition-all mx-auto active:scale-95"
         >

@@ -587,7 +587,7 @@
     {
       "id": "INC-1787563821510",
       "userId": "USR-DEFAULT-001",
-      "flowType": "digital_arrest",
+      "flowType": "financial_fraud",
       "profile": {
         "id": "INC-1787563821510",
         "victimName": "Citizen Demo User",
@@ -611,7 +611,7 @@
       "auditReport": {
         "overallCompletenessScore": 70,
         "isGoldenHourValid": true,
-        "minutesElapsed": 0,
+        "minutesElapsed": 6,
         "rbiZeroLiabilityEligible": true,
         "rbiRuleCitation": "RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18",
         "applicableBnsSections": [
@@ -637,7 +637,7 @@
             "label": "Golden 2-Hour Recovery Window",
             "score": 100,
             "status": "PASSED",
-            "details": "Incident reported within Golden Window (0 mins ago). High Fund Lock Probability (>80%).",
+            "details": "Incident reported within Golden Window (6 mins ago). High Fund Lock Probability (>80%).",
             "iconName": "Clock"
           },
           {
@@ -664,18 +664,18 @@
         ]
       },
       "payload": {
-        "ackToken": "I4C-NCRP-2026-09C574",
-        "timestamp": "2026-08-24T09:30:24.907Z",
-        "helplineReference": "1930-TICKET-729813",
+        "ackToken": "I4C-NCRP-2026-AB2EFC",
+        "timestamp": "2026-08-24T09:37:06.470Z",
+        "helplineReference": "1930-TICKET-316648",
         "i4cNodeTarget": "NATIONAL_CYBER_CRIME_REPORTING_PORTAL_SANDBOX_V2",
         "utrChecksum": "SHA256:-VERIFIED",
-        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-09C574",
+        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-AB2EFC",
         "status": "SUBMITTED"
       },
       "isSubmitted": false,
       "status": "AUDITED",
       "createdAt": "2026-08-24T09:30:26.334Z",
-      "updatedAt": "2026-08-24T09:30:26.334Z"
+      "updatedAt": "2026-08-24T09:37:06.554Z"
     }
   ],
   "ledger": {
@@ -708,6 +708,15 @@
         "payloadHash": "cc9f4c7486dff6504b039ae205f12fddf017abd65ede91ce760bd94f27ea1c3b",
         "previousEntryHash": "0000000000000000000000000000000000000000000000000000000000000000",
         "entryHash": "7bdb316bb99e12de337524ac346d40d471483c38483be30e25ea3ad3a2cf5f64"
+      },
+      {
+        "caseId": "INC-1787563821510",
+        "sequenceNumber": 1,
+        "timestamp": "2026-08-24T09:37:06.557Z",
+        "eventType": "case_updated",
+        "payloadHash": "f3406644e0313f1a004ca7af68580f4e76cc6dce558e897b877dab1bb68b2456",
+        "previousEntryHash": "7bdb316bb99e12de337524ac346d40d471483c38483be30e25ea3ad3a2cf5f64",
+        "entryHash": "4e3ea2cd318c3ebe829bad0430b0f4528600cb20fa3e2973060f96e2b1c11e61"
       }
     ]
   }

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { SkipToContent } from "@/components/SkipToContent";
 import { Header } from "@/components/Header";
 import { WizardStep1Intake } from "@/components/WizardStep1Intake";
 import { WizardStep2Audit } from "@/components/WizardStep2Audit";
@@ -221,11 +222,14 @@ export default function Home() {
           }).catch(console.error);
         }
 
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
+        const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!prefersReducedMotion) {
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+        }
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         alert("Backend integration failed: server returned error.");
@@ -261,7 +265,9 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 font-sans">
+    <>
+      <SkipToContent />
+      <main className="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 font-sans">
         {/* Emergency Sticky Header */}
         <Header
           language={language}
@@ -280,14 +286,14 @@ export default function Home() {
           onLogout={() => setCurrentUser(null)}
         />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1">
+        <div id="main-content" className="max-w-5xl mx-auto px-4 sm:px-6 w-full flex-1">
           {/* === CASE A: NOT LOGGED IN -> REQUIRE SIGN IN FIRST === */}
           {!currentUser ? (
             <div className="py-12 flex flex-col items-center justify-center animate-in fade-in">
               <div className="bg-white border border-slate-200 rounded-3xl shadow-xl max-w-lg w-full p-8 sm:p-10 relative">
                 <div className="text-center mb-6">
                   <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center mx-auto mb-4 shadow-xs">
-                    <Shield className="w-7 h-7" />
+                    <Shield className="w-7 h-7" aria-hidden="true" />
                   </div>
                   <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
                     Sign in to CyberRakshak 1930
@@ -301,7 +307,7 @@ export default function Home() {
                 <div className="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 mb-6 text-xs text-slate-700">
                   <div className="flex items-center justify-between font-bold text-indigo-900 mb-2">
                     <span className="flex items-center gap-1.5">
-                      <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+                      <CheckCircle2 className="w-4 h-4 text-indigo-600" aria-hidden="true" />
                       Demo Credentials Ready
                     </span>
                     <button
@@ -329,15 +335,16 @@ export default function Home() {
                 </div>
 
               {loginError && (
-                <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs">
+                <div role="alert" className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs">
                   {loginError}
                 </div>
               )}
 
               <form onSubmit={handleInitialLogin} className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-slate-700 font-bold mb-1.5">Mobile Phone Number</label>
+                  <label htmlFor="login-phone" className="block text-slate-700 font-bold mb-1.5">Mobile Phone Number</label>
                   <input
+                    id="login-phone"
                     type="tel"
                     required
                     value={loginPhone}
@@ -348,8 +355,9 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 font-bold mb-1.5">Password</label>
+                  <label htmlFor="login-password" className="block text-slate-700 font-bold mb-1.5">Password</label>
                   <input
+                    id="login-password"
                     type="password"
                     required
                     value={loginPassword}
@@ -840,5 +848,6 @@ export default function Home() {
         }}
       />
     </main>
+    </>
   );
 }

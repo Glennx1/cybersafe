@@ -53,8 +53,12 @@ export const CaseLedgerBadge: React.FC<CaseLedgerBadgeProps> = ({
 
   if (loading) {
     return (
-      <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 text-[10px] font-medium border border-slate-200 ${className}`}>
-        <Loader2 className="w-3 h-3 animate-spin text-indigo-600" />
+      <div 
+        role="status" 
+        aria-live="polite" 
+        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 text-[10px] font-medium border border-slate-200 ${className}`}
+      >
+        <Loader2 className="w-3 h-3 animate-spin text-indigo-600" aria-hidden="true" />
         <span>Verifying Ledger Chain...</span>
       </div>
     );
@@ -62,9 +66,13 @@ export const CaseLedgerBadge: React.FC<CaseLedgerBadgeProps> = ({
 
   if (valid === true) {
     return (
-      <div className={`inline-flex flex-col gap-1 ${className}`}>
+      <div 
+        role="status" 
+        aria-live="polite" 
+        className={`inline-flex flex-col gap-1 ${className}`}
+      >
         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-bold border border-emerald-200 shadow-xs">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" aria-hidden="true" />
           <span>Chain of Custody: Verified ✓</span>
           {entryCount > 0 && (
             <span className="text-[10px] bg-emerald-100/80 text-emerald-900 px-1.5 py-0.2 rounded-full font-mono">
