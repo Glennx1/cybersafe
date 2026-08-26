@@ -227,33 +227,33 @@ PRAYER:
             </span>
             <span className="text-xs text-slate-500 font-medium">One-Tap Action Matrix</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-black text-text-primary tracking-tight">
             {dict.actions.heroTitle}
           </h2>
-          <p className="text-xs text-slate-600 mt-0.5">
+          <p className="text-xs text-text-muted mt-0.5">
             {dict.actions.heroSubtitle}
           </p>
         </div>
       </div>
 
       {/* Action 1: Call 1930 Now (Urgency #1) */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-4 hover:border-slate-300 transition-all">
+      <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 mb-4 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold shadow-xs shrink-0 mt-0.5">
+            <div className="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center font-bold shadow-xs shrink-0 mt-0.5">
               <Phone className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded-md uppercase">
+                <span className="text-[10px] font-bold text-brand-primary bg-indigo-50 px-2 py-0.5 rounded-md uppercase">
                   {dict.actions.step1Tag}
                 </span>
-                <span className="text-xs text-slate-500">{dict.actions.step1Time}</span>
+                <span className="text-xs text-text-muted">{dict.actions.step1Time}</span>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mt-0.5">
+              <h3 className="text-base font-bold text-text-primary mt-0.5">
                 {dict.actions.step1HelplineTitle}
               </h3>
-              <p className="text-xs text-slate-600">
+              <p className="text-xs text-text-muted">
                 {dict.actions.step1HelplineDesc}
               </p>
             </div>
@@ -262,7 +262,7 @@ PRAYER:
           <a
             href="tel:1930"
             onClick={handleCall1930}
-            className="w-full sm:w-auto px-6 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-95 shrink-0"
+            className="w-full sm:w-auto px-6 py-3.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95 shrink-0"
           >
             <Phone className="w-4 h-4 fill-current" />
             <span>{dict.actions.call1930NowBtn}</span>
@@ -270,35 +270,35 @@ PRAYER:
         </div>
 
         {/* Call Script Prompter directly on-screen */}
-        <div className="mt-3 pt-3 border-t border-slate-200/80">
+        <div className="mt-3 pt-3 border-t border-stone-100">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-bold text-slate-700 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+            <span className="text-[11px] font-bold text-text-primary flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-brand-primary" />
               {dict.actions.livePrompterTitle}
             </span>
             <button
               type="button"
               onClick={() => setShowInlineScript(!showInlineScript)}
-              className="text-[11px] text-indigo-600 font-bold hover:underline"
+              className="text-[11px] text-brand-primary font-bold hover:underline"
             >
               {showInlineScript ? dict.actions.collapseScript : dict.actions.showScript}
             </button>
           </div>
 
           {showInlineScript && (
-            <div className="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs leading-relaxed space-y-2 border border-slate-800 animate-in fade-in">
-              <p className="text-emerald-400 font-bold">
+            <div className="bg-surface-section text-text-primary p-4 rounded-xl font-mono text-xs leading-relaxed space-y-2 border border-stone-200/80 animate-in fade-in">
+              <p className="text-brand-success font-bold">
                 "{dict.actions.teleprompterHello}{profile.fraudAmount.toLocaleString("en-IN")}."
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] pt-1 text-slate-300">
-                <div>• Banking UTR / RRN: <strong className="text-white font-bold">{profile.utrNumber || "N/A"}</strong></div>
-                <div>• Debited Bank: <strong className="text-white">{profile.victimBank}</strong></div>
-                <div>• Debited Account: <strong className="text-white">{profile.victimAccountMasked}</strong></div>
-                <div>• Time: <strong className="text-white">{new Date(profile.transactionTime).toLocaleTimeString()}</strong></div>
-                {profile.suspectVpa && <div>• Suspect UPI: <strong className="text-rose-400">{profile.suspectVpa}</strong></div>}
-                {profile.suspectAccountNo && <div>• Suspect A/C: <strong className="text-rose-400">{profile.suspectAccountNo}</strong></div>}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] pt-1 text-text-muted">
+                <div>• Banking UTR / RRN: <strong className="text-text-primary font-bold">{profile.utrNumber || "N/A"}</strong></div>
+                <div>• Debited Bank: <strong className="text-text-primary">{profile.victimBank}</strong></div>
+                <div>• Debited Account: <strong className="text-text-primary">{profile.victimAccountMasked}</strong></div>
+                <div>• Time: <strong className="text-text-primary">{new Date(profile.transactionTime).toLocaleTimeString()}</strong></div>
+                {profile.suspectVpa && <div>• Suspect UPI: <strong className="text-brand-warning">{profile.suspectVpa}</strong></div>}
+                {profile.suspectAccountNo && <div>• Suspect A/C: <strong className="text-brand-warning">{profile.suspectAccountNo}</strong></div>}
               </div>
-              <p className="text-amber-300 text-[11px] pt-1">
+              <p className="text-brand-warning text-[11px] pt-1">
                 "{dict.actions.teleprompterClosing}"
               </p>
             </div>
@@ -307,24 +307,24 @@ PRAYER:
       </div>
 
       {/* Action 2: Email Bank Fraud Desk Now (Urgency #2) */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-4 hover:border-slate-300 transition-all">
+      <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 mb-4 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-xs shrink-0 mt-0.5">
+            <div className="w-10 h-10 rounded-xl bg-brand-success text-white flex items-center justify-center font-bold shadow-xs shrink-0 mt-0.5">
               <Mail className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md uppercase">
+                <span className="text-[10px] font-bold text-brand-success bg-emerald-50 px-2 py-0.5 rounded-md uppercase">
                   {dict.actions.step2Tag}
                 </span>
-                <span className="text-xs text-slate-500">{dict.actions.step2Time}</span>
+                <span className="text-xs text-text-muted">{dict.actions.step2Time}</span>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mt-0.5">
+              <h3 className="text-base font-bold text-text-primary mt-0.5">
                 {dict.actions.emailBankTitle}
               </h3>
-              <p className="text-xs text-slate-600">
-                {dict.actions.emailBankDesc} <strong className="text-slate-900">{fraudDeskEmail}</strong>.
+              <p className="text-xs text-text-muted">
+                {dict.actions.emailBankDesc} <strong className="text-text-primary">{fraudDeskEmail}</strong>.
               </p>
             </div>
           </div>
@@ -333,7 +333,7 @@ PRAYER:
             <button
               type="button"
               onClick={handleEmailBank}
-              className="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-95"
+              className="px-6 py-3.5 bg-brand-success hover:bg-emerald-700 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
             >
               <Send className="w-4 h-4" />
               <span>{dict.actions.emailBankBtn}</span>
@@ -342,20 +342,20 @@ PRAYER:
             <button
               type="button"
               onClick={() => generateBankFreezePdf(profile, auditReport)}
-              className="px-4 py-3 bg-white hover:bg-slate-100 text-slate-700 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-300 shadow-xs transition-all active:scale-95"
+              className="px-4 py-3 bg-surface-card hover:bg-stone-50 text-text-primary rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-stone-200 shadow-xs transition-all active:scale-95"
               title="Download full Section 91 BNSS notice PDF to attach"
             >
-              <Download className="w-3.5 h-3.5 text-slate-600" />
+              <Download className="w-3.5 h-3.5 text-text-muted" />
               <span>{dict.actions.downloadPdfAttachBtn}</span>
             </button>
           </div>
         </div>
 
-          {/* Fallback box if no mail client opens */}
+        {/* Fallback box if no mail client opens */}
         {showEmailFallback && (
-          <div role="alert" className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-2 animate-in fade-in">
+          <div role="alert" className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-950 flex flex-col sm:flex-row sm:items-center justify-between gap-2 animate-in fade-in">
             <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" aria-hidden="true" />
+              <AlertCircle className="w-4 h-4 text-brand-warning shrink-0" aria-hidden="true" />
               <span>{dict.actions.noMailAppNotice} <strong className="font-mono">{fraudDeskEmail}</strong></span>
             </div>
             <button
@@ -364,7 +364,7 @@ PRAYER:
               aria-label="Copy bank fraud desk email address"
               className="px-3 py-1 bg-amber-200 hover:bg-amber-300 text-amber-950 font-bold rounded-lg text-xs flex items-center justify-center gap-1 shrink-0"
             >
-              {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-700" aria-hidden="true" /> : <Copy className="w-3.5 h-3.5" aria-hidden="true" />}
+              {copiedEmail ? <Check className="w-3.5 h-3.5 text-brand-success" aria-hidden="true" /> : <Copy className="w-3.5 h-3.5" aria-hidden="true" />}
               <span>{copiedEmail ? "Email Copied!" : "Copy Email"}</span>
             </button>
           </div>
@@ -372,23 +372,23 @@ PRAYER:
       </div>
 
       {/* Action 3: File NCRP Online Complaint (Urgency #3) */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-4 hover:border-slate-300 transition-all">
+      <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 mb-4 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shadow-xs shrink-0 mt-0.5">
+            <div className="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center font-bold shadow-xs shrink-0 mt-0.5">
               <FileText className="w-5 h-5" aria-hidden="true" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold text-blue-800 bg-blue-100 px-2 py-0.5 rounded-md uppercase">
+                <span className="text-[10px] font-bold text-brand-primary bg-indigo-50 px-2 py-0.5 rounded-md uppercase">
                   {dict.actions.step3Tag}
                 </span>
-                <span className="text-xs text-slate-500">{dict.actions.step3Time}</span>
+                <span className="text-xs text-text-muted">{dict.actions.step3Time}</span>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mt-0.5">
+              <h3 className="text-base font-bold text-text-primary mt-0.5">
                 {dict.actions.ncrpTitle}
               </h3>
-              <p className="text-xs text-slate-600">
+              <p className="text-xs text-text-muted">
                 {dict.actions.ncrpDesc}
               </p>
             </div>
@@ -401,8 +401,8 @@ PRAYER:
               aria-label="Copy legal complaint statement to clipboard"
               className={`px-5 py-3.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 ${
                 copiedNcrpStatement
-                  ? "bg-emerald-600 text-white"
-                  : "bg-slate-900 hover:bg-slate-800 text-white"
+                  ? "bg-brand-success text-white"
+                  : "bg-brand-primary hover:bg-indigo-700 text-white"
               }`}
             >
               {copiedNcrpStatement ? <Check className="w-4 h-4 text-emerald-200" aria-hidden="true" /> : <Copy className="w-4 h-4" aria-hidden="true" />}
@@ -413,7 +413,7 @@ PRAYER:
               href="https://cybercrime.gov.in/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-95"
+              className="px-5 py-3.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
             >
               <span>{dict.actions.openPortalBtn}</span>
               <ExternalLink className="w-4 h-4" aria-hidden="true" />
@@ -423,16 +423,16 @@ PRAYER:
       </div>
 
       {/* Action 4: Share Documents via WhatsApp (Urgency #4) */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 hover:border-slate-300 transition-all">
+      <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 shadow-sm">
         <div className="flex items-center gap-2 mb-3">
-          <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs">
+          <div className="w-7 h-7 rounded-lg bg-emerald-50 text-brand-success flex items-center justify-center font-bold text-xs">
             <Share2 className="w-4 h-4" aria-hidden="true" />
           </div>
           <div>
-            <h3 className="text-xs font-bold text-slate-900">
+            <h3 className="text-xs font-bold text-text-primary">
               {dict.actions.shareDocsTitle}
             </h3>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-text-muted">
               {dict.actions.shareDocsSubtitle}
             </p>
           </div>
@@ -440,10 +440,10 @@ PRAYER:
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1" aria-live="polite">
           {/* Doc 1: Bank Lien Notice */}
-          <div className="p-3 bg-white rounded-xl border border-slate-200 flex flex-col justify-between">
+          <div className="p-3 bg-surface-section rounded-xl border border-stone-200/60 flex flex-col justify-between">
             <div className="mb-2">
-              <span className="text-[10px] font-bold text-emerald-700 uppercase block">{dict.actions.docBankFreeze}</span>
-              <span className="text-xs font-bold text-slate-800">{dict.actions.docBankFreezeSub}</span>
+              <span className="text-[10px] font-bold text-brand-success uppercase block">{dict.actions.docBankFreeze}</span>
+              <span className="text-xs font-bold text-text-primary">{dict.actions.docBankFreezeSub}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <button
@@ -451,7 +451,7 @@ PRAYER:
                 onClick={() => handleShareDoc("freeze")}
                 disabled={sharingDoc === "freeze"}
                 aria-label="Share Bank Freeze Notice via WhatsApp"
-                className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
+                className="flex-1 py-2 bg-brand-success hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
               >
                 <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{shareSuccess === "freeze" ? "Shared!" : dict.common.shareWhatsApp}</span>
@@ -460,19 +460,19 @@ PRAYER:
                 type="button"
                 onClick={() => generateBankFreezePdf(profile, auditReport)}
                 aria-label="Download Bank Freeze Notice PDF"
-                className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg"
+                className="p-2 bg-surface-card hover:bg-stone-100 text-text-primary rounded-lg border border-stone-200"
                 title="Download PDF"
               >
-                <Download className="w-3.5 h-3.5" aria-hidden="true" />
+                <Download className="w-3.5 h-3.5 text-text-muted" aria-hidden="true" />
               </button>
             </div>
           </div>
 
           {/* Doc 2: Police FIR Dossier */}
-          <div className="p-3 bg-white rounded-xl border border-slate-200 flex flex-col justify-between">
+          <div className="p-3 bg-surface-section rounded-xl border border-stone-200/60 flex flex-col justify-between">
             <div className="mb-2">
-              <span className="text-[10px] font-bold text-indigo-700 uppercase block">{dict.actions.docPoliceFir}</span>
-              <span className="text-xs font-bold text-slate-800">{dict.actions.docPoliceFirSub}</span>
+              <span className="text-[10px] font-bold text-brand-primary uppercase block">{dict.actions.docPoliceFir}</span>
+              <span className="text-xs font-bold text-text-primary">{dict.actions.docPoliceFirSub}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <button
@@ -480,7 +480,7 @@ PRAYER:
                 onClick={() => handleShareDoc("fir")}
                 disabled={sharingDoc === "fir"}
                 aria-label="Share Police FIR Dossier via WhatsApp"
-                className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
+                className="flex-1 py-2 bg-brand-success hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
               >
                 <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{shareSuccess === "fir" ? "Shared!" : dict.common.shareWhatsApp}</span>
@@ -489,19 +489,19 @@ PRAYER:
                 type="button"
                 onClick={() => generatePoliceFirPdf(profile, auditReport)}
                 aria-label="Download Police FIR Dossier PDF"
-                className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg"
+                className="p-2 bg-surface-card hover:bg-stone-100 text-text-primary rounded-lg border border-stone-200"
                 title="Download PDF"
               >
-                <Download className="w-3.5 h-3.5" aria-hidden="true" />
+                <Download className="w-3.5 h-3.5 text-text-muted" aria-hidden="true" />
               </button>
             </div>
           </div>
 
           {/* Doc 3: Court Petition */}
-          <div className="p-3 bg-white rounded-xl border border-slate-200 flex flex-col justify-between">
+          <div className="p-3 bg-surface-section rounded-xl border border-stone-200/60 flex flex-col justify-between">
             <div className="mb-2">
-              <span className="text-[10px] font-bold text-purple-700 uppercase block">{dict.actions.docCourtRefund}</span>
-              <span className="text-xs font-bold text-slate-800">{dict.actions.docCourtRefundSub}</span>
+              <span className="text-[10px] font-bold text-brand-primary uppercase block">{dict.actions.docCourtRefund}</span>
+              <span className="text-xs font-bold text-text-primary">{dict.actions.docCourtRefundSub}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <button
@@ -509,7 +509,7 @@ PRAYER:
                 onClick={() => handleShareDoc("court")}
                 disabled={sharingDoc === "court"}
                 aria-label="Share Court Refund Petition via WhatsApp"
-                className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
+                className="flex-1 py-2 bg-brand-success hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
               >
                 <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{shareSuccess === "court" ? "Shared!" : dict.common.shareWhatsApp}</span>
@@ -518,19 +518,19 @@ PRAYER:
                 type="button"
                 onClick={() => generateMagistratePetitionPdf(profile)}
                 aria-label="Download Court Refund Petition PDF"
-                className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg"
+                className="p-2 bg-surface-card hover:bg-stone-100 text-text-primary rounded-lg border border-stone-200"
                 title="Download PDF"
               >
-                <Download className="w-3.5 h-3.5" aria-hidden="true" />
+                <Download className="w-3.5 h-3.5 text-text-muted" aria-hidden="true" />
               </button>
             </div>
           </div>
 
           {/* Doc 4: Sec 63 BSA Certificate */}
-          <div className="p-3 bg-white rounded-xl border border-slate-200 flex flex-col justify-between">
+          <div className="p-3 bg-surface-section rounded-xl border border-stone-200/60 flex flex-col justify-between">
             <div className="mb-2">
-              <span className="text-[10px] font-bold text-blue-700 uppercase block">{dict.actions.docEvidenceCert}</span>
-              <span className="text-xs font-bold text-slate-800">{dict.actions.docEvidenceCertSub}</span>
+              <span className="text-[10px] font-bold text-brand-primary uppercase block">{dict.actions.docEvidenceCert}</span>
+              <span className="text-xs font-bold text-text-primary">{dict.actions.docEvidenceCertSub}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <button
@@ -538,7 +538,7 @@ PRAYER:
                 onClick={() => handleShareDoc("bsa")}
                 disabled={sharingDoc === "bsa"}
                 aria-label="Share Section 63 BSA Certificate via WhatsApp"
-                className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
+                className="flex-1 py-2 bg-brand-success hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all active:scale-95"
               >
                 <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{shareSuccess === "bsa" ? "Shared!" : dict.common.shareWhatsApp}</span>
@@ -547,10 +547,10 @@ PRAYER:
                 type="button"
                 onClick={() => generateSection63BsaCertificatePdf(profile)}
                 aria-label="Download Section 63 BSA Certificate PDF"
-                className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg"
+                className="p-2 bg-surface-card hover:bg-stone-100 text-text-primary rounded-lg border border-stone-200"
                 title="Download PDF"
               >
-                <Download className="w-3.5 h-3.5" aria-hidden="true" />
+                <Download className="w-3.5 h-3.5 text-text-muted" aria-hidden="true" />
               </button>
             </div>
           </div>

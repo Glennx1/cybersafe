@@ -68,71 +68,71 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
   return (
     <div className="max-w-4xl mx-auto py-6 animate-in fade-in duration-300">
-      {/* 1. Audit Summary Banner */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
+      {/* 1. Hero Score Banner */}
+      <div className="bg-surface-card rounded-2xl p-6 sm:p-7 border border-stone-200/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div className="flex items-center gap-5">
-          <div className="relative w-16 h-16 shrink-0">
-            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+          <div className="relative w-20 h-20 shrink-0">
+            <svg className="w-20 h-20 transform -rotate-90">
               <circle
-                cx="50"
-                cy="50"
-                r="40"
-                className="stroke-slate-100"
-                strokeWidth="8"
+                cx="40"
+                cy="40"
+                r="34"
+                className="stroke-stone-200"
+                strokeWidth="7"
                 fill="transparent"
               />
               <circle
-                cx="50"
-                cy="50"
-                r="40"
-                className="stroke-indigo-600 transition-all duration-1000 ease-out"
-                strokeWidth="8"
-                strokeDasharray={2 * Math.PI * 40}
-                strokeDashoffset={2 * Math.PI * 40 * (1 - score / 100)}
+                cx="40"
+                cy="40"
+                r="34"
+                className="stroke-brand-primary transition-all duration-1000 ease-out"
+                strokeWidth="7"
+                strokeDasharray={2 * Math.PI * 34}
+                strokeDashoffset={2 * Math.PI * 34 * (1 - score / 100)}
                 strokeLinecap="round"
                 fill="transparent"
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-base font-bold text-slate-900">
+              <span className="text-base font-bold text-text-primary">
                 {score}%
               </span>
-              <span className="text-[9px] text-slate-500 font-semibold uppercase">{dict.audit.scoreLabel}</span>
+              <span className="text-[9px] text-text-muted font-semibold uppercase">{dict.audit.scoreLabel}</span>
             </div>
           </div>
 
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs text-emerald-700 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+              <span className="text-xs text-brand-success font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                 {dict.audit.detailsChecked}
               </span>
-              <h2 className="text-lg font-bold text-slate-900 tracking-tight">
+              <h2 className="text-lg font-bold text-text-primary tracking-tight">
                 {dict.audit.summaryTitle}
               </h2>
             </div>
-            <p className="text-xs text-slate-600 max-w-md leading-relaxed">
+            <p className="text-xs text-text-muted max-w-md leading-relaxed">
               {dict.audit.summaryVerdict}
             </p>
           </div>
         </div>
 
-        <div className="bg-slate-50 px-4 py-3 rounded-xl border border-slate-200 text-xs shrink-0 space-y-1">
-          <div className="text-slate-500 font-medium text-[10px] uppercase">{dict.audit.recoveryEligibility}</div>
-          <div className="font-bold text-emerald-700 flex items-center gap-1.5 text-xs">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+        <div className="bg-surface-section px-4 py-3 rounded-xl border border-stone-200/60 text-xs shrink-0 space-y-1">
+          <div className="text-text-muted font-medium text-[10px] uppercase">{dict.audit.recoveryEligibility}</div>
+          <div className="font-bold text-brand-success flex items-center gap-1.5 text-xs">
+            <CheckCircle2 className="w-4 h-4 text-brand-success" />
             <span>{dict.audit.eligibleForBankFreeze}</span>
           </div>
         </div>
       </div>
 
       {/* 2. Key Fields Inspector & Editor */}
-      <div className="mt-6 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs">
-        <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
-          <div className="text-xs font-bold text-slate-800">
+      <div className="mt-6 bg-surface-card p-5 sm:p-6 rounded-2xl border border-stone-200/80 shadow-sm">
+        <div className="flex items-center justify-between mb-4 pb-2 border-b border-stone-100">
+          <div className="text-xs font-bold text-text-primary">
             {dict.audit.verifyEditTitle}
           </div>
-          <div className="text-xs text-slate-500 flex items-center gap-1">
-            <Edit3 className="w-3.5 h-3.5 text-indigo-600" />
+          <div className="text-xs text-text-muted flex items-center gap-1">
+            <Edit3 className="w-3.5 h-3.5 text-brand-primary" />
             <span>{dict.audit.clickToUpdate}</span>
           </div>
         </div>
@@ -140,7 +140,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-slate-600 font-medium">
+              <label className="text-text-muted font-medium">
                 {dict.audit.utrLabel}
               </label>
               <VoiceInputButton
@@ -155,13 +155,13 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
               placeholder="e.g. 312345678901"
               value={profile.utrNumber}
               onChange={(e) => onProfileChange({ ...profile, utrNumber: e.target.value })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-emerald-700 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs font-bold text-brand-success focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             />
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-slate-600 font-medium">
+              <label className="text-text-muted font-medium">
                 {dict.audit.fraudAmountLabel}
               </label>
               <VoiceInputButton
@@ -181,13 +181,13 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
               placeholder="e.g. 85500"
               value={profile.fraudAmount || ""}
               onChange={(e) => onProfileChange({ ...profile, fraudAmount: Number(e.target.value) })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs font-bold text-text-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             />
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-slate-600 font-medium">
+              <label className="text-text-muted font-medium">
                 {dict.audit.suspectVpaLabel}
               </label>
               <VoiceInputButton
@@ -202,13 +202,13 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
               placeholder="e.g. suspect@upi"
               value={profile.suspectVpa}
               onChange={(e) => onProfileChange({ ...profile, suspectVpa: e.target.value })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-indigo-700 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs font-bold text-brand-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             />
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-slate-600 font-medium">
+              <label className="text-text-muted font-medium">
                 {dict.audit.suspectAccountNoLabel}
               </label>
               <VoiceInputButton
@@ -220,16 +220,16 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
             </div>
             <input
               type="text"
-              placeholder="e.g. 987654321012"
+              placeholder="e.g. 987654321098"
               value={profile.suspectAccountNo || ""}
               onChange={(e) => onProfileChange({ ...profile, suspectAccountNo: e.target.value })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-rose-700 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs font-bold text-brand-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             />
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-slate-600 font-medium">
+              <label className="text-text-muted font-medium">
                 {dict.audit.suspectIfscLabel}
               </label>
               <VoiceInputButton
@@ -244,18 +244,18 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
               placeholder="e.g. PYTM0123456"
               value={profile.suspectBankIfsc || ""}
               onChange={(e) => onProfileChange({ ...profile, suspectBankIfsc: e.target.value.toUpperCase() })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-bold text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs font-mono font-bold text-text-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             />
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
+            <label className="text-text-muted font-medium block mb-1">
               {dict.audit.victimBankLabel}
             </label>
             <select
               value={profile.victimBank}
               onChange={(e) => onProfileChange({ ...profile, victimBank: e.target.value })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs text-text-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             >
               <option value="State Bank of India (SBI)">State Bank of India (SBI)</option>
               <option value="HDFC Bank">HDFC Bank</option>
@@ -268,7 +268,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
+            <label className="text-text-muted font-medium block mb-1">
               {dict.audit.victimAccountNoLabel}
             </label>
             <input
@@ -280,12 +280,12 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
                 victimAccountNo: e.target.value,
                 victimAccountMasked: e.target.value ? e.target.value.replace(/\d(?=\d{4})/g, "X") : profile.victimAccountMasked
               })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs font-bold text-text-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             />
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
+            <label className="text-text-muted font-medium block mb-1">
               {dict.audit.victimIfscLabel}
             </label>
             <input
@@ -293,31 +293,31 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
               placeholder="e.g. SBIN0001234"
               value={profile.victimBankIfsc || ""}
               onChange={(e) => onProfileChange({ ...profile, victimBankIfsc: e.target.value.toUpperCase() })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-bold text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs font-mono font-bold text-text-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             />
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
+            <label className="text-text-muted font-medium block mb-1">
               {dict.audit.victimNameLabel}
             </label>
             <input
               type="text"
               value={profile.victimName}
               onChange={(e) => onProfileChange({ ...profile, victimName: e.target.value })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs text-text-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             />
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
+            <label className="text-text-muted font-medium block mb-1">
               {dict.audit.contactPhoneLabel}
             </label>
             <input
               type="text"
               value={profile.victimPhone}
               onChange={(e) => onProfileChange({ ...profile, victimPhone: e.target.value })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs text-text-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             />
           </div>
         </div>
@@ -325,7 +325,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
       {/* 3. Evidentiary Checkpoints */}
       <div className="mt-6 space-y-3">
-        <h3 className="text-xs font-bold text-slate-700 px-1 uppercase tracking-wider">
+        <h3 className="text-xs font-bold text-text-primary px-1 uppercase tracking-wider">
           {dict.audit.evidenceChecklistTitle}
         </h3>
 
@@ -335,35 +335,35 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
             return (
               <div
                 key={idx}
-                className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex items-start gap-3.5 transition-all"
+                className="bg-surface-card p-4 rounded-xl border border-stone-200/80 shadow-xs flex items-start gap-3.5 transition-all"
               >
                 <div className="mt-0.5 shrink-0">
                   {vec.status === "PASSED" ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                    <CheckCircle2 className="w-5 h-5 text-brand-success" />
                   ) : vec.status === "WARNING" ? (
-                    <AlertTriangle className="w-5 h-5 text-amber-500" />
+                    <AlertTriangle className="w-5 h-5 text-brand-warning" />
                   ) : (
-                    <ShieldAlert className="w-5 h-5 text-rose-500" />
+                    <ShieldAlert className="w-5 h-5 text-brand-urgent" />
                   )}
                 </div>
 
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-bold text-sm text-slate-900">
+                    <span className="font-bold text-sm text-text-primary">
                       {localized.label}
                     </span>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
                       vec.status === "PASSED"
-                        ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                        ? "bg-emerald-50 text-brand-success border-emerald-200"
                         : vec.status === "WARNING"
-                        ? "bg-amber-50 text-amber-700 border-amber-200"
-                        : "bg-rose-50 text-rose-700 border-rose-200"
+                        ? "bg-amber-50 text-brand-warning border-amber-200/80"
+                        : "bg-red-50 text-brand-urgent border-red-200"
                     }`}>
                       {vec.status === "PASSED" ? dict.audit.statusVerified : vec.status === "WARNING" ? dict.audit.statusAttention : dict.audit.statusUrgent}
                     </span>
                   </div>
 
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs text-text-muted leading-relaxed">
                     {localized.details}
                   </p>
                 </div>
@@ -374,8 +374,8 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
       </div>
 
       {/* 4. Statutory Compliance Notice */}
-      <div className="mt-6 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed">
-        <h4 className="font-bold text-slate-800 mb-1">{dict.audit.noticeCyberSafetyTitle}</h4>
+      <div className="mt-6 bg-surface-section p-5 rounded-2xl border border-stone-200/60 text-xs text-text-muted leading-relaxed shadow-sm">
+        <h4 className="font-bold text-text-primary mb-1">{dict.audit.noticeCyberSafetyTitle}</h4>
         <p>
           {dict.audit.noticeCyberSafetyDesc}
         </p>
@@ -385,7 +385,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
       <div className="mt-8 flex items-center justify-between">
         <button
           onClick={onBack}
-          className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 bg-white border border-slate-200 hover:border-slate-300 transition-all flex items-center gap-1.5 shadow-xs"
+          className="px-5 py-2.5 rounded-xl text-xs font-bold text-text-muted hover:text-text-primary bg-surface-card border border-stone-200 hover:border-stone-300 transition-all flex items-center gap-1.5 shadow-xs"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>{dict.audit.backToIntake}</span>
@@ -393,7 +393,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
         <button
           onClick={onNext}
-          className="h-12 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm flex items-center gap-2 shadow-sm transition-all active:scale-95"
+          className="h-12 px-8 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-sm flex items-center gap-2 shadow-sm transition-all active:scale-95"
         >
           <span>{dict.audit.continueToGetHelp}</span>
           <ArrowRight className="w-4 h-4" />

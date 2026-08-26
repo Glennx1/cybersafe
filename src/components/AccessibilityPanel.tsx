@@ -251,24 +251,24 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
           role="dialog"
           aria-modal="true"
           aria-labelledby="a11y-panel-title"
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-start sm:pl-6 bg-slate-950/40 backdrop-blur-xs p-4 animate-in fade-in"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-start sm:pl-6 bg-brand-navy/60 backdrop-blur-xs p-4 animate-in fade-in"
         >
           <div
             ref={panelRef}
             id="a11y-settings-panel"
-            className="bg-white border border-slate-200 rounded-3xl shadow-2xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto"
+            className="bg-surface-card border border-stone-200/80 rounded-3xl shadow-2xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto font-sans"
           >
             {/* Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
+            <div className="flex items-center justify-between pb-4 border-b border-stone-100 mb-5">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold">
                   <Sliders className="w-4 h-4" aria-hidden="true" />
                 </div>
                 <div>
-                  <h2 id="a11y-panel-title" className="text-base font-extrabold text-slate-900">
+                  <h2 id="a11y-panel-title" className="text-base font-extrabold text-text-primary">
                     Accessibility & Language
                   </h2>
-                  <p className="text-xs text-slate-500">Customise display & reading preferences</p>
+                  <p className="text-xs text-text-muted">Customise display & reading preferences</p>
                 </div>
               </div>
 
@@ -280,7 +280,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                   triggerButtonRef.current?.focus();
                 }}
                 aria-label="Close accessibility panel"
-                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-all"
+                className="w-8 h-8 rounded-full bg-surface-section hover:bg-stone-200 text-text-muted hover:text-text-primary flex items-center justify-center transition-all"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
               </button>
@@ -288,8 +288,8 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
 
             {/* 1. Language Preference */}
             <div className="mb-5">
-              <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5 mb-2.5">
-                <Globe className="w-4 h-4 text-indigo-600" aria-hidden="true" />
+              <label className="text-xs font-bold text-text-primary flex items-center gap-1.5 mb-2.5">
+                <Globe className="w-4 h-4 text-brand-primary" aria-hidden="true" />
                 <span>Select Language</span>
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -300,13 +300,13 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                     onClick={() => updateSetting("language", lang.code)}
                     className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-between transition-all ${
                       settings.language === lang.code
-                        ? "bg-indigo-50 border-indigo-600 text-indigo-900"
-                        : "bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300"
+                        ? "bg-indigo-50/80 border-brand-primary text-brand-primary ring-2 ring-brand-primary/20"
+                        : "bg-surface-section border-stone-200/60 text-text-primary hover:border-stone-300"
                     }`}
                   >
                     <span>{lang.native}</span>
                     {settings.language === lang.code && (
-                      <Check className="w-3.5 h-3.5 text-indigo-600" aria-hidden="true" />
+                      <Check className="w-3.5 h-3.5 text-brand-primary" aria-hidden="true" />
                     )}
                   </button>
                 ))}
@@ -315,8 +315,8 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
 
             {/* 2. Larger Text Scaling */}
             <div className="mb-5">
-              <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5 mb-2.5">
-                <Type className="w-4 h-4 text-indigo-600" aria-hidden="true" />
+              <label className="text-xs font-bold text-text-primary flex items-center gap-1.5 mb-2.5">
+                <Type className="w-4 h-4 text-brand-primary" aria-hidden="true" />
                 <span>Text Size</span>
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -331,8 +331,8 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                     onClick={() => updateSetting("textScale", scale.value as any)}
                     className={`py-2 px-2.5 rounded-xl border text-xs font-bold transition-all text-center ${
                       settings.textScale === scale.value
-                        ? "bg-indigo-50 border-indigo-600 text-indigo-900"
-                        : "bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300"
+                        ? "bg-indigo-50/80 border-brand-primary text-brand-primary ring-2 ring-brand-primary/20"
+                        : "bg-surface-section border-stone-200/60 text-text-primary hover:border-stone-300"
                     }`}
                   >
                     {scale.label}
@@ -342,13 +342,13 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
             </div>
 
             {/* 3. Simplified / Panic Mode */}
-            <div className="mb-5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+            <div className="mb-5 p-3.5 rounded-2xl bg-surface-section border border-stone-200/60 flex items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-1.5">
-                  <Eye className="w-4 h-4 text-indigo-600" aria-hidden="true" />
-                  <span className="text-xs font-bold text-slate-900">Simplified / Panic Mode</span>
+                  <Eye className="w-4 h-4 text-brand-primary" aria-hidden="true" />
+                  <span className="text-xs font-bold text-text-primary">Simplified / Panic Mode</span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">
+                <p className="text-[11px] text-text-muted mt-0.5">
                   Reduces visual clutter, hides secondary options, and enlarges main buttons.
                 </p>
               </div>
@@ -360,7 +360,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                 onClick={() => updateSetting("panicMode", !settings.panicMode)}
                 aria-label="Toggle Simplified Panic Mode"
                 className={`w-12 h-6 rounded-full transition-colors relative flex items-center p-1 shrink-0 ${
-                  settings.panicMode ? "bg-indigo-600" : "bg-slate-300"
+                  settings.panicMode ? "bg-brand-primary" : "bg-stone-300"
                 }`}
               >
                 <span
@@ -372,13 +372,13 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
             </div>
 
             {/* 4. Read Page Aloud (TTS) */}
-            <div className="mb-5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+            <div className="mb-5 p-3.5 rounded-2xl bg-surface-section border border-stone-200/60 flex items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-1.5">
-                  <Volume2 className="w-4 h-4 text-indigo-600" aria-hidden="true" />
-                  <span className="text-xs font-bold text-slate-900">Read Page Aloud</span>
+                  <Volume2 className="w-4 h-4 text-brand-primary" aria-hidden="true" />
+                  <span className="text-xs font-bold text-text-primary">Read Page Aloud</span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">
+                <p className="text-[11px] text-text-muted mt-0.5">
                   Plays speech audio of the current page content via browser speech synthesis.
                 </p>
               </div>
@@ -388,8 +388,8 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                 onClick={handleReadPageAloud}
                 className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all shrink-0 ${
                   isReadingPage
-                    ? "bg-rose-600 text-white"
-                    : "bg-indigo-600 hover:bg-indigo-700 text-white"
+                    ? "bg-brand-urgent text-white animate-pulse"
+                    : "bg-brand-primary hover:bg-indigo-700 text-white shadow-xs"
                 }`}
               >
                 {isReadingPage ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
@@ -401,10 +401,10 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
             <div className="mb-5 p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-1.5">
-                  <Sparkles className="w-4 h-4 text-amber-600" aria-hidden="true" />
-                  <span className="text-xs font-bold text-slate-900">Audio-First Mode (Auto Read-Back)</span>
+                  <Sparkles className="w-4 h-4 text-brand-warning" aria-hidden="true" />
+                  <span className="text-xs font-bold text-text-primary">Audio-First Mode (Auto Read-Back)</span>
                 </div>
-                <p className="text-[11px] text-slate-600 mt-0.5">
+                <p className="text-[11px] text-text-muted mt-0.5">
                   Automatically speaks extracted OCR data and Legal Fact Check points aloud without tapping read-aloud buttons.
                 </p>
               </div>
@@ -416,7 +416,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                 onClick={() => updateSetting("audioFirstMode", !settings.audioFirstMode)}
                 aria-label="Toggle Audio-First Auto Read-Back Mode"
                 className={`w-12 h-6 rounded-full transition-colors relative flex items-center p-1 shrink-0 ${
-                  settings.audioFirstMode ? "bg-amber-600" : "bg-slate-300"
+                  settings.audioFirstMode ? "bg-brand-warning" : "bg-stone-300"
                 }`}
               >
                 <span
@@ -428,15 +428,15 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
             </div>
 
             {/* 6. Sign Language Videos (Preview — Coming Soon) */}
-            <div className="mb-6 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+            <div className="mb-6 p-3.5 rounded-2xl bg-surface-section border border-stone-200/60 flex items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-1.5">
-                  <Hand className="w-4 h-4 text-indigo-600" aria-hidden="true" />
-                  <span className="text-xs font-bold text-slate-900">
+                  <Hand className="w-4 h-4 text-brand-primary" aria-hidden="true" />
+                  <span className="text-xs font-bold text-text-primary">
                     Sign language videos (preview — coming soon)
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">
+                <p className="text-[11px] text-text-muted mt-0.5">
                   Displays preview slots for upcoming Indian Sign Language (ISL) explainer videos for Deaf and hard-of-hearing users.
                 </p>
               </div>
@@ -448,7 +448,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                 onClick={() => updateSetting("showSignLanguage", !settings.showSignLanguage)}
                 aria-label="Toggle Sign language videos preview"
                 className={`w-12 h-6 rounded-full transition-colors relative flex items-center p-1 shrink-0 ${
-                  settings.showSignLanguage ? "bg-indigo-600" : "bg-slate-300"
+                  settings.showSignLanguage ? "bg-brand-primary" : "bg-stone-300"
                 }`}
               >
                 <span
@@ -466,7 +466,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                 setIsOpen(false);
                 triggerButtonRef.current?.focus();
               }}
-              className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs shadow-xs transition-all active:scale-95"
+              className="w-full py-3 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-xs shadow-sm transition-all active:scale-95"
             >
               Done & Save Preferences
             </button>

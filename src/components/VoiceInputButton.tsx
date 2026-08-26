@@ -113,8 +113,8 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
         title={isListening ? "Listening... Speak now" : buttonTitle}
         className={`p-2 rounded-xl transition-all flex items-center justify-center relative active:scale-95 ${
           isListening
-            ? "bg-rose-600 text-white ring-4 ring-rose-500/30 animate-pulse shadow-md"
-            : "bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-indigo-600 border border-slate-200/80"
+            ? "bg-brand-urgent text-white ring-4 ring-red-500/30 animate-pulse shadow-md"
+            : "bg-surface-section hover:bg-stone-200 text-text-primary hover:text-brand-primary border border-stone-200/80"
         } ${className}`}
       >
         {isListening ? (

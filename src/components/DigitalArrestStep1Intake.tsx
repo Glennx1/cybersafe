@@ -240,10 +240,10 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
     <div className="max-w-4xl mx-auto py-6 animate-in fade-in duration-300">
       {/* Step Header */}
       <div className="text-center mb-8">
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-bold text-text-primary tracking-tight">
           {dict.digitalArrest.heroTitle}
         </h2>
-        <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl mx-auto font-sans">
+        <p className="text-xs sm:text-sm text-text-muted mt-1 max-w-xl mx-auto font-sans">
           {dict.digitalArrest.heroSubtitle}
         </p>
       </div>
@@ -255,15 +255,15 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
 
       {/* Forensic Hash Mismatch Warning Banner */}
       {profile.hashMismatch && (
-        <div className="mb-6 p-4 rounded-2xl bg-rose-50 border-2 border-rose-400 text-rose-950 flex items-start gap-3 shadow-xs">
-          <div className="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold shrink-0">
+        <div className="mb-6 p-4 rounded-2xl bg-red-50 border-2 border-brand-urgent/60 text-red-950 flex items-start gap-3 shadow-xs">
+          <div className="w-8 h-8 rounded-xl bg-red-100 text-brand-urgent flex items-center justify-center font-bold shrink-0">
             ⚠️
           </div>
           <div>
-            <strong className="text-sm font-bold block text-rose-900 mb-0.5">
+            <strong className="text-sm font-bold block text-brand-urgent mb-0.5">
               Forensic Warning: Cryptographic Hash Mismatch Detected
             </strong>
-            <p className="text-xs text-rose-800 leading-relaxed">
+            <p className="text-xs text-red-900 leading-relaxed">
               The client-computed hash ({profile.evidenceHash?.substring(0, 16)}...) does not match the server-verified hash ({profile.serverEvidenceHash?.substring(0, 16)}...). This discrepancy has been logged in the case audit ledger for evidentiary integrity.
             </p>
           </div>
@@ -271,10 +271,10 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
       )}
 
       {/* Scammer Details Card */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
+      <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 sm:p-6 mb-6 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-          <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2">
-            <Building className="w-4 h-4 text-amber-600" />
+          <h3 className="text-xs font-bold text-text-primary flex items-center gap-2">
+            <Building className="w-4 h-4 text-brand-warning" />
             <span>{dict.digitalArrest.callerThreatDetailsTitle}</span>
           </h3>
 
@@ -285,25 +285,25 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
             aria-label={isReadingAloud ? "Stop reading threat details" : "Read threat details aloud"}
             className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs active:scale-95 ${
               isReadingAloud
-                ? "bg-rose-600 text-white animate-pulse"
-                : "bg-amber-50 text-amber-900 hover:bg-amber-100 border border-amber-200"
+                ? "bg-brand-urgent text-white animate-pulse"
+                : "bg-amber-50 text-brand-warning hover:bg-amber-100 border border-amber-200/80"
             }`}
           >
-            {isReadingAloud ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-700" />}
+            {isReadingAloud ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-brand-warning" />}
             <span>{isReadingAloud ? "Stop Audio" : "Read Details Aloud"}</span>
           </button>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
           <div>
-            <label htmlFor="impersonated-agency-select" className="text-slate-600 font-medium block mb-1 cursor-pointer">
+            <label htmlFor="impersonated-agency-select" className="text-text-muted font-medium block mb-1 cursor-pointer">
               {dict.digitalArrest.impersonatedAgencyLabel}
             </label>
             <select
               id="impersonated-agency-select"
               value={profile.impersonatedAgency || "Central Bureau of Investigation (CBI)"}
               onChange={(e) => onProfileChange({ ...profile, impersonatedAgency: e.target.value })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-hidden focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs text-text-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             >
               <option value="Central Bureau of Investigation (CBI)">CBI (Central Bureau of Investigation)</option>
               <option value="Cyber Police">Cyber Police</option>
@@ -316,7 +316,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label htmlFor="caller-id-input" className="text-slate-600 font-medium cursor-pointer">
+              <label htmlFor="caller-id-input" className="text-text-muted font-medium cursor-pointer">
                 {dict.digitalArrest.callerIdLabel}
               </label>
               <VoiceInputButton
@@ -332,13 +332,13 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
               placeholder="e.g. +91 98765 43210"
               value={profile.scammerCallerId || ""}
               onChange={(e) => onProfileChange({ ...profile, scammerCallerId: e.target.value })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-hidden focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 font-bold"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs text-text-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 font-bold"
             />
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label htmlFor="extortion-amount-input" className="text-slate-600 font-medium cursor-pointer">
+              <label htmlFor="extortion-amount-input" className="text-text-muted font-medium cursor-pointer">
                 {dict.digitalArrest.extortionDemandLabel}
               </label>
               <VoiceInputButton
@@ -359,7 +359,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
               placeholder="e.g. 250000"
               value={profile.extortionDemandAmount || profile.fraudAmount || 250000}
               onChange={(e) => onProfileChange({ ...profile, extortionDemandAmount: Number(e.target.value), fraudAmount: Number(e.target.value) })}
-              className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-hidden focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 font-bold"
+              className="w-full p-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs text-text-primary focus:outline-hidden focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 font-bold"
             />
           </div>
         </div>
@@ -368,32 +368,32 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
       {/* Intake Dropzone & Text Box */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
         {/* Dropzone */}
-        <div className="bg-white border border-slate-200 hover:border-amber-400 rounded-2xl p-6 text-center flex flex-col items-center justify-center min-h-[260px] transition-all relative overflow-hidden shadow-xs group">
+        <div className="bg-surface-card border border-stone-200/80 hover:border-brand-primary rounded-2xl p-6 text-center flex flex-col items-center justify-center min-h-[260px] transition-all relative overflow-hidden shadow-sm group">
           {isExtracting ? (
             <div className="flex flex-col items-center justify-center space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-lg border border-amber-100">
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg border border-indigo-100">
                 OCR
               </div>
               <div className="text-center">
-                <span className="text-sm font-bold text-slate-900 block">Scanning document...</span>
-                <span className="text-xs text-amber-600">Verifying seals & terminology</span>
+                <span className="text-sm font-bold text-text-primary block">Scanning document...</span>
+                <span className="text-xs text-brand-warning">Verifying seals & terminology</span>
               </div>
-              <div className="w-48 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                <div className="w-full h-full bg-amber-500 animate-pulse" />
+              <div className="w-48 h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                <div className="w-full h-full bg-brand-primary animate-pulse" />
               </div>
             </div>
           ) : (
             <>
-              <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 text-brand-primary border border-indigo-100 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                 <UploadCloud className="w-6 h-6" />
               </div>
-              <h3 className="font-bold text-sm text-slate-900 mb-1">
+              <h3 className="font-bold text-sm text-text-primary mb-1">
                 {dict.digitalArrest.dropNoticeTitle}
               </h3>
-              <p className="text-xs text-slate-500 mb-4 max-w-xs leading-relaxed font-sans">
+              <p className="text-xs text-text-muted mb-4 max-w-xs leading-relaxed font-sans">
                 {dict.digitalArrest.dropNoticeSubtitle}
               </p>
-              <label className="cursor-pointer px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl text-xs font-bold transition-all shadow-xs active:scale-95">
+              <label className="cursor-pointer px-5 py-2.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs active:scale-95">
                 <span>{dict.digitalArrest.uploadDocumentBtn}</span>
                 <input
                   type="file"
@@ -403,7 +403,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
                 />
               </label>
               {profile.evidenceFileName && (
-                <div className="mt-3 text-xs text-amber-800 bg-amber-50 px-3 py-1 rounded-full border border-amber-200 flex items-center gap-1.5 font-medium">
+                <div className="mt-3 text-xs text-brand-success bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5 font-medium">
                   ✓ Uploaded: {profile.evidenceFileName}
                 </div>
               )}
@@ -412,11 +412,11 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
         </div>
 
         {/* Text Paste Area */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 flex flex-col justify-between shadow-xs">
+        <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 flex flex-col justify-between shadow-sm">
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                <FileText className="w-4 h-4 text-amber-600" />
+              <label className="text-xs font-bold text-text-primary flex items-center gap-1.5">
+                <FileText className="w-4 h-4 text-brand-warning" />
                 <span>{dict.digitalArrest.pasteDemandTitle}</span>
               </label>
               <VoiceInputButton
@@ -431,20 +431,20 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
               value={pastedText}
               onChange={(e) => handlePastedChange(e.target.value)}
               placeholder={dict.digitalArrest.pasteDemandPlaceholder}
-              className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-amber-500 text-slate-800 placeholder-slate-400 leading-relaxed"
+              className="w-full p-3 bg-surface-card border border-stone-200 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-brand-primary text-text-primary placeholder-text-muted leading-relaxed"
             />
           </div>
 
-          <div className="pt-3 flex items-center justify-between text-xs text-slate-600 border-t border-slate-100">
-            <span>{dict.digitalArrest.targetAgencyLabel}: <strong className="text-slate-900 font-bold">{profile.impersonatedAgency || "CBI"}</strong></span>
-            <span>{dict.digitalArrest.demandLabel}: <strong className="text-rose-600 font-bold">₹{(profile.extortionDemandAmount || 250000).toLocaleString("en-IN")}</strong></span>
+          <div className="pt-3 flex items-center justify-between text-xs text-text-muted border-t border-stone-100">
+            <span>{dict.digitalArrest.targetAgencyLabel}: <strong className="text-text-primary font-bold">{profile.impersonatedAgency || "CBI"}</strong></span>
+            <span>{dict.digitalArrest.demandLabel}: <strong className="text-brand-warning font-bold">₹{(profile.extortionDemandAmount || 250000).toLocaleString("en-IN")}</strong></span>
           </div>
         </div>
       </div>
 
       {/* Advisory Banner */}
-      <div className="mb-8 bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 text-xs text-slate-700 leading-relaxed shadow-xs">
-        <strong className="text-slate-900 font-bold block mb-1">{dict.digitalArrest.advisoryTitle}</strong>
+      <div className="mb-8 bg-surface-section border border-stone-200/60 rounded-2xl p-4 sm:p-5 text-xs text-text-muted leading-relaxed shadow-sm">
+        <strong className="text-text-primary font-bold block mb-1">{dict.digitalArrest.advisoryTitle}</strong>
         {dict.digitalArrest.advisoryDesc}
       </div>
 
@@ -456,7 +456,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
             stopSpeaking();
             onNext();
           }}
-          className="h-12 px-8 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-bold text-sm flex items-center gap-2 shadow-xs transition-all mx-auto active:scale-95"
+          className="h-12 px-8 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-sm flex items-center gap-2 shadow-xs transition-all mx-auto active:scale-95"
         >
           <span>{dict.digitalArrest.continueToReviewProof}</span>
           <ArrowRight className="w-4 h-4" />

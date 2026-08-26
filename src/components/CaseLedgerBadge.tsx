@@ -56,9 +56,9 @@ export const CaseLedgerBadge: React.FC<CaseLedgerBadgeProps> = ({
       <div 
         role="status" 
         aria-live="polite" 
-        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 text-[10px] font-medium border border-slate-200 ${className}`}
+        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-section text-text-muted text-[10px] font-medium border border-stone-200/80 ${className}`}
       >
-        <Loader2 className="w-3 h-3 animate-spin text-indigo-600" aria-hidden="true" />
+        <Loader2 className="w-3 h-3 animate-spin text-brand-primary" aria-hidden="true" />
         <span>Verifying Ledger Chain...</span>
       </div>
     );
@@ -71,17 +71,17 @@ export const CaseLedgerBadge: React.FC<CaseLedgerBadgeProps> = ({
         aria-live="polite" 
         className={`inline-flex flex-col gap-1 ${className}`}
       >
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-bold border border-emerald-200 shadow-xs">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" aria-hidden="true" />
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-brand-success text-[11px] font-bold border border-emerald-200 shadow-xs">
+          <ShieldCheck className="w-3.5 h-3.5 text-brand-success shrink-0" aria-hidden="true" />
           <span>Chain of Custody: Verified ✓</span>
           {entryCount > 0 && (
-            <span className="text-[10px] bg-emerald-100/80 text-emerald-900 px-1.5 py-0.2 rounded-full font-mono">
+            <span className="text-[10px] bg-emerald-100 text-brand-success px-1.5 py-0.2 rounded-full font-mono">
               {entryCount} {entryCount === 1 ? 'block' : 'blocks'}
             </span>
           )}
         </div>
         {showDetails && latestHash && (
-          <span className="text-[10px] font-mono text-slate-400 truncate max-w-[280px]">
+          <span className="text-[10px] font-mono text-text-muted truncate max-w-[280px]">
             Root Hash: {latestHash.substring(0, 16)}...
           </span>
         )}
@@ -91,8 +91,8 @@ export const CaseLedgerBadge: React.FC<CaseLedgerBadgeProps> = ({
 
   return (
     <div className={`inline-flex flex-col gap-1 ${className}`}>
-      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-50 text-rose-800 text-[11px] font-bold border border-rose-200 shadow-xs">
-        <ShieldAlert className="w-3.5 h-3.5 text-rose-600 shrink-0" />
+      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 text-brand-urgent text-[11px] font-bold border border-red-200 shadow-xs">
+        <ShieldAlert className="w-3.5 h-3.5 text-brand-urgent shrink-0" />
         <span>
           Integrity Check Failed
           {brokenAtSequence !== undefined ? ` (Broken at Block #${brokenAtSequence})` : ""}

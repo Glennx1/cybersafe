@@ -195,54 +195,54 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/95 text-slate-100 flex flex-col justify-between font-sans animate-in fade-in backdrop-blur-md">
-      {/* Top Header Bar */}
-      <div className="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          {/* Live Recording Pulse Indicator */}
-          <div className="flex items-center gap-2 bg-rose-950/60 border border-rose-800/80 px-3 py-1 rounded-full">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping shrink-0" />
-            <span className="text-xs font-bold text-rose-300 font-mono tracking-wider uppercase">
-              {isRecording ? "Recording Live" : "Capture Vault Active"}
-            </span>
+    <div className="fixed inset-0 z-50 bg-brand-navy/60 backdrop-blur-xs flex items-center justify-center p-4 font-sans animate-in fade-in">
+      <div className="bg-surface-card text-text-primary border border-stone-200/80 rounded-3xl shadow-2xl max-w-xl w-full p-6 sm:p-7 max-h-[90vh] flex flex-col justify-between overflow-y-auto">
+        {/* Top Header Bar */}
+        <div className="pb-3 border-b border-stone-100 flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2.5">
+            {/* Live Recording Pulse Indicator */}
+            <div className="flex items-center gap-2 bg-red-50 border border-brand-urgent/30 px-3 py-1 rounded-full">
+              <span className="w-2.5 h-2.5 rounded-full bg-brand-urgent animate-ping shrink-0" />
+              <span className="text-xs font-bold text-brand-urgent font-mono tracking-wider uppercase">
+                {isRecording ? "Recording Live" : "Capture Vault Active"}
+              </span>
+            </div>
+
+            <div className="text-xs font-mono font-bold text-text-primary flex items-center gap-1 bg-surface-section px-2.5 py-1 rounded-full border border-stone-200/80">
+              <Clock className="w-3.5 h-3.5 text-text-muted" />
+              <span>{formatDuration(recordingDuration)}</span>
+            </div>
           </div>
 
-          <div className="text-xs font-mono font-bold text-slate-300 flex items-center gap-1 bg-slate-900 px-2.5 py-1 rounded-full border border-slate-800">
-            <Clock className="w-3.5 h-3.5 text-slate-400" />
-            <span>{formatDuration(recordingDuration)}</span>
+          {/* Top Right Controls (Minimize / Keep recording in background) */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="text-xs text-text-muted hover:text-text-primary bg-surface-section hover:bg-stone-200 px-3 py-1.5 rounded-lg border border-stone-200 flex items-center gap-1.5 transition-all"
+              title="Minimize window while recording continues in background"
+            >
+              <Minimize2 className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Minimize</span>
+            </button>
           </div>
         </div>
 
-        {/* Top Right Controls (Minimize / Keep recording in background) */}
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-xs text-slate-400 hover:text-white bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-800 flex items-center gap-1.5 transition-all"
-            title="Minimize window while recording continues in background"
-          >
-            <Minimize2 className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Minimize</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Main Content Area */}
-      <div className="flex-1 max-w-xl w-full mx-auto p-5 flex flex-col justify-between overflow-y-auto">
+        {/* Main Content Area */}
         <div className="space-y-4">
           {/* Audio Telemetry Banner */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+          <div className="bg-surface-section border border-stone-200/80 rounded-2xl p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold ${
-                isRecording ? "bg-rose-500/20 text-rose-400 border border-rose-500/30" : "bg-slate-800 text-slate-400"
+                isRecording ? "bg-red-50 text-brand-urgent border border-brand-urgent/30" : "bg-stone-200 text-stone-600"
               }`}>
                 {isRecording ? <Mic className="w-5 h-5 animate-pulse" /> : <MicOff className="w-5 h-5" />}
               </div>
               <div>
-                <h3 className="text-xs font-bold text-white">
+                <h3 className="text-xs font-bold text-text-primary">
                   {isRecording ? "Device Microphone Capturing Audio" : "Microphone Idle / Text Capture Ready"}
                 </h3>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[11px] text-text-muted">
                   {micAvailable === false
                     ? "Mic unavailable — you can still log quick notes below."
                     : "Encrypted locally on this device. Zero network traffic."}
@@ -251,23 +251,23 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
             </div>
 
             <div className="flex items-center gap-1">
-              <span className={`w-1.5 h-4 rounded-full bg-rose-500 ${isRecording ? "animate-pulse" : "opacity-30"}`} />
-              <span className={`w-1.5 h-6 rounded-full bg-rose-400 ${isRecording ? "animate-pulse delay-75" : "opacity-30"}`} />
-              <span className={`w-1.5 h-3 rounded-full bg-rose-500 ${isRecording ? "animate-pulse delay-150" : "opacity-30"}`} />
+              <span className={`w-1.5 h-4 rounded-full bg-brand-urgent ${isRecording ? "animate-pulse" : "opacity-30"}`} />
+              <span className={`w-1.5 h-6 rounded-full bg-brand-urgent ${isRecording ? "animate-pulse delay-75" : "opacity-30"}`} />
+              <span className={`w-1.5 h-3 rounded-full bg-brand-urgent ${isRecording ? "animate-pulse delay-150" : "opacity-30"}`} />
             </div>
           </div>
 
           {/* Quick Note Input (Sub-10s Entry) */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-sm">
+          <div className="bg-surface-section border border-stone-200/80 rounded-2xl p-4 shadow-sm">
             <div className="flex items-center justify-between mb-2">
-              <label htmlFor="quick-note-input" className="text-xs font-bold text-slate-300">
+              <label htmlFor="quick-note-input" className="text-xs font-bold text-text-primary">
                 Jot down quick details (Phone #, Caller Name, Bank, Demand):
               </label>
               <VoiceInputButton
                 language={language}
                 fieldLabel="Quick incident note"
                 buttonTitle="Dictate quick note"
-                className="bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700"
+                className="bg-surface-card hover:bg-stone-50 text-text-primary border-stone-200"
                 onTranscript={(text) => setQuickNoteText((prev) => (prev ? `${prev} ${text}` : text))}
               />
             </div>
@@ -279,13 +279,13 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
                 value={quickNoteText}
                 onChange={(e) => setQuickNoteText(e.target.value)}
                 placeholder="e.g. CBI Officer Sharma, ₹2.5L, Skype: cbi.investigation"
-                className="flex-1 px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-indigo-500"
+                className="flex-1 px-3.5 py-2.5 bg-surface-card border border-stone-200 rounded-xl text-xs text-text-primary placeholder-text-muted focus:outline-hidden focus:border-brand-primary"
               />
               <button
                 type="submit"
-                className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all shrink-0 flex items-center gap-1 shadow-xs active:scale-95"
+                className="px-4 py-2.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shrink-0 flex items-center gap-1 shadow-xs active:scale-95"
               >
-                {noteSavedFeedback ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Plus className="w-3.5 h-3.5" />}
+                {noteSavedFeedback ? <Check className="w-3.5 h-3.5 text-brand-success" /> : <Plus className="w-3.5 h-3.5" />}
                 <span>{noteSavedFeedback ? "Saved" : "Add Note"}</span>
               </button>
             </form>
@@ -293,15 +293,15 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
 
           {/* Captured Notes List */}
           {notes.length > 0 && (
-            <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-4">
-              <span className="text-[11px] font-bold text-slate-400 block mb-2 uppercase tracking-wider">
+            <div className="bg-surface-section border border-stone-200/80 rounded-2xl p-4">
+              <span className="text-[11px] font-bold text-text-muted block mb-2 uppercase tracking-wider">
                 Logged Notes ({notes.length})
               </span>
-              <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+              <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
                 {notes.map((note, idx) => (
-                  <div key={note.id || idx} className="p-2.5 bg-slate-950 rounded-xl border border-slate-800/80 flex items-start justify-between gap-2 text-xs">
-                    <span className="text-slate-200 font-medium">{note.text}</span>
-                    <span className="text-[10px] text-slate-500 font-mono shrink-0">
+                  <div key={note.id || idx} className="p-2.5 bg-surface-card rounded-xl border border-stone-200/60 flex items-start justify-between gap-2 text-xs">
+                    <span className="text-text-primary font-medium">{note.text}</span>
+                    <span className="text-[10px] text-text-muted font-mono shrink-0">
                       {new Date(note.deviceTimestamp).toLocaleTimeString()}
                     </span>
                   </div>
@@ -312,12 +312,12 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
         </div>
 
         {/* Bottom Actions Bar */}
-        <div className="pt-6 border-t border-slate-800 space-y-3">
+        <div className="pt-6 border-t border-stone-100 space-y-3 mt-4">
           <div className="flex flex-col sm:flex-row items-center gap-2.5">
             <button
               type="button"
               onClick={handleStopAndSave}
-              className="w-full sm:flex-1 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
+              className="w-full sm:flex-1 py-3.5 bg-brand-success hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
             >
               <Check className="w-4 h-4 stroke-[2.5]" />
               <span>Stop & Save Evidence</span>
@@ -326,14 +326,14 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
             <button
               type="button"
               onClick={handleStopAndDiscard}
-              className="w-full sm:w-auto px-4 py-3.5 bg-slate-900 hover:bg-rose-950/60 text-slate-400 hover:text-rose-400 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-800 transition-all"
+              className="w-full sm:w-auto px-4 py-3.5 bg-surface-card hover:bg-red-50 text-brand-urgent rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-stone-200 transition-all shadow-xs"
             >
               <Trash2 className="w-4 h-4" />
               <span>Stop & Discard</span>
             </button>
           </div>
 
-          <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
+          <div className="flex items-center justify-between text-[11px] text-text-muted pt-1">
             <span>Evidence saved to local device IndexedDB.</span>
             <button
               type="button"
@@ -341,7 +341,7 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
                 handleStopAndSave();
                 onNavigateToLogin();
               }}
-              className="text-indigo-400 hover:text-indigo-300 font-bold underline flex items-center gap-1"
+              className="text-brand-primary hover:underline font-bold flex items-center gap-1"
             >
               <span>Go to login & start case</span>
               <ArrowRight className="w-3 h-3" />

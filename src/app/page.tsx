@@ -276,7 +276,7 @@ export default function Home() {
   return (
     <>
       <SkipToContent />
-      <main className="min-h-screen flex flex-col justify-between bg-surface-bg text-text-primary font-sans">
+      <main className="min-h-screen flex flex-col justify-between bg-surface-page text-text-primary font-sans">
         {/* Emergency Sticky Header */}
         <Header
           language={language}
@@ -299,24 +299,24 @@ export default function Home() {
           {/* === CASE A: NOT LOGGED IN -> REQUIRE SIGN IN FIRST === */}
           {!currentUser ? (
             <div className="py-12 flex flex-col items-center justify-center animate-in fade-in">
-              <div className="bg-white border border-slate-200 rounded-3xl shadow-xl max-w-lg w-full p-8 sm:p-10 relative">
+              <div className="bg-surface-card border border-stone-200/80 rounded-3xl shadow-xl max-w-lg w-full p-8 sm:p-10 relative">
                 <div className="text-center mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center mx-auto mb-4 shadow-xs">
+                  <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-brand-primary border border-indigo-100 flex items-center justify-center mx-auto mb-4 shadow-xs">
                     <Shield className="w-7 h-7" aria-hidden="true" />
                   </div>
-                  <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+                  <h1 className="text-2xl font-extrabold text-text-primary tracking-tight">
                     Sign in to CyberRakshak 1930
                   </h1>
-                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                  <p className="text-xs sm:text-sm text-text-muted mt-1">
                     Access your secure dashboard to file cyber incidents, generate freeze notices, and manage cases.
                   </p>
                 </div>
 
                 {/* Demo Credentials Box */}
-                <div className="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 mb-6 text-xs text-slate-700">
-                  <div className="flex items-center justify-between font-bold text-indigo-900 mb-2">
+                <div className="bg-surface-section border border-stone-200/80 rounded-2xl p-4 mb-6 text-xs text-text-muted">
+                  <div className="flex items-center justify-between font-bold text-text-primary mb-2">
                     <span className="flex items-center gap-1.5">
-                      <CheckCircle2 className="w-4 h-4 text-indigo-600" aria-hidden="true" />
+                      <CheckCircle2 className="w-4 h-4 text-brand-success" aria-hidden="true" />
                       Demo Credentials Ready
                     </span>
                     <button
@@ -326,32 +326,32 @@ export default function Home() {
                         setLoginPassword("password123");
                         setLoginError(null);
                       }}
-                      className="text-xs text-indigo-600 hover:text-indigo-800 font-bold underline"
+                      className="text-xs text-brand-primary hover:text-indigo-800 font-bold underline"
                     >
                       Auto-Fill
                     </button>
                   </div>
-                  <div className="text-xs text-slate-600 grid grid-cols-2 gap-2 bg-white/80 p-2.5 rounded-xl border border-indigo-100/60">
+                  <div className="text-xs text-text-muted grid grid-cols-2 gap-2 bg-surface-card p-2.5 rounded-xl border border-stone-200/60">
                     <div>
-                      <span className="text-[10px] text-slate-400 block uppercase">Phone</span>
-                      <strong className="text-slate-900 font-mono">9999999999</strong>
+                      <span className="text-[10px] text-text-muted block uppercase">Phone</span>
+                      <strong className="text-text-primary font-mono">9999999999</strong>
                     </div>
                     <div>
-                      <span className="text-[10px] text-slate-400 block uppercase">Password</span>
-                      <strong className="text-slate-900 font-mono">password123</strong>
+                      <span className="text-[10px] text-text-muted block uppercase">Password</span>
+                      <strong className="text-text-primary font-mono">password123</strong>
                     </div>
                   </div>
                 </div>
 
               {loginError && (
-                <div role="alert" className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs">
+                <div role="alert" className="mb-4 p-3 bg-red-50 border border-brand-urgent/40 text-brand-urgent rounded-xl text-xs">
                   {loginError}
                 </div>
               )}
 
               <form onSubmit={handleInitialLogin} className="space-y-4 text-xs">
                 <div>
-                  <label htmlFor="login-phone" className="block text-slate-700 font-bold mb-1.5">Mobile Phone Number</label>
+                  <label htmlFor="login-phone" className="block text-text-primary font-bold mb-1.5">Mobile Phone Number</label>
                   <input
                     id="login-phone"
                     type="tel"
@@ -359,12 +359,12 @@ export default function Home() {
                     value={loginPhone}
                     onChange={(e) => setLoginPhone(e.target.value)}
                     placeholder="Enter mobile number"
-                    className="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-hidden focus:ring-2 focus:ring-indigo-500 text-slate-900"
+                    className="w-full px-3.5 py-3 bg-surface-card border border-stone-200 rounded-xl text-xs font-mono focus:outline-hidden focus:ring-2 focus:ring-brand-primary text-text-primary"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="login-password" className="block text-slate-700 font-bold mb-1.5">Password</label>
+                  <label htmlFor="login-password" className="block text-text-primary font-bold mb-1.5">Password</label>
                   <input
                     id="login-password"
                     type="password"
@@ -372,26 +372,26 @@ export default function Home() {
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
                     placeholder="Enter password"
-                    className="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 text-slate-900"
+                    className="w-full px-3.5 py-3 bg-surface-card border border-stone-200 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-brand-primary text-text-primary"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={loginLoading}
-                  className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 disabled:opacity-50 mt-2"
+                  className="w-full py-3.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95 disabled:opacity-50 mt-2"
                 >
                   <span>{loginLoading ? "Authenticating..." : "Sign In & Begin Case"}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
 
-              <div className="mt-6 pt-5 border-t border-slate-100 text-center text-xs text-slate-500">
+              <div className="mt-6 pt-5 border-t border-stone-100 text-center text-xs text-text-muted">
                 Need a new account?{" "}
                 <button
                   type="button"
                   onClick={() => setShowAuthModal(true)}
-                  className="text-indigo-600 font-bold hover:underline"
+                  className="text-brand-primary font-bold hover:underline"
                 >
                   Register Here
                 </button>
@@ -405,10 +405,10 @@ export default function Home() {
             {!isSubmitted && currentStep === 1 && (
               <div className="pt-8 pb-6">
                 <div className="text-center mb-6">
-                  <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                  <h1 className="text-2xl sm:text-3xl font-extrabold text-text-primary tracking-tight">
                     {dict.common.flowSelectTitle}
                   </h1>
-                  <p className="text-slate-600 text-sm mt-1">
+                  <p className="text-text-muted text-sm mt-1">
                     {dict.common.flowSelectSubtitle}
                   </p>
                 </div>

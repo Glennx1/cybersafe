@@ -94,64 +94,64 @@ Location: ${profile.cityState}
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brand-navy/60 backdrop-blur-xs animate-in fade-in"
       onClick={onClose}
     >
       <div
-        className="bg-white text-slate-800 border border-slate-200 rounded-2xl shadow-xl max-w-2xl w-full p-6 sm:p-7 max-h-[90vh] overflow-y-auto font-sans"
+        className="bg-surface-card text-text-primary border border-stone-200/80 rounded-2xl shadow-xl max-w-2xl w-full p-6 sm:p-7 max-h-[90vh] overflow-y-auto font-sans"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-5">
+        <div className="flex items-center justify-between pb-3 border-b border-stone-100 mb-5">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center font-bold">
+            <div className="w-9 h-9 rounded-xl bg-indigo-50 text-brand-primary border border-indigo-100 flex items-center justify-center font-bold">
               <Mail className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-sm text-slate-900">
+              <h3 className="font-bold text-sm text-text-primary">
                 Email Bank Fraud Desk
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-text-muted">
                 Send a formal Section 91 BNSS freeze request to your bank
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-7 h-7 flex items-center justify-center rounded-lg bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors"
+            className="w-7 h-7 flex items-center justify-center rounded-lg bg-surface-section text-text-muted hover:text-text-primary transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Bank Registry Target Card */}
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-5">
-          <div className="flex items-center gap-2 text-xs font-bold text-indigo-700 uppercase tracking-wider mb-2">
+        <div className="bg-surface-section border border-stone-200/60 rounded-xl p-4 mb-5">
+          <div className="flex items-center gap-2 text-xs font-bold text-brand-primary uppercase tracking-wider mb-2">
             <Building2 className="w-4 h-4" />
             <span>Target Bank Nodal Hub</span>
           </div>
-          <div className="text-sm font-bold text-slate-900 mb-2">{bank.name}</div>
+          <div className="text-sm font-bold text-text-primary mb-2">{bank.name}</div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-            <div className="bg-white rounded-lg p-2.5 border border-slate-200">
-              <span className="text-slate-500 block text-[10px] font-bold">To (Principal Nodal Officer):</span>
-              <span className="text-indigo-700 select-all font-bold text-xs truncate block">{bank.nodalEmail}</span>
+            <div className="bg-surface-card rounded-lg p-2.5 border border-stone-200/60">
+              <span className="text-text-muted block text-[10px] font-bold">To (Principal Nodal Officer):</span>
+              <span className="text-brand-primary select-all font-bold text-xs truncate block">{bank.nodalEmail}</span>
             </div>
-            <div className="bg-white rounded-lg p-2.5 border border-slate-200">
-              <span className="text-slate-500 block text-[10px] font-bold">CC (Cyber Fraud Cell):</span>
-              <span className="text-slate-800 select-all font-bold text-xs truncate block">{bank.cyberEmail}</span>
+            <div className="bg-surface-card rounded-lg p-2.5 border border-stone-200/60">
+              <span className="text-text-muted block text-[10px] font-bold">CC (Cyber Fraud Cell):</span>
+              <span className="text-text-primary select-all font-bold text-xs truncate block">{bank.cyberEmail}</span>
             </div>
           </div>
           {bank.phone && (
-            <div className="mt-2 text-xs text-slate-600 flex items-center gap-1.5 font-medium">
-              <PhoneCall className="w-3.5 h-3.5 text-amber-600" />
-              <span>Emergency Hotline: <strong>{bank.phone}</strong></span>
+            <div className="mt-2 text-xs text-text-muted flex items-center gap-1.5 font-medium">
+              <PhoneCall className="w-3.5 h-3.5 text-brand-warning" />
+              <span>Emergency Hotline: <strong className="text-text-primary">{bank.phone}</strong></span>
             </div>
           )}
         </div>
 
         {/* Dispatch Options */}
         <div className="space-y-2.5 mb-5">
-          <div className="text-xs font-bold text-slate-700">
+          <div className="text-xs font-bold text-text-primary">
             Choose Client to Dispatch:
           </div>
 
@@ -161,7 +161,7 @@ Location: ${profile.cityState}
               href={gmailUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-2.5 px-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-xs active:scale-95"
+              className="py-2.5 px-3 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-xs active:scale-95"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               <span>Open in Gmail</span>
@@ -172,7 +172,7 @@ Location: ${profile.cityState}
               href={outlookUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-2.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-xs active:scale-95"
+              className="py-2.5 px-3 rounded-xl bg-brand-primary hover:bg-indigo-700 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-xs active:scale-95"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               <span>Open in Outlook</span>
@@ -181,7 +181,7 @@ Location: ${profile.cityState}
             {/* Default Mail App */}
             <a
               href={mailtoUrl}
-              className="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-95"
+              className="py-2.5 px-3 rounded-xl bg-brand-navy hover:bg-indigo-950 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-95"
             >
               <Mail className="w-3.5 h-3.5" />
               <span>Default Mail App</span>
@@ -191,35 +191,35 @@ Location: ${profile.cityState}
           {/* Copy Button */}
           <button
             onClick={() => copyToClipboard(`TO: ${bank.nodalEmail}\nCC: ${bank.cyberEmail}\nSUBJECT: ${subject}\n\n${body}`, 'all')}
-            className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-bold flex items-center justify-center gap-2 border border-slate-200 transition-all"
+            className="w-full py-2 bg-surface-card hover:bg-stone-50 text-text-primary rounded-lg text-xs font-bold flex items-center justify-center gap-2 border border-stone-200 transition-all shadow-xs"
           >
-            {copiedAll ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+            {copiedAll ? <Check className="w-3.5 h-3.5 text-brand-success" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copiedAll ? "Copied Full Notice!" : "Copy Full Notice & Addresses"}</span>
           </button>
         </div>
 
         {/* Notice Preview */}
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+        <div className="bg-surface-section border border-stone-200/60 rounded-xl p-3.5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-slate-700">
+            <span className="text-xs font-bold text-text-primary">
               Notice Text Preview
             </span>
             <button
               onClick={() => copyToClipboard(body, 'body')}
-              className="text-xs text-indigo-600 hover:text-indigo-700 font-bold flex items-center gap-1"
+              className="text-xs text-brand-primary hover:text-indigo-700 font-bold flex items-center gap-1"
             >
-              {copiedBody ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedBody ? <Check className="w-3.5 h-3.5 text-brand-success" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copiedBody ? "Copied" : "Copy Text"}</span>
             </button>
           </div>
-          <div className="text-xs text-slate-700 bg-white rounded-lg p-3 max-h-44 overflow-y-auto whitespace-pre-wrap border border-slate-200 leading-relaxed font-mono">
+          <div className="text-xs text-text-primary bg-surface-card rounded-lg p-3 max-h-44 overflow-y-auto whitespace-pre-wrap border border-stone-200/80 leading-relaxed font-mono">
             {body}
           </div>
         </div>
 
         {/* Footer */}
-        <div className="mt-3.5 flex items-center gap-2 text-xs text-slate-500">
-          <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+        <div className="mt-3.5 flex items-center gap-2 text-xs text-text-muted">
+          <ShieldCheck className="w-4 h-4 text-brand-success shrink-0" />
           <span>
             Under RBI Master Directions, sending this written notice establishes timestamp proof of your reporting.
           </span>

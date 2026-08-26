@@ -81,31 +81,31 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
   return (
     <div className="max-w-4xl mx-auto py-6 animate-in fade-in duration-300">
       {/* 1. Hero Reassurance Banner */}
-      <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs mb-6">
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-3 border border-emerald-200 w-fit">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
+      <div className="bg-surface-card rounded-2xl p-6 sm:p-7 border border-stone-200/80 shadow-sm mb-6">
+        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-brand-success text-xs font-bold mb-3 border border-emerald-200 w-fit">
+          <ShieldCheck className="w-4 h-4 text-brand-success" />
           <span>{dict.digitalArrest.safeTakeActionBadge}</span>
         </div>
 
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-text-primary tracking-tight mb-2">
           {dict.digitalArrest.step3NextStepsTitle}
         </h2>
 
-        <p className="text-xs sm:text-sm text-slate-600 max-w-xl leading-relaxed">
+        <p className="text-xs sm:text-sm text-text-muted max-w-xl leading-relaxed">
           {dict.digitalArrest.step3NextStepsSubtitle}
         </p>
       </div>
 
-      {/* 2. Step-by-Step Safety Steps */}
-      <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 sm:p-6 mb-6 shadow-sm">
+      {/* 2. Step-by-Step Safety Steps (surface-section container with surface-card numbered cards) */}
+      <div className="bg-surface-section border border-stone-200/60 rounded-2xl p-5 sm:p-6 mb-6 shadow-sm">
         <h3 className="text-xs font-bold text-text-primary mb-4 flex items-center gap-2">
           <PhoneOff className="w-4 h-4 text-brand-primary" />
           <span>{dict.step3Action.whatNextTitle}</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-4 rounded-xl bg-stone-50 border border-stone-200/60">
-            <div className="w-6 h-6 rounded-md bg-indigo-100 text-brand-primary text-xs font-bold flex items-center justify-center mb-2">
+          <div className="p-4 rounded-xl bg-surface-card border border-stone-200/80 shadow-xs">
+            <div className="w-6 h-6 rounded-md bg-indigo-50 text-brand-primary text-xs font-bold flex items-center justify-center mb-2">
               1
             </div>
             <h4 className="text-xs font-bold text-text-primary mb-1">{dict.digitalArrest.safetyStep1Title}</h4>
@@ -114,8 +114,8 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-stone-50 border border-stone-200/60">
-            <div className="w-6 h-6 rounded-md bg-amber-100 text-brand-warning text-xs font-bold flex items-center justify-center mb-2">
+          <div className="p-4 rounded-xl bg-surface-card border border-stone-200/80 shadow-xs">
+            <div className="w-6 h-6 rounded-md bg-amber-50 text-brand-warning text-xs font-bold flex items-center justify-center mb-2">
               2
             </div>
             <h4 className="text-xs font-bold text-text-primary mb-1">{dict.digitalArrest.safetyStep2Title}</h4>
@@ -124,8 +124,8 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-stone-50 border border-stone-200/60">
-            <div className="w-6 h-6 rounded-md bg-indigo-100 text-brand-primary text-xs font-bold flex items-center justify-center mb-2">
+          <div className="p-4 rounded-xl bg-surface-card border border-stone-200/80 shadow-xs">
+            <div className="w-6 h-6 rounded-md bg-indigo-50 text-brand-primary text-xs font-bold flex items-center justify-center mb-2">
               3
             </div>
             <h4 className="text-xs font-bold text-text-primary mb-1">{dict.digitalArrest.safetyStep3Title}</h4>
@@ -139,18 +139,18 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
       {/* 3. Action Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         {/* Action 1: Download FIR PDF */}
-        <div className="bg-white border border-slate-200 hover:border-indigo-300 rounded-2xl p-5 shadow-xs transition-all flex flex-col justify-between group">
+        <div className="bg-surface-card border border-stone-200/80 hover:border-brand-primary rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between group">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold border border-indigo-100">
+              <div className="w-9 h-9 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold border border-indigo-100">
                 <FileCheck className="w-5 h-5" />
               </div>
-              <span className="text-xs text-slate-500 font-medium">BNS Sec 204 & 308</span>
+              <span className="text-xs text-text-muted font-medium">BNS Sec 204 & 308</span>
             </div>
-            <h3 className="font-bold text-sm text-slate-900 mb-1">
+            <h3 className="font-bold text-sm text-text-primary mb-1">
               {dict.digitalArrest.safetyStep3Title}
             </h3>
-            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+            <p className="text-xs text-text-muted leading-relaxed mb-4">
               {dict.digitalArrest.safetyStep3Desc}
             </p>
           </div>
@@ -160,7 +160,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
                 type="button"
                 onClick={handleShareDigitalArrestFir}
                 disabled={sharingFir}
-                className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
+                className="flex-1 py-2.5 bg-brand-success hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
               >
                 <Share2 className="w-3.5 h-3.5" />
                 <span>{shareSuccess ? "Shared!" : dict.common.shareWhatsApp}</span>
@@ -168,7 +168,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
 
               <button
                 onClick={onDownloadDigitalArrestFir}
-                className="px-3.5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
+                className="px-3.5 py-2.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
                 title="Download PDF"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -180,10 +180,10 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
               <button
                 type="button"
                 onClick={() => generateSection63BsaCertificatePdf(profile)}
-                className="w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-emerald-200 transition-all active:scale-95"
+                className="w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-brand-success rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-emerald-200 transition-all active:scale-95"
                 title="Section 63(4) BSA 2023 Certificate of Authenticity for submitted evidence"
               >
-                <Download className="w-3.5 h-3.5 text-emerald-700" />
+                <Download className="w-3.5 h-3.5 text-brand-success" />
                 <span>Download Sec 63 BSA Certificate</span>
               </button>
             )}
@@ -191,34 +191,34 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
         </div>
 
         {/* Action 2: DoT Chakshu SIM Blocking */}
-        <div className="bg-white border border-slate-200 hover:border-blue-300 rounded-2xl p-5 shadow-xs transition-all flex flex-col justify-between group">
+        <div className="bg-surface-card border border-stone-200/80 hover:border-brand-primary rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between group">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold border border-blue-100">
+              <div className="w-9 h-9 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold border border-indigo-100">
                 <Radio className="w-5 h-5" />
               </div>
-              <span className="text-xs text-slate-500 font-medium">DoT Sanchar Saathi</span>
+              <span className="text-xs text-text-muted font-medium">DoT Sanchar Saathi</span>
             </div>
-            <h3 className="font-bold text-sm text-slate-900 mb-1">
+            <h3 className="font-bold text-sm text-text-primary mb-1">
               {dict.digitalArrest.safetyStep2Title}
             </h3>
-            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+            <p className="text-xs text-text-muted leading-relaxed mb-4">
               {dict.digitalArrest.safetyStep2Desc}
             </p>
           </div>
           <div className="space-y-2">
             <button
               onClick={handleCopyChakshuDetails}
-              className="w-full py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 border border-slate-200 transition-all"
+              className="w-full py-2 bg-stone-50 hover:bg-stone-100 text-text-primary rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 border border-stone-200 transition-all"
             >
-              {copiedChakshu ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
+              {copiedChakshu ? <Check className="w-3.5 h-3.5 text-brand-success" /> : <Copy className="w-3.5 h-3.5 text-text-muted" />}
               <span>{copiedChakshu ? dict.digitalArrest.chakshuCopiedBtn : dict.digitalArrest.copyChakshuBtn}</span>
             </button>
             <a
               href={chakshuUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition-all active:scale-95"
+              className="w-full py-2.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition-all active:scale-95"
             >
               <span>{dict.digitalArrest.openChakshuBtn}</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -228,29 +228,29 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
       </div>
 
       {/* 4. Real Verified Central Control Room Directory */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
-        <h3 className="text-xs font-bold text-slate-800 mb-3 flex items-center gap-2">
-          <Building2 className="w-4 h-4 text-indigo-600" />
+      <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 sm:p-6 mb-6 shadow-sm">
+        <h3 className="text-xs font-bold text-text-primary mb-3 flex items-center gap-2">
+          <Building2 className="w-4 h-4 text-brand-primary" />
           <span>Official Verified Helplines & Numbers</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-          <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
-            <span className="text-slate-500 block text-xs font-medium">National Cybercrime Helpline:</span>
-            <span className="text-emerald-700 text-sm font-bold mt-0.5 block">1930 (Toll Free)</span>
-            <span className="text-[11px] text-slate-500 block mt-0.5">24x7 Citizen Cyber Defense</span>
+          <div className="bg-surface-section rounded-xl p-3 border border-stone-200/60">
+            <span className="text-text-muted block text-xs font-medium">National Cybercrime Helpline:</span>
+            <span className="text-brand-success text-sm font-bold mt-0.5 block">1930 (Toll Free)</span>
+            <span className="text-[11px] text-text-muted block mt-0.5">24x7 Citizen Cyber Defense</span>
           </div>
 
-          <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
-            <span className="text-slate-500 block text-xs font-medium">CBI Control Room:</span>
-            <span className="text-slate-900 text-xs font-bold mt-0.5 block">011-24362755</span>
-            <span className="text-[11px] text-slate-500 block mt-0.5">HQ Lodhi Road, New Delhi</span>
+          <div className="bg-surface-section rounded-xl p-3 border border-stone-200/60">
+            <span className="text-text-muted block text-xs font-medium">CBI Control Room:</span>
+            <span className="text-text-primary text-xs font-bold mt-0.5 block">011-24362755</span>
+            <span className="text-[11px] text-text-muted block mt-0.5">HQ Lodhi Road, New Delhi</span>
           </div>
 
-          <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
-            <span className="text-slate-500 block text-xs font-medium">Enforcement Directorate (ED):</span>
-            <span className="text-slate-900 text-xs font-bold mt-0.5 block">011-23339100</span>
-            <span className="text-[11px] text-slate-500 block mt-0.5">Headquarters, New Delhi</span>
+          <div className="bg-surface-section rounded-xl p-3 border border-stone-200/60">
+            <span className="text-text-muted block text-xs font-medium">Enforcement Directorate (ED):</span>
+            <span className="text-text-primary text-xs font-bold mt-0.5 block">011-23339100</span>
+            <span className="text-[11px] text-text-muted block mt-0.5">Headquarters, New Delhi</span>
           </div>
         </div>
       </div>
@@ -259,7 +259,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
       <div className="flex items-center justify-between">
         <button
           onClick={onBack}
-          className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 bg-white border border-slate-200 hover:border-slate-300 transition-all flex items-center gap-1.5 shadow-xs"
+          className="px-5 py-2.5 rounded-xl text-xs font-bold text-text-muted hover:text-text-primary bg-surface-card border border-stone-200 hover:border-stone-300 transition-all flex items-center gap-1.5 shadow-xs"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Legal Reality</span>

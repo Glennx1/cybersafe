@@ -52,50 +52,50 @@ export const CyberFirRegistrationModal: React.FC<CyberFirRegistrationModalProps>
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brand-navy/60 backdrop-blur-xs animate-in fade-in"
       onClick={onClose}
     >
       <div
-        className="bg-white text-slate-800 border border-slate-200 rounded-2xl shadow-2xl max-w-3xl w-full p-6 sm:p-7 max-h-[90vh] flex flex-col font-sans"
+        className="bg-surface-card text-text-primary border border-stone-200/80 rounded-2xl shadow-2xl max-w-3xl w-full p-6 sm:p-7 max-h-[90vh] flex flex-col font-sans"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4 shrink-0">
+        <div className="flex items-center justify-between pb-3 border-b border-stone-100 mb-4 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100 flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-brand-primary border border-indigo-100 flex items-center justify-center font-bold">
               <Scale className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-bold text-base text-slate-900">
+                <h3 className="font-bold text-base text-text-primary">
                   Register Cyber Police FIR
                 </h3>
-                <span className="text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold bg-indigo-50 text-brand-primary border border-indigo-200 px-2 py-0.5 rounded-full">
                   Official Police Format
                 </span>
               </div>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-text-muted">
                 Official filing pursuant to BNS Sec 318(4) & IT Act Sec 66D
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-100 text-slate-500 hover:text-slate-800"
+            className="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-section text-text-muted hover:text-text-primary"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Method Toggle */}
-        <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl mb-4 text-xs font-bold shrink-0">
+        <div className="grid grid-cols-2 gap-2 p-1 bg-surface-section rounded-xl mb-4 text-xs font-bold shrink-0">
           <button
             type="button"
             onClick={() => setSelectedMethod("online")}
             className={`py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
               selectedMethod === "online"
-                ? "bg-white text-indigo-700 shadow-xs"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-surface-card text-brand-primary shadow-xs"
+                : "text-text-muted hover:text-text-primary"
             }`}
           >
             <ExternalLink className="w-3.5 h-3.5" />
@@ -106,8 +106,8 @@ export const CyberFirRegistrationModal: React.FC<CyberFirRegistrationModalProps>
             onClick={() => setSelectedMethod("station")}
             className={`py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
               selectedMethod === "station"
-                ? "bg-white text-indigo-700 shadow-xs"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-surface-card text-brand-primary shadow-xs"
+                : "text-text-muted hover:text-text-primary"
             }`}
           >
             <Printer className="w-3.5 h-3.5" />
@@ -116,34 +116,34 @@ export const CyberFirRegistrationModal: React.FC<CyberFirRegistrationModalProps>
         </div>
 
         {/* Scrollable Content Area */}
-        <div className="flex-1 overflow-y-auto space-y-4 pr-1 text-xs text-slate-700">
+        <div className="flex-1 overflow-y-auto space-y-4 pr-1 text-xs text-text-muted">
           {/* Key Identifiers Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-surface-section p-3 rounded-xl border border-stone-200/60">
             <div>
-              <span className="text-[10px] text-slate-500 block">Complainant</span>
-              <strong className="text-slate-900 font-bold truncate block">{profile.victimName}</strong>
+              <span className="text-[10px] text-text-muted block">Complainant</span>
+              <strong className="text-text-primary font-bold truncate block">{profile.victimName}</strong>
             </div>
             <div>
-              <span className="text-[10px] text-slate-500 block">Fraud Amount</span>
-              <strong className="text-rose-700 font-bold block">₹{profile.fraudAmount.toLocaleString("en-IN")}</strong>
+              <span className="text-[10px] text-text-muted block">Fraud Amount</span>
+              <strong className="text-brand-urgent font-bold block">₹{profile.fraudAmount.toLocaleString("en-IN")}</strong>
             </div>
             <div>
-              <span className="text-[10px] text-slate-500 block">Banking UTR</span>
-              <strong className="text-slate-900 font-mono font-bold truncate block">{profile.utrNumber || "Pending"}</strong>
+              <span className="text-[10px] text-text-muted block">Banking UTR</span>
+              <strong className="text-text-primary font-mono font-bold truncate block">{profile.utrNumber || "Pending"}</strong>
             </div>
             <div>
-              <span className="text-[10px] text-slate-500 block">Suspect Account / VPA</span>
-              <strong className="text-indigo-700 font-mono font-bold truncate block">{profile.suspectVpa || profile.suspectAccountNo || "Extracted"}</strong>
+              <span className="text-[10px] text-text-muted block">Suspect Account / VPA</span>
+              <strong className="text-brand-primary font-mono font-bold truncate block">{profile.suspectVpa || profile.suspectAccountNo || "Extracted"}</strong>
             </div>
           </div>
 
           {selectedMethod === "online" ? (
-            <div className="bg-indigo-50/50 border border-indigo-100 rounded-xl p-4 space-y-2.5">
-              <h4 className="font-bold text-slate-900 flex items-center gap-1.5 text-xs">
-                <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+            <div className="bg-surface-section border border-stone-200/80 rounded-xl p-4 space-y-2.5">
+              <h4 className="font-bold text-text-primary flex items-center gap-1.5 text-xs">
+                <CheckCircle2 className="w-4 h-4 text-brand-primary" />
                 <span>How to file on cybercrime.gov.in (NCRP):</span>
               </h4>
-              <ol className="list-decimal list-inside space-y-1 text-slate-600 leading-relaxed text-xs">
+              <ol className="list-decimal list-inside space-y-1 text-text-muted leading-relaxed text-xs">
                 <li>Copy the pre-written legal narrative below.</li>
                 <li>Open the official National Cyber Crime Reporting Portal.</li>
                 <li>Click <strong>Report Other Cyber Crime &gt; Financial Fraud</strong>.</li>
@@ -152,12 +152,12 @@ export const CyberFirRegistrationModal: React.FC<CyberFirRegistrationModalProps>
               </ol>
             </div>
           ) : (
-            <div className="bg-amber-50/50 border border-amber-200/80 rounded-xl p-4 space-y-2.5">
-              <h4 className="font-bold text-slate-900 flex items-center gap-1.5 text-xs">
-                <CheckCircle2 className="w-4 h-4 text-amber-700" />
+            <div className="bg-surface-section border border-stone-200/80 rounded-xl p-4 space-y-2.5">
+              <h4 className="font-bold text-text-primary flex items-center gap-1.5 text-xs">
+                <CheckCircle2 className="w-4 h-4 text-brand-warning" />
                 <span>How to file at your local Police Cyber Cell:</span>
               </h4>
-              <ol className="list-decimal list-inside space-y-1 text-slate-600 leading-relaxed text-xs">
+              <ol className="list-decimal list-inside space-y-1 text-text-muted leading-relaxed text-xs">
                 <li>Download the generated <strong>Police FIR Dossier PDF</strong> below.</li>
                 <li>Print 2 copies and sign the Complainant Signature field.</li>
                 <li>Submit to the Duty Officer / Station House Officer (SHO) at your nearest Cyber Police Station.</li>
@@ -169,16 +169,16 @@ export const CyberFirRegistrationModal: React.FC<CyberFirRegistrationModalProps>
           {/* Pre-Compiled FIR Text Preview */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="font-bold text-slate-800 text-xs flex items-center gap-1">
-                <FileText className="w-3.5 h-3.5 text-indigo-600" />
+              <label className="font-bold text-text-primary text-xs flex items-center gap-1">
+                <FileText className="w-3.5 h-3.5 text-brand-primary" />
                 <span>Pre-Formatted FIR Complaint Statement:</span>
               </label>
               <button
                 type="button"
                 onClick={handleCopyText}
-                className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md font-bold text-[11px] flex items-center gap-1 transition-all"
+                className="px-2.5 py-1 bg-surface-card hover:bg-stone-50 text-text-primary border border-stone-200 rounded-md font-bold text-[11px] flex items-center gap-1 transition-all shadow-xs"
               >
-                {copiedText ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                {copiedText ? <Check className="w-3 h-3 text-brand-success" /> : <Copy className="w-3 h-3" />}
                 <span>{copiedText ? "Copied to Clipboard!" : "Copy Complaint Text"}</span>
               </button>
             </div>
@@ -186,20 +186,20 @@ export const CyberFirRegistrationModal: React.FC<CyberFirRegistrationModalProps>
               readOnly
               rows={7}
               value={firNarrativeText}
-              className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] font-mono text-slate-800 leading-relaxed focus:outline-hidden resize-none"
+              className="w-full p-3 bg-surface-section border border-stone-200 rounded-xl text-[11px] font-mono text-text-primary leading-relaxed focus:outline-hidden resize-none"
             />
           </div>
         </div>
 
         {/* Modal Action Buttons */}
-        <div className="pt-4 border-t border-slate-100 mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+        <div className="pt-4 border-t border-stone-100 mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
           <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => generatePoliceFirPdf(profile, auditReport)}
-              className="w-full sm:w-auto px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border border-slate-200 transition-all active:scale-95"
+              className="w-full sm:w-auto px-4 py-2.5 bg-surface-card hover:bg-stone-50 text-text-primary rounded-xl font-bold text-xs flex items-center justify-center gap-2 border border-stone-200 transition-all active:scale-95 shadow-xs"
             >
-              <Download className="w-4 h-4 text-indigo-600" />
+              <Download className="w-4 h-4 text-brand-primary" />
               <span>Download Signed FIR PDF</span>
             </button>
 
@@ -207,10 +207,10 @@ export const CyberFirRegistrationModal: React.FC<CyberFirRegistrationModalProps>
               <button
                 type="button"
                 onClick={() => generateSection63BsaCertificatePdf(profile)}
-                className="w-full sm:w-auto px-3.5 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-emerald-200 transition-all active:scale-95"
+                className="w-full sm:w-auto px-3.5 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-brand-success rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-emerald-200 transition-all active:scale-95"
                 title="Section 63(4) BSA 2023 Certificate of Authenticity for submitted evidence"
               >
-                <Download className="w-4 h-4 text-emerald-700" />
+                <Download className="w-4 h-4 text-brand-success" />
                 <span>Sec 63 BSA Cert PDF</span>
               </button>
             )}
@@ -221,7 +221,7 @@ export const CyberFirRegistrationModal: React.FC<CyberFirRegistrationModalProps>
               href={nationalPortalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95"
+              className="w-full sm:w-auto px-5 py-2.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
             >
               <span>Open cybercrime.gov.in</span>
               <ExternalLink className="w-4 h-4" />
