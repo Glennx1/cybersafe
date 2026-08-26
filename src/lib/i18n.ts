@@ -237,8 +237,7 @@ export interface TranslationDictionary {
   };
 }
 
-export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
-  en: {
+const EN_DICT: TranslationDictionary = {
     common: {
       appName: "CyberRakshak 1930",
       tagline: "A guided cyber-fraud assistant & statutory action system",
@@ -472,8 +471,9 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       docEvidenceCert: "Evidence Certificate",
       docEvidenceCertSub: "Sec 63(4) BSA 2023"
     }
-  },
-  hi: {
+  };
+
+  const HI_DICT: TranslationDictionary = {
     common: {
       appName: "साइबर रक्षक 1930",
       tagline: "मार्गदर्शित साइबर-धोखाधड़ी सहायक और कानूनी कार्रवाई प्रणाली",
@@ -707,24 +707,11 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       docEvidenceCert: "साक्ष्य प्रमाण पत्र",
       docEvidenceCertSub: "धारा 63(4) BSA 2023"
     }
-  },
-  ta: {
-    ...I18N_RESOURCES_EN_FALLBACK("ta")
-  },
-  te: {
-    ...I18N_RESOURCES_EN_FALLBACK("te")
-  },
-  kn: {
-    ...I18N_RESOURCES_EN_FALLBACK("kn")
-  },
-  bn: {
-    ...I18N_RESOURCES_EN_FALLBACK("bn")
-  }
-};
+  };
 
-function I18N_RESOURCES_EN_FALLBACK(lang: "ta" | "te" | "kn" | "bn"): TranslationDictionary {
-  const en = I18N_RESOURCES.en;
-  // If native common translations already exist for regional stubs, we retain them
+  function I18N_RESOURCES_EN_FALLBACK(lang: "ta" | "te" | "kn" | "bn"): TranslationDictionary {
+    const en = EN_DICT;
+    // If native common translations already exist for regional stubs, we retain them
   if (lang === "ta") {
     return {
       ...en,
@@ -905,6 +892,15 @@ function I18N_RESOURCES_EN_FALLBACK(lang: "ta" | "te" | "kn" | "bn"): Translatio
     }
   };
 }
+
+export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
+  en: EN_DICT,
+  hi: HI_DICT,
+  ta: I18N_RESOURCES_EN_FALLBACK("ta"),
+  te: I18N_RESOURCES_EN_FALLBACK("te"),
+  kn: I18N_RESOURCES_EN_FALLBACK("kn"),
+  bn: I18N_RESOURCES_EN_FALLBACK("bn")
+};
 
 export function getDictionary(lang: Language): TranslationDictionary {
   return I18N_RESOURCES[lang] || I18N_RESOURCES.en;
