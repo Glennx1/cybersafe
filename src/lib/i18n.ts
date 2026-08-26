@@ -21,6 +21,22 @@ export interface TranslationDictionary {
     verified: string;
     recordLiveCallout: string;
     recordLiveBtn: string;
+    // Flow selector cards
+    flowSelectTitle: string;
+    flowSelectSubtitle: string;
+    selected: string;
+    financialCardTitle: string;
+    financialCardSubtitle: string;
+    financialCardDesc: string;
+    financialTag1: string;
+    financialTag2: string;
+    financialTag3: string;
+    digitalCardTitle: string;
+    digitalCardSubtitle: string;
+    digitalCardDesc: string;
+    digitalTag1: string;
+    digitalTag2: string;
+    digitalTag3: string;
   };
   navigation: {
     financialStep1: string;
@@ -99,7 +115,22 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       downloadPdf: "Download PDF",
       verified: "Verified",
       recordLiveCallout: "Being scammed right now? Record live",
-      recordLiveBtn: "Record Live"
+      recordLiveBtn: "Record Live",
+      flowSelectTitle: "Tell us what happened",
+      flowSelectSubtitle: "Choose the option that best matches your situation.",
+      selected: "Selected",
+      financialCardTitle: "Money was sent or deducted without my permission",
+      financialCardSubtitle: "Payment, UPI, card, or bank-transfer fraud",
+      financialCardDesc: "Add the payment details you have, then use the next steps to contact your bank and the cybercrime helpline.",
+      financialTag1: "Screenshot Helper",
+      financialTag2: "Bank Lien Request",
+      financialTag3: "Magistrate Petition",
+      digitalCardTitle: "Suspicious calls, messages, or fake documents",
+      digitalCardSubtitle: "Fake law-enforcement calls, blackmail, or digital arrest threats",
+      digitalCardDesc: "Save the caller details and messages. We'll guide you through the safest reporting steps.",
+      digitalTag1: "Document Check",
+      digitalTag2: "Complaint Draft",
+      digitalTag3: "SIM Block Guidance"
     },
     navigation: {
       financialStep1: "1. Tell us what happened",
@@ -176,7 +207,22 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       downloadPdf: "पीडीएफ डाउनलोड करें",
       verified: "सत्यापित",
       recordLiveCallout: "क्या अभी धोखाधड़ी कॉल पर हैं? लाइव रिकॉर्ड करें",
-      recordLiveBtn: "लाइव रिकॉर्ड"
+      recordLiveBtn: "लाइव रिकॉर्ड",
+      flowSelectTitle: "बताएं क्या हुआ",
+      flowSelectSubtitle: "वह विकल्प चुनें जो आपकी स्थिति से सबसे अधिक मेल खाता हो।",
+      selected: "चयनित",
+      financialCardTitle: "मेरी अनुमति के बिना पैसे भेजे या काटे गए",
+      financialCardSubtitle: "UPI, कार्ड या बैंक ट्रांसफर धोखाधड़ी",
+      financialCardDesc: "आपके पास जो भुगतान विवरण हैं वो डालें, फिर अपने बैंक और साइबर क्राइम हेल्पलाइन से संपर्क करें।",
+      financialTag1: "स्क्रीनशॉट सहायक",
+      financialTag2: "बैंक लीन अनुरोध",
+      financialTag3: "मजिस्ट्रेट याचिका",
+      digitalCardTitle: "संदिग्ध कॉल, संदेश या नकली दस्तावेज़",
+      digitalCardSubtitle: "फर्जी कानून प्रवर्तन, ब्लैकमेल या डिजिटल अरेस्ट की धमकी",
+      digitalCardDesc: "कॉलर के विवरण और संदेश सहेजें। हम आपको सबसे सुरक्षित रिपोर्टिंग प्रक्रिया से मार्गदर्शन देंगे।",
+      digitalTag1: "दस्तावेज़ जांच",
+      digitalTag2: "शिकायत मसौदा",
+      digitalTag3: "सिम ब्लॉक मार्गदर्शन"
     },
     navigation: {
       financialStep1: "1. बताएं क्या हुआ",
@@ -254,7 +300,22 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       downloadPdf: "PDF பதிவிறக்கு",
       verified: "சரிபார்க்கப்பட்டது",
       recordLiveCallout: "இப்போது மோசடி அழைப்பில் உள்ளீர்களா? பதிவு செய்க",
-      recordLiveBtn: "நேரலை பதிவு"
+      recordLiveBtn: "நேரலை பதிவு",
+      flowSelectTitle: "என்ன நடந்தது என்று சொல்லுங்கள்",
+      flowSelectSubtitle: "உங்கள் நிலைமைக்கு மிகவும் பொருத்தமான விருப்பத்தைத் தேர்ந்தெடுக்கவும்.",
+      selected: "தேர்ந்தெடுக்கப்பட்டது",
+      financialCardTitle: "என் அனுமதி இல்லாமல் பணம் அனுப்பப்பட்டது அல்லது கழிக்கப்பட்டது",
+      financialCardSubtitle: "UPI, அட்டை அல்லது வங்கி பரிமாற்ற மோசடி",
+      financialCardDesc: "நீங்கள் வைத்திருக்கும் கட்டண விவரங்களைச் சேர்க்கவும், பின்னர் உங்கள் வங்கி மற்றும் சைபர் குற்ற உதவி எண்ணை தொடர்பு கொள்ளவும்.",
+      financialTag1: "ஸ்கிரீன்ஷாட் உதவியாளர்",
+      financialTag2: "வங்கி Lien கோரிக்கை",
+      financialTag3: "மாஜிஸ்ட்ரேட் மனு",
+      digitalCardTitle: "சந்தேகப்படத்தக்க அழைப்புகள், செய்திகள் அல்லது போலி ஆவணங்கள்",
+      digitalCardSubtitle: "போலி சட்ட அமலாக்க அழைப்புகள், மிரட்டல் அல்லது டிஜிட்டல் கைது அச்சுறுத்தல்கள்",
+      digitalCardDesc: "அழைப்பாளர் விவரங்கள் மற்றும் செய்திகளை சேமிக்கவும். நாங்கள் உங்களை பாதுகாப்பான புகாரளிக்கும் படிகள் வழியாக வழிநடத்துவோம்.",
+      digitalTag1: "ஆவண சரிபார்ப்பு",
+      digitalTag2: "புகார் வரைவு",
+      digitalTag3: "SIM தடுப்பு வழிகாட்டுதல்"
     },
     navigation: {
       financialStep1: "1. என்ன நடந்தது என்று சொல்லுங்கள்",
@@ -331,7 +392,22 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       downloadPdf: "PDF డౌన్‌లోడ్ చేయండి",
       verified: "ధృవీకరించబడింది",
       recordLiveCallout: "ఇప్పుడే మోసపు కాల్‌లో ఉన్నారా? లైవ్ రికార్డ్ చేయండి",
-      recordLiveBtn: "లైవ్ రికార్డ్"
+      recordLiveBtn: "లైవ్ రికార్డ్",
+      flowSelectTitle: "ఏం జరిగిందో మాకు చెప్పండి",
+      flowSelectSubtitle: "మీ పరిస్థితికి బాగా సరిపోయే ఎంపికను ఎంచుకోండి.",
+      selected: "ఎంచుకోబడింది",
+      financialCardTitle: "నా అనుమతి లేకుండా డబ్బు పంపబడింది లేదా తీసివేయబడింది",
+      financialCardSubtitle: "UPI, కార్డు లేదా బ్యాంక్ బదిలీ మోసం",
+      financialCardDesc: "మీ వద్ద ఉన్న చెల్లింపు వివరాలను జోడించండి, తర్వాత మీ బ్యాంక్ మరియు సైబర్ క్రైమ్ హెల్ప్‌లైన్‌ను సంప్రదించండి.",
+      financialTag1: "స్క్రీన్‌షాట్ సహాయకుడు",
+      financialTag2: "బ్యాంక్ Lien అభ్యర్థన",
+      financialTag3: "మేజిస్ట్రేట్ పిటిషన్",
+      digitalCardTitle: "అనుమానాస్పద కాల్‌లు, సందేశాలు లేదా నకిలీ పత్రాలు",
+      digitalCardSubtitle: "నకిలీ చట్ట అమలు కాల్‌లు, బ్లాక్‌మెయిల్ లేదా డిజిటల్ అరెస్ట్ బెదిరింపులు",
+      digitalCardDesc: "కాలర్ వివరాలు మరియు సందేశాలను సేవ్ చేయండి. మేము మీకు సురక్షితమైన రిపోర్టింగ్ దశలను నిర్దేశిస్తాము.",
+      digitalTag1: "పత్రాల తనిఖీ",
+      digitalTag2: "ఫిర్యాదు ముసాయిదా",
+      digitalTag3: "SIM బ్లాక్ మార్గదర్శకత్వం"
     },
     navigation: {
       financialStep1: "1. ఏం జరిగిందో మాకు చెప్పండి",
@@ -408,7 +484,22 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       downloadPdf: "ಪಿಡಿಎಫ್ ಡೌನ್‌ಲೋಡ್",
       verified: "ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
       recordLiveCallout: "ಈಗ ವಂಚನೆಯ ಕರೆಯಲ್ಲಿರುವಿರಾ? ಲೈವ್ ರೆಕಾರ್ಡ್ ಮಾಡಿ",
-      recordLiveBtn: "ಲೈವ್ ರೆಕಾರ್ಡ್"
+      recordLiveBtn: "ಲೈವ್ ರೆಕಾರ್ಡ್",
+      flowSelectTitle: "ಏನಾಯಿತು ಎಂದು ನಮಗೆ ತಿಳಿಸಿ",
+      flowSelectSubtitle: "ನಿಮ್ಮ ಪರಿಸ್ಥಿತಿಗೆ ಹೆಚ್ಚು ಸೂಕ್ತವಾದ ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ.",
+      selected: "ಆಯ್ಕೆಯಾಗಿದೆ",
+      financialCardTitle: "ನನ್ನ ಅನುಮತಿ ಇಲ್ಲದೆ ಹಣ ಕಳಿಸಲಾಯಿತು ಅಥವಾ ಕಡಿತವಾಯಿತು",
+      financialCardSubtitle: "UPI, ಕಾರ್ಡ್ ಅಥವಾ ಬ್ಯಾಂಕ್ ವರ್ಗಾವಣೆ ವಂಚನೆ",
+      financialCardDesc: "ನೀವು ಹೊಂದಿರುವ ಪಾವತಿ ವಿವರಗಳನ್ನು ಸೇರಿಸಿ, ನಂತರ ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಮತ್ತು ಸೈಬರ್ ಕ್ರೈಮ್ ಹೆಲ್ಪ್‌ಲೈನ್ ಅನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+      financialTag1: "ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ಸಹಾಯಕ",
+      financialTag2: "ಬ್ಯಾಂಕ್ Lien ವಿನಂತಿ",
+      financialTag3: "ಮ್ಯಾಜಿಸ್ಟ್ರೇಟ್ ಅರ್ಜಿ",
+      digitalCardTitle: "ಅನುಮಾನಾಸ್ಪದ ಕರೆಗಳು, ಸಂದೇಶಗಳು ಅಥವಾ ನಕಲಿ ದಾಖಲೆಗಳು",
+      digitalCardSubtitle: "ನಕಲಿ ಕಾನೂನು ಜಾರಿ ಕರೆಗಳು, ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್ ಅಥವಾ ಡಿಜಿಟಲ್ ಅರೆಸ್ಟ್ ಬೆದರಿಕೆಗಳು",
+      digitalCardDesc: "ಕರೆ ಮಾಡಿದವರ ವಿವರಗಳು ಮತ್ತು ಸಂದೇಶಗಳನ್ನು ಉಳಿಸಿ. ಸುರಕ್ಷಿತ ದೂರು ಸಲ್ಲಿಕೆ ಹಂತಗಳ ಮೂಲಕ ಮಾರ್ಗದರ್ಶನ ನೀಡುತ್ತೇವೆ.",
+      digitalTag1: "ದಾಖಲೆ ಪರಿಶೀಲನೆ",
+      digitalTag2: "ದೂರು ಕರಡು",
+      digitalTag3: "SIM ಬ್ಲಾಕ್ ಮಾರ್ಗದರ್ಶನ"
     },
     navigation: {
       financialStep1: "1. ಏನಾಯಿತು ಎಂದು ನಮಗೆ ತಿಳಿಸಿ",
@@ -485,7 +576,22 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       downloadPdf: "পিডিএফ ডাউনলোড",
       verified: "যাচাইকৃত",
       recordLiveCallout: "এখনই প্রতারণামূলক কলে আছেন? লাইভ রেকর্ড করুন",
-      recordLiveBtn: "লাইভ রেকর্ড"
+      recordLiveBtn: "লাইভ রেকর্ড",
+      flowSelectTitle: "কী হয়েছে তা আমাদের বলুন",
+      flowSelectSubtitle: "আপনার পরিস্থিতির সাথে সবচেয়ে ভালো মেলে এমন বিকল্পটি বেছে নিন।",
+      selected: "নির্বাচিত",
+      financialCardTitle: "আমার অনুমতি ছাড়াই টাকা পাঠানো বা কাটা হয়েছে",
+      financialCardSubtitle: "UPI, কার্ড বা ব্যাংক ট্রান্সফার প্রতারণা",
+      financialCardDesc: "আপনার কাছে থাকা পেমেন্টের বিবরণ যোগ করুন, তারপর আপনার ব্যাংক ও সাইবার ক্রাইম হেল্পলাইনে যোগাযোগ করুন।",
+      financialTag1: "স্ক্রিনশট সহায়ক",
+      financialTag2: "ব্যাংক Lien অনুরোধ",
+      financialTag3: "ম্যাজিস্ট্রেট পিটিশন",
+      digitalCardTitle: "সন্দেহজনক কল, বার্তা বা ভুয়া নথি",
+      digitalCardSubtitle: "ভুয়া আইন প্রয়োগকারী কল, ব্ল্যাকমেইল বা ডিজিটাল গ্রেপ্তারের হুমকি",
+      digitalCardDesc: "কলারের বিবরণ ও বার্তাগুলো সংরক্ষণ করুন। আমরা সবচেয়ে নিরাপদ রিপোর্টিং পদক্ষেপগুলোতে আপনাকে গাইড করব।",
+      digitalTag1: "নথি পরীক্ষা",
+      digitalTag2: "অভিযোগ খসড়া",
+      digitalTag3: "SIM ব্লক নির্দেশিকা"
     },
     navigation: {
       financialStep1: "১. কি ঘটেছে আমাদের বলুন",

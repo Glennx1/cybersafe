@@ -26,6 +26,7 @@ import {
   DispatchPayload
 } from "@/lib/types";
 import { runForensicAudit, generateDispatchPayload } from "@/lib/forensicEngine";
+import { getDictionary } from "@/lib/i18n";
 import { generateBankFreezePdf, generatePoliceFirPdf, generateMagistratePetitionPdf, generateDigitalArrestFirPdf } from "@/lib/pdfGenerator";
 import { Shield, Sparkles, Code2, X, Zap, ShieldAlert, CheckCircle2, ArrowRight, Radio, EyeOff, FileText, Mic, AlertCircle } from "lucide-react";
 import confetti from "canvas-confetti";
@@ -53,6 +54,7 @@ export default function Home() {
   };
 
   const [language, setLanguage] = useState<Language>("en");
+  const dict = getDictionary(language);
   const [flowType, setFlowType] = useState<FlowType>("digital_arrest");
   const [currentStep, setCurrentStep] = useState<number>(1);
 
@@ -398,10 +400,10 @@ export default function Home() {
               <div className="pt-8 pb-6">
                 <div className="text-center mb-6">
                   <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                    Tell us what happened
+                    {dict.common.flowSelectTitle}
                   </h1>
                   <p className="text-slate-600 text-sm mt-1">
-                    Choose the option that best matches your situation.
+                    {dict.common.flowSelectSubtitle}
                   </p>
                 </div>
 
@@ -420,7 +422,7 @@ export default function Home() {
                   >
                     {flowType === "financial_fraud" && (
                       <div className="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-                        Selected
+                        {dict.common.selected}
                       </div>
                     )}
                     <div>
@@ -434,23 +436,23 @@ export default function Home() {
                         </div>
                         <div>
                           <h3 className="font-bold text-base text-slate-900">
-                            Money was sent or deducted without my permission
+                            {dict.common.financialCardTitle}
                           </h3>
                           <span className="text-xs text-rose-600 font-semibold block">
-                            Payment, UPI, card, or bank-transfer fraud
+                            {dict.common.financialCardSubtitle}
                           </span>
                         </div>
                       </div>
 
                       <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                        Add the payment details you have, then use the next steps to contact your bank and the cybercrime helpline.
+                        {dict.common.financialCardDesc}
                       </p>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 pt-3 border-t border-slate-100">
-                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">Screenshot Helper</span>
-                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">Bank Lien Request</span>
-                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">Magistrate Petition</span>
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">{dict.common.financialTag1}</span>
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">{dict.common.financialTag2}</span>
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">{dict.common.financialTag3}</span>
                     </div>
                   </div>
 
@@ -468,7 +470,7 @@ export default function Home() {
                   >
                     {flowType === "digital_arrest" && (
                       <div className="absolute top-0 right-0 bg-amber-500 text-slate-950 text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-                        Selected
+                        {dict.common.selected}
                       </div>
                     )}
                     <div>
@@ -482,23 +484,23 @@ export default function Home() {
                         </div>
                         <div>
                           <h3 className="font-bold text-base text-slate-900">
-                            Suspicious calls, messages, or fake documents
+                            {dict.common.digitalCardTitle}
                           </h3>
                           <span className="text-xs text-amber-700 font-semibold block">
-                            Fake law-enforcement calls, blackmail, or digital arrest threats
+                            {dict.common.digitalCardSubtitle}
                           </span>
                         </div>
                       </div>
 
                       <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                        Save the caller details and messages. We'll guide you through the safest reporting steps.
+                        {dict.common.digitalCardDesc}
                       </p>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 pt-3 border-t border-slate-100">
-                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">Document Check</span>
-                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">Complaint Draft</span>
-                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">SIM Block Guidance</span>
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">{dict.common.digitalTag1}</span>
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">{dict.common.digitalTag2}</span>
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-md">{dict.common.digitalTag3}</span>
                     </div>
                   </div>
                 </div>
