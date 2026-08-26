@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { ForensicAuditReport, IncidentProfile, Language } from "@/lib/types";
 import { getDictionary } from "@/lib/i18n";
+import { VoiceInputButton } from "@/components/VoiceInputButton";
 
 interface WizardStep2AuditProps {
   auditReport: ForensicAuditReport;
@@ -138,9 +139,17 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
-              {dict.audit.utrLabel}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-slate-600 font-medium">
+                {dict.audit.utrLabel}
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="UTR Number"
+                buttonTitle="Dictate UTR Number"
+                onTranscript={(text) => onProfileChange({ ...profile, utrNumber: text.replace(/[^0-9]/g, "") })}
+              />
+            </div>
             <input
               type="text"
               placeholder="e.g. 312345678901"
@@ -151,9 +160,22 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
-              {dict.audit.fraudAmountLabel}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-slate-600 font-medium">
+                {dict.audit.fraudAmountLabel}
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="Fraud Amount"
+                buttonTitle="Dictate fraud amount"
+                onTranscript={(text) => {
+                  const cleaned = Number(text.replace(/[^0-9]/g, ""));
+                  if (cleaned) {
+                    onProfileChange({ ...profile, fraudAmount: cleaned });
+                  }
+                }}
+              />
+            </div>
             <input
               type="number"
               placeholder="e.g. 85500"
@@ -164,9 +186,17 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
-              {dict.audit.suspectVpaLabel}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-slate-600 font-medium">
+                {dict.audit.suspectVpaLabel}
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="Suspect UPI ID"
+                buttonTitle="Dictate suspect UPI"
+                onTranscript={(text) => onProfileChange({ ...profile, suspectVpa: text.replace(/\s+/g, "") })}
+              />
+            </div>
             <input
               type="text"
               placeholder="e.g. suspect@upi"
@@ -177,9 +207,17 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
-              {dict.audit.suspectAccountNoLabel}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-slate-600 font-medium">
+                {dict.audit.suspectAccountNoLabel}
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="Suspect Account Number"
+                buttonTitle="Dictate suspect account number"
+                onTranscript={(text) => onProfileChange({ ...profile, suspectAccountNo: text.replace(/[^0-9]/g, "") })}
+              />
+            </div>
             <input
               type="text"
               placeholder="e.g. 987654321012"
@@ -190,9 +228,17 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
-              {dict.audit.suspectIfscLabel}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-slate-600 font-medium">
+                {dict.audit.suspectIfscLabel}
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="Suspect IFSC"
+                buttonTitle="Dictate IFSC code"
+                onTranscript={(text) => onProfileChange({ ...profile, suspectBankIfsc: text.replace(/\s+/g, "").toUpperCase() })}
+              />
+            </div>
             <input
               type="text"
               placeholder="e.g. PYTM0123456"

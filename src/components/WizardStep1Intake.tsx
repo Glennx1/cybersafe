@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   UploadCloud,
   Sparkles,
@@ -10,16 +10,21 @@ import {
   Eye,
   CheckCircle2,
   Lock,
-  FileCheck
+  FileCheck,
+  Volume2,
+  VolumeX
 } from "lucide-react";
 import { IncidentProfile, Language } from "@/lib/types";
 import { parseForensicText } from "@/lib/forensicEngine";
 import { getDictionary } from "@/lib/i18n";
+import { readExtractedDetailsAloud, stopSpeaking } from "@/lib/speechService";
+import { VoiceInputButton } from "@/components/VoiceInputButton";
 import Tesseract from "tesseract.js";
 
 interface WizardStep1IntakeProps {
   profile: IncidentProfile;
   language: Language;
+  audioFirstMode?: boolean;
   onProfileChange: (updated: IncidentProfile) => void;
   onNext: () => void;
 }
@@ -27,12 +32,37 @@ interface WizardStep1IntakeProps {
 export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
   profile,
   language,
+  audioFirstMode = false,
   onProfileChange,
   onNext,
 }) => {
   const dict = getDictionary(language);
   const [isExtracting, setIsExtracting] = useState(false);
   const [pastedText, setPastedText] = useState(profile.rawEvidenceText);
+  const [isReadingAloud, setIsReadingAloud] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      stopSpeaking();
+    };
+  }, []);
+
+  const handleReadAloud = (customProfile?: IncidentProfile) => {
+    if (isReadingAloud) {
+      stopSpeaking();
+      setIsReadingAloud(false);
+      return;
+    }
+
+    readExtractedDetailsAloud(
+      customProfile || profile,
+      false,
+      language,
+      () => setIsReadingAloud(true),
+      () => setIsReadingAloud(false),
+      () => setIsReadingAloud(false)
+    );
+  };
 
   const handleFileUpload = async (file: File) => {
     setIsExtracting(true);
@@ -69,11 +99,11 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
         console.warn("Server hash verification fallback to local:", err);
       }
 
-      // 3. Perform OCR
+      // 3. Tesseract OCR
       const { data: { text } } = await Tesseract.recognize(file, 'eng');
       const parsed = parseForensicText(text);
 
-      onProfileChange({
+      const updatedProfile: IncidentProfile = {
         ...profile,
         evidenceFileName: file.name,
         evidenceHash: clientHashHex,
@@ -87,15 +117,20 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
         fraudAmount: parsed.fraudAmount || profile.fraudAmount,
         suspectVpa: parsed.suspectVpa || profile.suspectVpa,
         suspectBankIfsc: parsed.suspectBankIfsc || profile.suspectBankIfsc
-      });
+      };
+
+      onProfileChange(updatedProfile);
       setPastedText(text);
-      
-      if (!parsed.utrNumber && !parsed.fraudAmount && !parsed.suspectVpa) {
-        alert("OCR Notice: Could not automatically detect UTR or Amount. You can verify and edit the values in Step 2.");
+
+      // Auto read-back if global audio-first mode is enabled
+      if (audioFirstMode) {
+        setTimeout(() => {
+          handleReadAloud(updatedProfile);
+        }, 400);
       }
     } catch (error) {
       console.error("OCR Extraction failed", error);
-      alert("OCR Engine error. Please check console or enter details manually in Step 2.");
+      alert("OCR parsing encountered an issue. You can still paste the raw SMS / transaction text manually.");
     } finally {
       setIsExtracting(false);
     }
@@ -199,6 +234,14 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
                 <FileText className="w-4 h-4 text-indigo-600" />
                 <span>{dict.intake.pasteSmsTitle}</span>
               </label>
+
+              {/* Voice input for SMS / raw transaction text */}
+              <VoiceInputButton
+                language={language}
+                fieldLabel="SMS or Transaction message"
+                buttonTitle="Dictate SMS or fraud details"
+                onTranscript={(text) => handlePastedTextChange(pastedText ? `${pastedText} ${text}` : text)}
+              />
             </div>
             <textarea
               id="raw-sms-input"
@@ -217,19 +260,36 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
         </div>
       </div>
 
-      {/* 3. Forensic Entity Manifest */}
-      {(profile.serverEvidenceHash || profile.evidenceHash) && (
+      {/* 3. Forensic Entity Manifest & Audio Read-Back */}
+      {(profile.serverEvidenceHash || profile.evidenceHash || profile.utrNumber || profile.fraudAmount > 0) && (
         <div className="mb-8 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs animate-in fade-in" aria-live="polite">
-          <div className="flex items-center justify-between mb-3 pb-2.5 border-b border-slate-100">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 pb-2.5 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <Eye className="w-4 h-4 text-indigo-600" />
               <h3 className="text-xs font-bold text-slate-800">
                 Extracted Information & Section 63 BSA Hash
               </h3>
             </div>
-            <span className="text-xs bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full border border-emerald-200 font-medium">
-              Server Verified
-            </span>
+            <div className="flex items-center gap-2">
+              {/* Active Audio Read-Back Button */}
+              <button
+                type="button"
+                onClick={() => handleReadAloud()}
+                aria-label={isReadingAloud ? "Stop reading details" : "Read extracted details aloud in your language"}
+                className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs active:scale-95 ${
+                  isReadingAloud
+                    ? "bg-rose-600 text-white animate-pulse"
+                    : "bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200"
+                }`}
+              >
+                {isReadingAloud ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                <span>{isReadingAloud ? "Stop Audio" : "Read Details Aloud"}</span>
+              </button>
+
+              <span className="text-xs bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full border border-emerald-200 font-medium">
+                Server Verified
+              </span>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
@@ -268,7 +328,10 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
       <div className="text-center pt-2">
         <button
           type="button"
-          onClick={onNext}
+          onClick={() => {
+            stopSpeaking();
+            onNext();
+          }}
           className="h-12 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm flex items-center gap-2 shadow-sm transition-all mx-auto active:scale-95"
         >
           <span>Continue to check details</span>

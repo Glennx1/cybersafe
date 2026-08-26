@@ -21,6 +21,7 @@ export interface AccessibilitySettings {
   textScale: "1" | "1.25" | "1.5";
   panicMode: boolean;
   readAloud: boolean;
+  audioFirstMode: boolean;
   showSignLanguage: boolean;
 }
 
@@ -31,17 +32,20 @@ const DEFAULT_SETTINGS: AccessibilitySettings = {
   textScale: "1",
   panicMode: false,
   readAloud: false,
+  audioFirstMode: false,
   showSignLanguage: false
 };
 
 interface AccessibilityPanelProps {
   currentLanguage: Language;
   onLanguageChange: (lang: Language) => void;
+  onAudioFirstModeChange?: (enabled: boolean) => void;
 }
 
 export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
   currentLanguage,
-  onLanguageChange
+  onLanguageChange,
+  onAudioFirstModeChange
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [settings, setSettings] = useState<AccessibilitySettings>(DEFAULT_SETTINGS);
@@ -61,6 +65,9 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
         if (parsed.language) {
           onLanguageChange(parsed.language);
         }
+        if (typeof parsed.audioFirstMode === "boolean" && onAudioFirstModeChange) {
+          onAudioFirstModeChange(parsed.audioFirstMode);
+        }
       } else {
         // Detect browser language default
         const browserLang = navigator.language?.slice(0, 2);
@@ -76,6 +83,9 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
         const initial = { ...DEFAULT_SETTINGS, language: detected };
         setSettings(initial);
         onLanguageChange(detected);
+        if (onAudioFirstModeChange) {
+          onAudioFirstModeChange(false);
+        }
       }
     } catch (e) {
       console.warn("Failed to load a11y preferences from localStorage:", e);
@@ -109,6 +119,9 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
 
     if (key === "language") {
       onLanguageChange(value as Language);
+    }
+    if (key === "audioFirstMode" && onAudioFirstModeChange) {
+      onAudioFirstModeChange(value as boolean);
     }
   };
 
@@ -373,7 +386,37 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
               </button>
             </div>
 
-            {/* 5. Sign Language Clips Preference */}
+            {/* 5. Audio-First Mode (Auto Read-Back) */}
+            <div className="mb-5 p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-center justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4 text-amber-600" aria-hidden="true" />
+                  <span className="text-xs font-bold text-slate-900">Audio-First Mode (Auto Read-Back)</span>
+                </div>
+                <p className="text-[11px] text-slate-600 mt-0.5">
+                  Automatically speaks extracted OCR data and Legal Fact Check points aloud without tapping read-aloud buttons.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                role="switch"
+                aria-checked={settings.audioFirstMode}
+                onClick={() => updateSetting("audioFirstMode", !settings.audioFirstMode)}
+                aria-label="Toggle Audio-First Auto Read-Back Mode"
+                className={`w-12 h-6 rounded-full transition-colors relative flex items-center p-1 shrink-0 ${
+                  settings.audioFirstMode ? "bg-amber-600" : "bg-slate-300"
+                }`}
+              >
+                <span
+                  className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform transform ${
+                    settings.audioFirstMode ? "translate-x-6" : "translate-x-0"
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* 6. Sign Language Clips Preference */}
             <div className="mb-6 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-1.5">

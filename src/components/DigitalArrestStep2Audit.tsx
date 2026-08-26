@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
 import {
   ShieldCheck,
   Scale,
@@ -12,14 +14,20 @@ import {
   PhoneCall,
   Lock,
   Sparkles,
-  HelpCircle
+  HelpCircle,
+  Volume2,
+  VolumeX,
+  Radio
 } from "lucide-react";
 import { IncidentProfile, Language } from "@/lib/types";
 import { getDictionary } from "@/lib/i18n";
+import { readLegalFactCheckAloud, stopSpeaking } from "@/lib/speechService";
+import { VoiceInputButton } from "@/components/VoiceInputButton";
 
 interface DigitalArrestStep2AuditProps {
   profile: IncidentProfile;
   language: Language;
+  audioFirstMode?: boolean;
   onProfileChange: (updated: IncidentProfile) => void;
   onBack: () => void;
   onNext: () => void;
@@ -28,11 +36,15 @@ interface DigitalArrestStep2AuditProps {
 export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = ({
   profile,
   language,
+  audioFirstMode = false,
   onProfileChange,
   onBack,
   onNext,
 }) => {
   const dict = getDictionary(language);
+  const [isPlayingFactCheck, setIsPlayingFactCheck] = useState(false);
+  const [activePairIndex, setActivePairIndex] = useState<number | null>(null);
+  const cancelFactCheckRef = useRef<(() => void) | null>(null);
 
   const comparisonData = [
     {
@@ -56,6 +68,48 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
       statute: "Art 22 & Sec 36 BNSS"
     }
   ];
+
+  const handleToggleFactCheckAudio = () => {
+    if (isPlayingFactCheck) {
+      if (cancelFactCheckRef.current) {
+        cancelFactCheckRef.current();
+      }
+      setIsPlayingFactCheck(false);
+      setActivePairIndex(null);
+      return;
+    }
+
+    const cancelFn = readLegalFactCheckAloud(
+      comparisonData,
+      language,
+      () => setIsPlayingFactCheck(true),
+      () => {
+        setIsPlayingFactCheck(false);
+        setActivePairIndex(null);
+      },
+      (idx) => setActivePairIndex(idx)
+    );
+
+    cancelFactCheckRef.current = cancelFn;
+  };
+
+  useEffect(() => {
+    if (audioFirstMode) {
+      const timer = setTimeout(() => {
+        handleToggleFactCheckAudio();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [audioFirstMode]);
+
+  useEffect(() => {
+    return () => {
+      if (cancelFactCheckRef.current) {
+        cancelFactCheckRef.current();
+      }
+      stopSpeaking();
+    };
+  }, []);
 
   return (
     <div className="max-w-4xl mx-auto py-6 animate-in fade-in duration-300">
@@ -82,53 +136,82 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
         </p>
       </div>
 
-      {/* 2. Side-by-Side Deconstruction Table */}
+      {/* 2. Side-by-Side Deconstruction Table & Audio Narration */}
       <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
-        <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
           <span className="text-xs font-bold text-slate-800 flex items-center gap-2">
             <Scale className="w-4 h-4 text-indigo-600" />
             <span>{dict.digitalArrest.claimVsRealityTitle}</span>
           </span>
+
+          {/* Audio Fact Check Narration Control */}
+          <button
+            type="button"
+            onClick={handleToggleFactCheckAudio}
+            aria-label={isPlayingFactCheck ? "Stop legal fact check narration" : "Listen to legal fact check points aloud"}
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs active:scale-95 ${
+              isPlayingFactCheck
+                ? "bg-rose-600 text-white animate-pulse"
+                : "bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200"
+            }`}
+          >
+            {isPlayingFactCheck ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-indigo-600" />}
+            <span>{isPlayingFactCheck ? "Stop Audio Narration" : "Listen to Fact Check Aloud"}</span>
+          </button>
         </div>
 
         <div className="space-y-3">
-          {comparisonData.map((item, idx) => (
-            <div
-              key={idx}
-              className="grid grid-cols-1 md:grid-cols-2 gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200"
-            >
-              {/* Scammer Myth */}
-              <div className="flex items-start gap-2.5">
-                <XCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
-                <div>
-                  <span className="text-[11px] font-bold text-rose-700 block">
-                    {dict.digitalArrest.scammerClaimLabel}:
-                  </span>
-                  <p className="text-xs text-slate-700 mt-0.5 leading-relaxed">{item.scammerMyth}</p>
-                </div>
-              </div>
-
-              {/* Legal Reality */}
-              <div className="flex items-start gap-2.5 border-t md:border-t-0 md:border-l border-slate-200 pt-2 md:pt-0 md:pl-3">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-[11px] font-bold text-emerald-800">
-                      {dict.digitalArrest.legalRealityLabel}:
-                    </span>
-                    <span className="text-[10px] bg-emerald-100/70 text-emerald-800 px-2 py-0.5 rounded font-bold">
-                      {item.statute}
-                    </span>
+          {comparisonData.map((item, idx) => {
+            const isCurrentlyPlaying = activePairIndex === idx && isPlayingFactCheck;
+            return (
+              <div
+                key={idx}
+                className={`grid grid-cols-1 md:grid-cols-2 gap-3 p-4 rounded-xl transition-all ${
+                  isCurrentlyPlaying
+                    ? "bg-indigo-50/80 border-2 border-indigo-500 shadow-md ring-2 ring-indigo-500/20"
+                    : "bg-slate-50 border border-slate-200"
+                }`}
+              >
+                {/* Scammer Myth */}
+                <div className="flex items-start gap-2.5">
+                  <XCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] font-bold text-rose-700 block">
+                        {dict.digitalArrest.scammerClaimLabel}:
+                      </span>
+                      {isCurrentlyPlaying && (
+                        <span className="text-[9px] bg-indigo-600 text-white px-1.5 py-0.5 rounded font-bold uppercase animate-pulse">
+                          Speaking
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-slate-700 mt-0.5 leading-relaxed">{item.scammerMyth}</p>
                   </div>
-                  <p className="text-xs text-slate-800 mt-0.5 leading-relaxed">{item.legalReality}</p>
+                </div>
+
+                {/* Legal Reality */}
+                <div className="flex items-start gap-2.5 border-t md:border-t-0 md:border-l border-slate-200 pt-2 md:pt-0 md:pl-3">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-bold text-emerald-800">
+                        {dict.digitalArrest.legalRealityLabel}:
+                      </span>
+                      <span className="text-[10px] bg-emerald-100/70 text-emerald-800 px-2 py-0.5 rounded font-bold">
+                        {item.statute}
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-800 mt-0.5 leading-relaxed">{item.legalReality}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
-      {/* 3. Complainant & Threat Verification */}
+      {/* 3. Complainant & Threat Verification with Voice Input */}
       <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
         <h3 className="text-xs font-bold text-slate-800 mb-3 flex items-center gap-2">
           <UserCheck className="w-4 h-4 text-indigo-600" />
@@ -137,10 +220,19 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
-              {dict.audit.victimNameLabel}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label htmlFor="victim-name-input" className="text-slate-600 font-medium">
+                {dict.audit.victimNameLabel}
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="Full Name"
+                buttonTitle="Dictate your name"
+                onTranscript={(text) => onProfileChange({ ...profile, victimName: text })}
+              />
+            </div>
             <input
+              id="victim-name-input"
               type="text"
               placeholder="e.g. Aditya Sharma"
               value={profile.victimName}
@@ -150,10 +242,19 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
-              {dict.audit.contactPhoneLabel}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label htmlFor="victim-phone-input" className="text-slate-600 font-medium">
+                {dict.audit.contactPhoneLabel}
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="Mobile Number"
+                buttonTitle="Dictate mobile number"
+                onTranscript={(text) => onProfileChange({ ...profile, victimPhone: text })}
+              />
+            </div>
             <input
+              id="victim-phone-input"
               type="text"
               placeholder="e.g. 9876543210"
               value={profile.victimPhone}
@@ -163,10 +264,19 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
-              City & State
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label htmlFor="city-state-input" className="text-slate-600 font-medium">
+                City & State
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="City and State"
+                buttonTitle="Dictate your city and state"
+                onTranscript={(text) => onProfileChange({ ...profile, cityState: text })}
+              />
+            </div>
             <input
+              id="city-state-input"
               type="text"
               placeholder="e.g. Mumbai, Maharashtra"
               value={profile.cityState}
@@ -176,10 +286,19 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
           </div>
 
           <div>
-            <label className="text-slate-600 font-medium block mb-1">
-              {dict.digitalArrest.callerIdLabel}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label htmlFor="caller-id-verify-input" className="text-slate-600 font-medium">
+                {dict.digitalArrest.callerIdLabel}
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="Scammer Caller ID"
+                buttonTitle="Dictate caller ID"
+                onTranscript={(text) => onProfileChange({ ...profile, scammerCallerId: text })}
+              />
+            </div>
             <input
+              id="caller-id-verify-input"
               type="text"
               placeholder="e.g. +91 98765 43210"
               value={profile.scammerCallerId || ""}
@@ -193,7 +312,12 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
       {/* 4. Navigation Buttons */}
       <div className="flex items-center justify-between">
         <button
-          onClick={onBack}
+          type="button"
+          onClick={() => {
+            if (cancelFactCheckRef.current) cancelFactCheckRef.current();
+            stopSpeaking();
+            onBack();
+          }}
           className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 bg-white border border-slate-200 hover:border-slate-300 transition-all flex items-center gap-1.5 shadow-xs"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -201,7 +325,12 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
         </button>
 
         <button
-          onClick={onNext}
+          type="button"
+          onClick={() => {
+            if (cancelFactCheckRef.current) cancelFactCheckRef.current();
+            stopSpeaking();
+            onNext();
+          }}
           className="h-12 px-8 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-bold text-sm flex items-center gap-2 shadow-xs transition-all active:scale-95"
         >
           <span>{dict.digitalArrest.continueToSafetyBtn}</span>

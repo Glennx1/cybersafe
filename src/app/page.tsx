@@ -54,6 +54,7 @@ export default function Home() {
   };
 
   const [language, setLanguage] = useState<Language>("en");
+  const [audioFirstMode, setAudioFirstMode] = useState<boolean>(false);
   const dict = getDictionary(language);
   const [flowType, setFlowType] = useState<FlowType>("digital_arrest");
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -523,6 +524,7 @@ export default function Home() {
                   <WizardStep1Intake
                     profile={profile}
                     language={language}
+                    audioFirstMode={audioFirstMode}
                     onProfileChange={setProfile}
                     onNext={() => {
                       setCurrentStep(2);
@@ -576,6 +578,7 @@ export default function Home() {
                   <DigitalArrestStep1Intake
                     profile={profile}
                     language={language}
+                    audioFirstMode={audioFirstMode}
                     onProfileChange={setProfile}
                     onNext={() => {
                       setCurrentStep(2);
@@ -588,6 +591,7 @@ export default function Home() {
                   <DigitalArrestStep2Audit
                     profile={profile}
                     language={language}
+                    audioFirstMode={audioFirstMode}
                     onProfileChange={setProfile}
                     onBack={() => {
                       setCurrentStep(1);
@@ -844,6 +848,7 @@ export default function Home() {
       {/* Direct-to-Capture Live Recording & Note Vault Modal Overlay */}
       <LiveCaptureOverlay
         isOpen={showLiveCaptureOverlay}
+        language={language}
         onClose={() => setShowLiveCaptureOverlay(false)}
         onNavigateToLogin={() => {
           setShowLiveCaptureOverlay(false);
@@ -855,6 +860,7 @@ export default function Home() {
       <AccessibilityPanel
         currentLanguage={language}
         onLanguageChange={setLanguage}
+        onAudioFirstModeChange={setAudioFirstMode}
       />
     </main>
     </>

@@ -10,7 +10,7 @@
 endobj
 4 0 obj
 <<
-/Length 4572
+/Length 4799
 >>
 stream
 0.5670000000000001 w
@@ -37,7 +37,7 @@ BT
 11.5 TL
 0.059 0.09 0.165 rg
 42.5196850393700814 742.6774015748030706 Td
-(Date: 22 August 2026) Tj
+(Date: 26 August 2026) Tj
 ET
 BT
 /F2 10 Tf
@@ -102,70 +102,75 @@ BT
 (Respected Sir/Madam,) Tj
 T* () Tj
 T* (I am writing to formally report an unauthorized fraudulent cyber transaction involving my bank account \(XXXX1234\) held with) Tj
-T* (your branch. The incident occurred on 22/8/2026, 5:21:37 pm, wherein an amount of Rs. 85,500 was illegally debited via UTR /) Tj
+T* (your branch. The incident occurred on 26/8/2026, 12:52:08 pm, wherein an amount of Rs. 85,500 was illegally debited via UTR /) Tj
 T* (RRN 312345678901 without my consent.) Tj
 ET
 0.95 0.96 0.98 rg
-42.5196850393700814 515.9057480314960458 510.2362204724410049 -90.708661417322844 re
+42.5196850393700814 544.2522047244093528 510.2362204724410049 -136.0629921259842661 re
 f
 0.8 0.84 0.88 RG
-42.5196850393700814 515.9057480314960458 510.2362204724410049 -90.708661417322844 re
+42.5196850393700814 544.2522047244093528 510.2362204724410049 -136.0629921259842661 re
 S
 BT
 /F2 9 Tf
 10.3499999999999996 TL
 0.059 0.09 0.165 rg
-51.0236220472441033 496.0632283464566399 Td
-(FORENSIC TRANSACTION IDENTIFIERS) Tj
+51.0236220472441033 524.4096850393700606 Td
+(CRITICAL BENEFICIARY / SUSPECT ACCOUNT DETAILS FOR IMMEDIATE LIEN:) Tj
 ET
 BT
 /F1 9 Tf
 10.3499999999999996 TL
 0.059 0.09 0.165 rg
-51.0236220472441033 479.0553543307086102 Td
-(â€¢ Victim Account: XXXX1234 \(State Bank of India\)) Tj
+51.0236220472441033 504.5671653543306547 Td
+(• Suspect Beneficiary UPI / VPA: ramesh.traders@okaxis) Tj
 ET
 BT
 /F1 9 Tf
 10.3499999999999996 TL
 0.059 0.09 0.165 rg
-51.0236220472441033 462.0474803149605805 Td
-(â€¢ Fraud Amount: Rs. 85,500) Tj
+51.0236220472441033 484.7246456692913057 Td
+(• Suspect Beneficiary Account No: 987654321000) Tj
+ET
+BT
+/F1 9 Tf
+10.3499999999999996 TL
+0.059 0.09 0.165 rg
+51.0236220472441033 464.8821259842518998 Td
+(• Suspect Bank & Branch IFSC: UTIB0001234) Tj
 ET
 BT
 /F1 9 Tf
 10.3499999999999996 TL
 0.059 0.09 0.165 rg
 51.0236220472441033 445.0396062992125508 Td
-(â€¢ Suspect Beneficiary VPA / A/C: ramesh.traders@okaxis) Tj
+(• Transaction UTR / RRN Reference: 312345678901) Tj
 ET
 BT
 /F1 9 Tf
 10.3499999999999996 TL
 0.059 0.09 0.165 rg
-51.0236220472441033 428.0317322834645211 Td
-(â€¢ Suspect Bank IFSC: UTIB0001234) Tj
+51.0236220472441033 425.1970866141731449 Td
+(• Date & Timestamp: 26/8/2026, 12:52:08 pm) Tj
 ET
 BT
 /F2 9 Tf
 10.3499999999999996 TL
 0.059 0.09 0.165 rg
-42.5196850393700814 402.5199212598424765 Td
-(STATUTORY & REGULATORY OBLIGATIONS:) Tj
+42.5196850393700814 394.0159842519684616 Td
+(STATUTORY MANDATES & URGENT INSTRUCTIONS:) Tj
 ET
 BT
 /F1 9 Tf
 10.3499999999999996 TL
 0.059 0.09 0.165 rg
 42.5196850393700814 379.8427559055117513 Td
-(1. RBI Master Direction \(DPSS.CO.PD.No.1417/02.14.006/2017-18\): Entitles zero customer liability as this incident was reported) Tj
-T* (immediately within the Golden Hour window.) Tj
-T* () Tj
-T* (2. Section 91 BNSS 2023 \(Sec 91 CrPC\): Authorizes bank nodal officers to produce documents and freeze accounts implicated) Tj
-T* (in active criminal investigations.) Tj
-T* () Tj
-T* (3. Request to Bank: You are requested to immediately mark an urgent LIEN / FREEZE on the suspect beneficiary account node) Tj
-T* (to prevent further laundering of funds.) Tj
+(1. In accordance with RBI Master Direction \(DPSS.CO.PD.No.1417/02.14.006/2017-18\) on Limiting Liability of Customers in) Tj
+T* (Unauthorized Electronic Banking Transactions, immediate reporting has been recorded.) Tj
+T* (2. Under Section 91 of Bharatiya Nagarik Suraksha Sanhita \(BNSS\), 2023, banks are mandated to preserve transaction logs and) Tj
+T* (place a debit freeze/lien marking on recipient accounts.) Tj
+T* (3. You are requested to communicate with the beneficiary bank nodal officer via CFCFRMS / 1930 portal to stop further layered) Tj
+T* (transfers.) Tj
 ET
 BT
 /F2 9 Tf
@@ -200,7 +205,7 @@ BT
 9.1999999999999993 TL
 0.392 0.455 0.545 rg
 42.5196850393700814 48.1892125984251152 Td
-(Generated via CyberRakshak 1930 â€¢ Citizen Emergency Anti-Fraud Copilot) Tj
+(Generated via CyberRakshak 1930 • Citizen Emergency Anti-Fraud Copilot) Tj
 ET
 endstream
 endobj
@@ -374,7 +379,7 @@ endobj
 19 0 obj
 <<
 /Producer (jsPDF 2.5.2)
-/CreationDate (D:20260822172138+05'30')
+/CreationDate (D:20260826125210+05'30')
 >>
 endobj
 20 0 obj
@@ -388,33 +393,33 @@ endobj
 xref
 0 21
 0000000000 65535 f 
-0000004776 00000 n 
-0000006593 00000 n 
+0000005003 00000 n 
+0000006820 00000 n 
 0000000015 00000 n 
 0000000152 00000 n 
-0000004833 00000 n 
-0000004958 00000 n 
-0000005088 00000 n 
-0000005221 00000 n 
-0000005358 00000 n 
-0000005481 00000 n 
-0000005610 00000 n 
-0000005742 00000 n 
-0000005878 00000 n 
-0000006006 00000 n 
-0000006133 00000 n 
-0000006262 00000 n 
-0000006395 00000 n 
-0000006497 00000 n 
-0000006841 00000 n 
-0000006927 00000 n 
+0000005060 00000 n 
+0000005185 00000 n 
+0000005315 00000 n 
+0000005448 00000 n 
+0000005585 00000 n 
+0000005708 00000 n 
+0000005837 00000 n 
+0000005969 00000 n 
+0000006105 00000 n 
+0000006233 00000 n 
+0000006360 00000 n 
+0000006489 00000 n 
+0000006622 00000 n 
+0000006724 00000 n 
+0000007068 00000 n 
+0000007154 00000 n 
 trailer
 <<
 /Size 21
 /Root 20 0 R
 /Info 19 0 R
-/ID [ <63C0105C79DD290ABF9CBE759FEA3A6C> <63C0105C79DD290ABF9CBE759FEA3A6C> ]
+/ID [ <1A8ADAC8BA6F9A3A8CB4F8F9B1B5FC3D> <1A8ADAC8BA6F9A3A8CB4F8F9B1B5FC3D> ]
 >>
 startxref
-7031
+7258
 %%EOF

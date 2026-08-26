@@ -22,15 +22,19 @@ import {
   clearCovertSession,
   CovertSession
 } from "@/lib/covertStore";
+import { Language } from "@/lib/types";
+import { VoiceInputButton } from "@/components/VoiceInputButton";
 
 interface LiveCaptureOverlayProps {
   isOpen: boolean;
+  language?: Language;
   onClose: () => void;
   onNavigateToLogin: () => void;
 }
 
 export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
   isOpen,
+  language = "en",
   onClose,
   onNavigateToLogin
 }) => {
@@ -255,11 +259,21 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
 
           {/* Quick Note Input (Sub-10s Entry) */}
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-sm">
-            <label className="text-xs font-bold text-slate-300 block mb-2">
-              Jot down quick details (Phone #, Caller Name, Bank, Demand):
-            </label>
+            <div className="flex items-center justify-between mb-2">
+              <label htmlFor="quick-note-input" className="text-xs font-bold text-slate-300">
+                Jot down quick details (Phone #, Caller Name, Bank, Demand):
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="Quick incident note"
+                buttonTitle="Dictate quick note"
+                className="bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700"
+                onTranscript={(text) => setQuickNoteText((prev) => (prev ? `${prev} ${text}` : text))}
+              />
+            </div>
             <form onSubmit={handleAddQuickNote} className="flex gap-2">
               <input
+                id="quick-note-input"
                 type="text"
                 autoFocus
                 value={quickNoteText}

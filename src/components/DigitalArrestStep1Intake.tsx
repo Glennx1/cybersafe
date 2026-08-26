@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ShieldAlert,
   UploadCloud,
@@ -14,16 +14,21 @@ import {
   PhoneCall,
   Lock,
   XCircle,
-  CheckCircle2
+  CheckCircle2,
+  Volume2,
+  VolumeX
 } from "lucide-react";
 import { IncidentProfile, Language } from "@/lib/types";
 import { parseForensicText } from "@/lib/forensicEngine";
 import { getDictionary } from "@/lib/i18n";
+import { readExtractedDetailsAloud, stopSpeaking } from "@/lib/speechService";
+import { VoiceInputButton } from "@/components/VoiceInputButton";
 import Tesseract from "tesseract.js";
 
 interface DigitalArrestStep1IntakeProps {
   profile: IncidentProfile;
   language: Language;
+  audioFirstMode?: boolean;
   onProfileChange: (updated: IncidentProfile) => void;
   onNext: () => void;
 }
@@ -31,6 +36,7 @@ interface DigitalArrestStep1IntakeProps {
 export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> = ({
   profile,
   language,
+  audioFirstMode = false,
   onProfileChange,
   onNext,
 }) => {
@@ -39,6 +45,30 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
   const [pastedText, setPastedText] = useState(profile.rawEvidenceText);
   const [digitalArrestScore, setDigitalArrestScore] = useState<number | null>(profile.forgeryConfidence || null);
   const [detectedRedFlags, setDetectedRedFlags] = useState<string[]>(profile.forgeryFlags || []);
+  const [isReadingAloud, setIsReadingAloud] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      stopSpeaking();
+    };
+  }, []);
+
+  const handleReadAloud = (customProfile?: IncidentProfile) => {
+    if (isReadingAloud) {
+      stopSpeaking();
+      setIsReadingAloud(false);
+      return;
+    }
+
+    readExtractedDetailsAloud(
+      customProfile || profile,
+      true,
+      language,
+      () => setIsReadingAloud(true),
+      () => setIsReadingAloud(false),
+      () => setIsReadingAloud(false)
+    );
+  };
 
   const analyzeDigitalArrestText = (text: string) => {
     const lower = text.toLowerCase();
@@ -132,7 +162,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
 
       const parsed = parseForensicText(text);
 
-      onProfileChange({
+      const updatedProfile: IncidentProfile = {
         ...profile,
         evidenceFileName: file.name,
         evidenceHash: clientHashHex,
@@ -146,8 +176,17 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
         extortionDemandAmount: parsed.fraudAmount || profile.extortionDemandAmount || 250000,
         forgeryConfidence: score,
         forgeryFlags: flags
-      });
+      };
+
+      onProfileChange(updatedProfile);
       setPastedText(text);
+
+      // Auto read-back if global audio-first mode is enabled
+      if (audioFirstMode) {
+        setTimeout(() => {
+          handleReadAloud(updatedProfile);
+        }, 400);
+      }
     } catch (error) {
       console.error("OCR Extraction failed", error);
       alert("OCR error on document. You can still paste the threat message manually.");
@@ -225,10 +264,27 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
 
       {/* Scammer Details Card */}
       <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
-        <h3 className="text-xs font-bold text-slate-800 mb-3 flex items-center gap-2">
-          <Building className="w-4 h-4 text-amber-600" />
-          <span>{dict.digitalArrest.callerThreatDetailsTitle}</span>
-        </h3>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+          <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2">
+            <Building className="w-4 h-4 text-amber-600" />
+            <span>{dict.digitalArrest.callerThreatDetailsTitle}</span>
+          </h3>
+
+          {/* Read Details Aloud Button */}
+          <button
+            type="button"
+            onClick={() => handleReadAloud()}
+            aria-label={isReadingAloud ? "Stop reading threat details" : "Read threat details aloud"}
+            className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs active:scale-95 ${
+              isReadingAloud
+                ? "bg-rose-600 text-white animate-pulse"
+                : "bg-amber-50 text-amber-900 hover:bg-amber-100 border border-amber-200"
+            }`}
+          >
+            {isReadingAloud ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-700" />}
+            <span>{isReadingAloud ? "Stop Audio" : "Read Details Aloud"}</span>
+          </button>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
           <div>
@@ -251,9 +307,17 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
           </div>
 
           <div>
-            <label htmlFor="caller-id-input" className="text-slate-600 font-medium block mb-1 cursor-pointer">
-              {dict.digitalArrest.callerIdLabel}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label htmlFor="caller-id-input" className="text-slate-600 font-medium cursor-pointer">
+                {dict.digitalArrest.callerIdLabel}
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="Caller ID"
+                buttonTitle="Dictate Caller ID"
+                onTranscript={(text) => onProfileChange({ ...profile, scammerCallerId: text })}
+              />
+            </div>
             <input
               id="caller-id-input"
               type="text"
@@ -265,9 +329,22 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
           </div>
 
           <div>
-            <label htmlFor="extortion-amount-input" className="text-slate-600 font-medium block mb-1 cursor-pointer">
-              {dict.digitalArrest.extortionDemandLabel}
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label htmlFor="extortion-amount-input" className="text-slate-600 font-medium cursor-pointer">
+                {dict.digitalArrest.extortionDemandLabel}
+              </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="Demand Amount"
+                buttonTitle="Dictate Demand Amount"
+                onTranscript={(text) => {
+                  const cleaned = Number(text.replace(/[^0-9]/g, ""));
+                  if (cleaned) {
+                    onProfileChange({ ...profile, extortionDemandAmount: cleaned, fraudAmount: cleaned });
+                  }
+                }}
+              />
+            </div>
             <input
               id="extortion-amount-input"
               type="number"
@@ -334,6 +411,12 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
                 <FileText className="w-4 h-4 text-amber-600" />
                 <span>{dict.digitalArrest.pasteDemandTitle}</span>
               </label>
+              <VoiceInputButton
+                language={language}
+                fieldLabel="Threat message"
+                buttonTitle="Dictate threat message text"
+                onTranscript={(text) => handlePastedChange(pastedText ? `${pastedText} ${text}` : text)}
+              />
             </div>
             <textarea
               rows={6}
@@ -360,7 +443,11 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
       {/* CTA Button */}
       <div className="text-center pt-2">
         <button
-          onClick={onNext}
+          type="button"
+          onClick={() => {
+            stopSpeaking();
+            onNext();
+          }}
           className="h-12 px-8 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-bold text-sm flex items-center gap-2 shadow-xs transition-all mx-auto active:scale-95"
         >
           <span>{dict.digitalArrest.continueToReviewProof}</span>
