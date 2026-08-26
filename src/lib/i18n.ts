@@ -187,6 +187,18 @@ export interface TranslationDictionary {
     downloadDigitalFirBtn: string;
     shareDigitalFirBtn: string;
     continueToSafetyBtn: string;
+    // Step 1 Intake Cards
+    callerThreatDetailsTitle: string;
+    dropNoticeTitle: string;
+    dropNoticeSubtitle: string;
+    uploadDocumentBtn: string;
+    pasteDemandTitle: string;
+    pasteDemandPlaceholder: string;
+    targetAgencyLabel: string;
+    demandLabel: string;
+    advisoryTitle: string;
+    advisoryDesc: string;
+    continueToReviewProof: string;
   };
   actions: {
     heroTitle: string;
@@ -422,7 +434,18 @@ const EN_DICT: TranslationDictionary = {
       safetyStep3Desc: "Generate pre-drafted criminal complaint under Bharatiya Nyaya Sanhita (BNS) Section 204 (Impersonating Public Servant) and Section 308 (Extortion).",
       downloadDigitalFirBtn: "Download FIR Complaint PDF",
       shareDigitalFirBtn: "Share FIR to WhatsApp",
-      continueToSafetyBtn: "Continue to Safety Action"
+      continueToSafetyBtn: "Continue to Safety Action",
+      callerThreatDetailsTitle: "Caller & Threat Details",
+      dropNoticeTitle: "Drop Suspicious Notice / Summons Image",
+      dropNoticeSubtitle: "Image of forged CBI/Police letter received on WhatsApp or Skype screenshot.",
+      uploadDocumentBtn: "Upload Document",
+      pasteDemandTitle: "Or Paste Message / Demand Text",
+      pasteDemandPlaceholder: "Paste text e.g. 'You are under digital arrest by CBI Mumbai for drug parcel money laundering. Stay on Skype camera and deposit Rs 2,50,000 in RBI account...'",
+      targetAgencyLabel: "Target Agency",
+      demandLabel: "Demand",
+      advisoryTitle: "Official Cyber Safety Advisory:",
+      advisoryDesc: "Indian Law Enforcement agencies (CBI, State Police, ED, Customs, Supreme Court) never arrest citizens over Skype or WhatsApp video calls and never demand money transfer into any \"verification account\". Do not send money.",
+      continueToReviewProof: "Continue to review proof"
     },
     actions: {
       heroTitle: "Take Action Now — Direct Deep Links",
@@ -658,7 +681,18 @@ const EN_DICT: TranslationDictionary = {
       safetyStep3Desc: "भारतीय न्याय संहिता (BNS) धारा 204 (लोक सेवक का प्रतिरूपण) और धारा 308 (जबरन वसूली) के तहत आपराधिक शिकायत तैयार करें।",
       downloadDigitalFirBtn: "एफआईआर शिकायत पीडीएफ डाउनलोड करें",
       shareDigitalFirBtn: "व्हाट्सएप पर एफआईआर शेयर करें",
-      continueToSafetyBtn: "सुरक्षा कार्रवाई के लिए आगे बढ़ें"
+      continueToSafetyBtn: "सुरक्षा कार्रवाई के लिए आगे बढ़ें",
+      callerThreatDetailsTitle: "कॉलर और धमकी विवरण",
+      dropNoticeTitle: "संदिग्ध नोटिस / समन छवि अपलोड करें",
+      dropNoticeSubtitle: "व्हाट्सएप या स्काइप पर प्राप्त जाली सीबीआई/पुलिस पत्र या स्क्रीनशॉट।",
+      uploadDocumentBtn: "दस्तावेज़ अपलोड करें",
+      pasteDemandTitle: "या संदेश / मांग विवरण पेस्ट करें",
+      pasteDemandPlaceholder: "धमकी संदेश पेस्ट करें e.g. 'आप मनी लॉन्ड्रिंग के लिए सीबीआई द्वारा डिजिटल अरेस्ट में हैं। स्काइप कैमरे पर रहें और 2,50,000 रुपये जमा करें...'",
+      targetAgencyLabel: "लक्षित संस्था",
+      demandLabel: "मांग",
+      advisoryTitle: "आधिकारिक साइबर सुरक्षा सलाह:",
+      advisoryDesc: "भारतीय कानून प्रवर्तन एजेंसियां (CBI, राज्य पुलिस, ED, कस्टम्स, सुप्रीम कोर्ट) कभी भी स्काइप या व्हाट्सएप वीडियो कॉल पर नागरिकों को गिरफ्तार नहीं करती हैं और कभी भी किसी \"सत्यापन खाते\" में पैसे ट्रांसफर करने की मांग नहीं करती हैं। पैसे न भेजें।",
+      continueToReviewProof: "साक्ष्य समीक्षा के लिए आगे बढ़ें"
     },
     actions: {
       heroTitle: "अभी कार्रवाई करें — 1-टैप डायरेक्ट लिंक्स",

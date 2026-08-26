@@ -227,7 +227,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
       <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
         <h3 className="text-xs font-bold text-slate-800 mb-3 flex items-center gap-2">
           <Building className="w-4 h-4 text-amber-600" />
-          <span>Caller & Threat Details</span>
+          <span>{dict.digitalArrest.callerThreatDetailsTitle}</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
@@ -303,13 +303,13 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
                 <UploadCloud className="w-6 h-6" />
               </div>
               <h3 className="font-bold text-sm text-slate-900 mb-1">
-                Drop Suspicious Notice / Summons Image
+                {dict.digitalArrest.dropNoticeTitle}
               </h3>
               <p className="text-xs text-slate-500 mb-4 max-w-xs leading-relaxed font-sans">
-                Image of forged CBI/Police letter received on WhatsApp or Skype screenshot.
+                {dict.digitalArrest.dropNoticeSubtitle}
               </p>
               <label className="cursor-pointer px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl text-xs font-bold transition-all shadow-xs active:scale-95">
-                <span>Upload Document</span>
+                <span>{dict.digitalArrest.uploadDocumentBtn}</span>
                 <input
                   type="file"
                   accept="image/*,.pdf,.svg"
@@ -332,29 +332,29 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
             <div className="flex items-center justify-between mb-2">
               <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                 <FileText className="w-4 h-4 text-amber-600" />
-                <span>Or Paste Message / Demand Text</span>
+                <span>{dict.digitalArrest.pasteDemandTitle}</span>
               </label>
             </div>
             <textarea
               rows={6}
               value={pastedText}
               onChange={(e) => handlePastedChange(e.target.value)}
-              placeholder="Paste text e.g. 'You are under digital arrest by CBI Mumbai for drug parcel money laundering. Stay on Skype camera and deposit Rs 2,50,000 in RBI account...'"
+              placeholder={dict.digitalArrest.pasteDemandPlaceholder}
               className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-amber-500 text-slate-800 placeholder-slate-400 leading-relaxed"
             />
           </div>
 
           <div className="pt-3 flex items-center justify-between text-xs text-slate-600 border-t border-slate-100">
-            <span>Target Agency: <strong className="text-slate-900 font-bold">{profile.impersonatedAgency || "CBI"}</strong></span>
-            <span>Demand: <strong className="text-rose-600 font-bold">₹{(profile.extortionDemandAmount || 250000).toLocaleString("en-IN")}</strong></span>
+            <span>{dict.digitalArrest.targetAgencyLabel}: <strong className="text-slate-900 font-bold">{profile.impersonatedAgency || "CBI"}</strong></span>
+            <span>{dict.digitalArrest.demandLabel}: <strong className="text-rose-600 font-bold">₹{(profile.extortionDemandAmount || 250000).toLocaleString("en-IN")}</strong></span>
           </div>
         </div>
       </div>
 
       {/* Advisory Banner */}
       <div className="mb-8 bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 text-xs text-slate-700 leading-relaxed shadow-xs">
-        <strong className="text-slate-900 font-bold block mb-1">Official Cyber Safety Advisory:</strong>
-        Indian Law Enforcement agencies (CBI, State Police, ED, Customs, Supreme Court) <strong>never arrest citizens over Skype or WhatsApp video calls</strong> and <strong>never demand money transfer into any "verification account"</strong>. Do not send money.
+        <strong className="text-slate-900 font-bold block mb-1">{dict.digitalArrest.advisoryTitle}</strong>
+        {dict.digitalArrest.advisoryDesc}
       </div>
 
       {/* CTA Button */}
@@ -363,7 +363,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
           onClick={onNext}
           className="h-12 px-8 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-bold text-sm flex items-center gap-2 shadow-xs transition-all mx-auto active:scale-95"
         >
-          <span>Continue to review proof</span>
+          <span>{dict.digitalArrest.continueToReviewProof}</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
