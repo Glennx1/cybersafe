@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Mic,
   MicOff,
@@ -13,7 +13,9 @@ import {
   ArrowRight,
   X,
   ShieldAlert,
-  Minimize2
+  Minimize2,
+  Loader2,
+  Play
 } from "lucide-react";
 import {
   appendCovertNote,
@@ -32,15 +34,18 @@ interface LiveCaptureOverlayProps {
   onNavigateToLogin: () => void;
 }
 
+type RecordingState = "idle" | "recording" | "stopped";
+
 export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
   isOpen,
   language = "en",
   onClose,
   onNavigateToLogin
 }) => {
-  const [isRecording, setIsRecording] = useState(false);
+  const [recordingState, setRecordingState] = useState<RecordingState>("idle");
   const [recordingDuration, setRecordingDuration] = useState(0);
   const [micAvailable, setMicAvailable] = useState<boolean | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Quick notes state
   const [notes, setNotes] = useState<Array<{ id: string; text: string; deviceTimestamp: string }>>([]);
@@ -48,12 +53,92 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
   const [noteSavedFeedback, setNoteSavedFeedback] = useState(false);
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
 
+  // Refs for MediaRecorder lifecycle and buffering (ensures no garbage collection on re-render)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const durationTimerRef = useRef<NodeJS.Timeout | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  // Initialize session and auto-start recording on mount/open
+  const startAudioRecording = useCallback(async () => {
+    // Prevent starting a new recording while one is already active
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      return;
+    }
+
+    try {
+      if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
+        console.error("Audio recording API (getUserMedia) not supported in this browser.");
+        setMicAvailable(false);
+        setRecordingState("idle");
+        return;
+      }
+
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+
+      // Requirement 4: Check audio tracks and ensure readyState === 'live'
+      const audioTracks = stream.getAudioTracks();
+      if (!audioTracks || audioTracks.length === 0 || audioTracks[0].readyState !== "live") {
+        console.error("Microphone permission granted but audio track is not live:", audioTracks);
+        setMicAvailable(false);
+        setRecordingState("idle");
+        return;
+      }
+
+      setMicAvailable(true);
+
+      // Detect supported MIME types (WebM opus preferred, fallback to mp4 or ogg)
+      let mimeType = "";
+      if (typeof MediaRecorder !== "undefined") {
+        if (MediaRecorder.isTypeSupported("audio/webm;codecs=opus")) {
+          mimeType = "audio/webm;codecs=opus";
+        } else if (MediaRecorder.isTypeSupported("audio/webm")) {
+          mimeType = "audio/webm";
+        } else if (MediaRecorder.isTypeSupported("audio/ogg;codecs=opus")) {
+          mimeType = "audio/ogg;codecs=opus";
+        } else if (MediaRecorder.isTypeSupported("audio/mp4")) {
+          mimeType = "audio/mp4";
+        }
+      }
+
+      const mediaRecorder = mimeType
+        ? new MediaRecorder(stream, { mimeType })
+        : new MediaRecorder(stream);
+
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
+
+      // Requirement 2: Collect audio chunks in ref on every timeslice
+      mediaRecorder.ondataavailable = (event: BlobEvent) => {
+        if (event.data && event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.onerror = (event: Event) => {
+        console.error("MediaRecorder runtime error:", event);
+      };
+
+      // Requirement 3: Timeslice of 1000ms buffers chunks continuously
+      mediaRecorder.start(1000);
+      setRecordingState("recording");
+      setRecordingDuration(0);
+
+      // Requirement 9: Visible duration timer updating every second
+      if (durationTimerRef.current) {
+        clearInterval(durationTimerRef.current);
+      }
+      durationTimerRef.current = setInterval(() => {
+        setRecordingDuration((prev) => prev + 1);
+      }, 1000);
+    } catch (err) {
+      console.warn("Microphone access denied or failed to initialize:", err);
+      setMicAvailable(false);
+      setRecordingState("idle");
+    }
+  }, []);
+
+  // Initialize session and auto-start recording on open
   useEffect(() => {
     if (!isOpen) return;
 
@@ -65,104 +150,108 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
       setNotes(session.notes || []);
     });
 
-    // Auto-start recording immediately
     startAudioRecording();
 
+    // Requirement 5: Cleanup only on actual unmount / overlay closing
     return () => {
       isMounted = false;
-      // Do not terminate media recorder on simple overlay close if still running,
-      // but clean up duration display interval if unmounted
       if (durationTimerRef.current) {
         clearInterval(durationTimerRef.current);
+        durationTimerRef.current = null;
+      }
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+        try {
+          mediaRecorderRef.current.stop();
+        } catch (e) {}
+      }
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((t) => t.stop());
+        streamRef.current = null;
       }
     };
-  }, [isOpen]);
+  }, [isOpen, startAudioRecording]);
 
-  const startAudioRecording = async () => {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state === "recording") {
-      return;
-    }
-
-    try {
-      if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
-        setMicAvailable(false);
-        return;
-      }
-
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      streamRef.current = stream;
-      setMicAvailable(true);
-
-      const mimeType = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
-        ? "audio/webm;codecs=opus"
-        : MediaRecorder.isTypeSupported("audio/mp4")
-        ? "audio/mp4"
-        : "";
-
-      const mediaRecorder = mimeType
-        ? new MediaRecorder(stream, { mimeType })
-        : new MediaRecorder(stream);
-
-      mediaRecorderRef.current = mediaRecorder;
-      audioChunksRef.current = [];
-
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data && event.data.size > 0) {
-          audioChunksRef.current.push(event.data);
-        }
-      };
-
-      mediaRecorder.start(1000); // chunk every 1s
-      setIsRecording(true);
-
-      // Start duration counter
-      durationTimerRef.current = setInterval(() => {
-        setRecordingDuration((prev) => prev + 1);
-      }, 1000);
-    } catch (err) {
-      console.warn("Microphone access unavailable or denied (silent fallback to quick notes):", err);
-      setMicAvailable(false);
-      setIsRecording(false);
-    }
-  };
-
+  // Requirement 7: Stop & Save Evidence to IndexedDB
   const handleStopAndSave = async () => {
-    // 1. Stop audio recorder and save blob
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state === "recording") {
-      mediaRecorderRef.current.onstop = async () => {
-        const audioBlob = new Blob(audioChunksRef.current, {
-          type: mediaRecorderRef.current?.mimeType || "audio/webm"
-        });
-        await saveCovertAudioBlob(audioBlob, recordingDuration);
-
-        // Stop all tracks
-        streamRef.current?.getTracks().forEach((track) => track.stop());
-        streamRef.current = null;
-      };
-      mediaRecorderRef.current.stop();
-    }
+    if (isSaving) return;
+    setIsSaving(true);
 
     if (durationTimerRef.current) {
       clearInterval(durationTimerRef.current);
+      durationTimerRef.current = null;
     }
-    setIsRecording(false);
 
-    // Close overlay
+    const finalDuration = recordingDuration;
+
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      await new Promise<void>((resolve) => {
+        if (!mediaRecorderRef.current) {
+          resolve();
+          return;
+        }
+
+        mediaRecorderRef.current.onstop = async () => {
+          try {
+            const mimeType = mediaRecorderRef.current?.mimeType || "audio/webm";
+            const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
+            await saveCovertAudioBlob(audioBlob, finalDuration);
+          } catch (err) {
+            console.error("Failed to save audio blob to IndexedDB:", err);
+          } finally {
+            resolve();
+          }
+        };
+
+        try {
+          mediaRecorderRef.current.stop();
+        } catch (e) {
+          resolve();
+        }
+      });
+    } else if (audioChunksRef.current.length > 0) {
+      try {
+        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+        await saveCovertAudioBlob(audioBlob, finalDuration);
+      } catch (err) {
+        console.error("Failed to save existing chunks:", err);
+      }
+    }
+
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+    }
+
+    mediaRecorderRef.current = null;
+    audioChunksRef.current = [];
+    setRecordingState("stopped");
+    setIsSaving(false);
+
     onClose();
   };
 
+  // Requirement 8: Stop & Discard without writing to IndexedDB
   const handleStopAndDiscard = async () => {
-    // Stop recording and cleanup without saving
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state === "recording") {
-      mediaRecorderRef.current.stop();
-    }
-    streamRef.current?.getTracks().forEach((track) => track.stop());
-    streamRef.current = null;
-
     if (durationTimerRef.current) {
       clearInterval(durationTimerRef.current);
+      durationTimerRef.current = null;
     }
-    setIsRecording(false);
+
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      try {
+        mediaRecorderRef.current.stop();
+      } catch (e) {}
+    }
+
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+    }
+
+    mediaRecorderRef.current = null;
+    audioChunksRef.current = [];
+    setRecordingState("idle");
+    setRecordingDuration(0);
 
     if (activeSessionId) {
       await clearCovertSession(activeSessionId);
@@ -186,6 +275,7 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
     }
   };
 
+  // Requirement 9: MM:SS format
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -194,6 +284,8 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
 
   if (!isOpen) return null;
 
+  const isRecording = recordingState === "recording";
+
   return (
     <div className="fixed inset-0 z-50 bg-brand-navy/60 backdrop-blur-xs flex items-center justify-center p-4 font-sans animate-in fade-in">
       <div className="bg-surface-card text-text-primary border border-stone-200/80 rounded-3xl shadow-2xl max-w-xl w-full p-6 sm:p-7 max-h-[90vh] flex flex-col justify-between overflow-y-auto">
@@ -201,10 +293,18 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
         <div className="pb-3 border-b border-stone-100 flex items-center justify-between mb-4">
           <div className="flex items-center gap-2.5">
             {/* Live Recording Pulse Indicator */}
-            <div className="flex items-center gap-2 bg-red-50 border border-brand-urgent/30 px-3 py-1 rounded-full">
-              <span className="w-2.5 h-2.5 rounded-full bg-brand-urgent animate-ping shrink-0" />
-              <span className="text-xs font-bold text-brand-urgent font-mono tracking-wider uppercase">
-                {isRecording ? "Recording Live" : "Capture Vault Active"}
+            <div className={`flex items-center gap-2 px-3 py-1 rounded-full border ${
+              isRecording
+                ? "bg-red-50 border-brand-urgent/30"
+                : "bg-surface-section border-stone-200"
+            }`}>
+              <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${
+                isRecording ? "bg-brand-urgent animate-ping" : "bg-stone-400"
+              }`} />
+              <span className={`text-xs font-bold font-mono tracking-wider uppercase ${
+                isRecording ? "text-brand-urgent" : "text-text-muted"
+              }`}>
+                {isRecording ? "Recording Live" : "Capture Vault Ready"}
               </span>
             </div>
 
@@ -233,14 +333,27 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
           {/* Audio Telemetry Banner */}
           <div className="bg-surface-section border border-stone-200/80 rounded-2xl p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold ${
-                isRecording ? "bg-red-50 text-brand-urgent border border-brand-urgent/30" : "bg-stone-200 text-stone-600"
-              }`}>
-                {isRecording ? <Mic className="w-5 h-5 animate-pulse" /> : <MicOff className="w-5 h-5" />}
-              </div>
+              {/* Mic Icon Button (Requirement 6: Clickable when idle to start recording) */}
+              <button
+                type="button"
+                onClick={recordingState === "idle" ? startAudioRecording : undefined}
+                disabled={isRecording}
+                className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold transition-all ${
+                  isRecording
+                    ? "bg-red-50 text-brand-urgent border border-brand-urgent/30 cursor-default"
+                    : "bg-brand-primary text-white hover:bg-indigo-700 cursor-pointer shadow-xs active:scale-95"
+                }`}
+                title={isRecording ? "Microphone active & recording" : "Click to start recording"}
+              >
+                {isRecording ? <Mic className="w-5 h-5 animate-pulse" /> : <Play className="w-4 h-4 ml-0.5" />}
+              </button>
               <div>
                 <h3 className="text-xs font-bold text-text-primary">
-                  {isRecording ? "Device Microphone Capturing Audio" : "Microphone Idle / Text Capture Ready"}
+                  {isRecording
+                    ? "Device Microphone Capturing Audio"
+                    : micAvailable === false
+                    ? "Microphone Denied / Unavailable"
+                    : "Microphone Idle — Tap Play or Add Notes"}
                 </h3>
                 <p className="text-[11px] text-text-muted">
                   {micAvailable === false
@@ -251,9 +364,9 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
             </div>
 
             <div className="flex items-center gap-1">
-              <span className={`w-1.5 h-4 rounded-full bg-brand-urgent ${isRecording ? "animate-pulse" : "opacity-30"}`} />
-              <span className={`w-1.5 h-6 rounded-full bg-brand-urgent ${isRecording ? "animate-pulse delay-75" : "opacity-30"}`} />
-              <span className={`w-1.5 h-3 rounded-full bg-brand-urgent ${isRecording ? "animate-pulse delay-150" : "opacity-30"}`} />
+              <span className={`w-1.5 h-4 rounded-full ${isRecording ? "bg-brand-urgent animate-pulse" : "bg-stone-300"}`} />
+              <span className={`w-1.5 h-6 rounded-full ${isRecording ? "bg-brand-urgent animate-pulse delay-75" : "bg-stone-300"}`} />
+              <span className={`w-1.5 h-3 rounded-full ${isRecording ? "bg-brand-urgent animate-pulse delay-150" : "bg-stone-300"}`} />
             </div>
           </div>
 
@@ -311,26 +424,45 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
           )}
         </div>
 
-        {/* Bottom Actions Bar */}
+        {/* Bottom Actions Bar (Requirement 6: Active in 'recording' state) */}
         <div className="pt-6 border-t border-stone-100 space-y-3 mt-4">
           <div className="flex flex-col sm:flex-row items-center gap-2.5">
-            <button
-              type="button"
-              onClick={handleStopAndSave}
-              className="w-full sm:flex-1 py-3.5 bg-brand-success hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
-            >
-              <Check className="w-4 h-4 stroke-[2.5]" />
-              <span>Stop & Save Evidence</span>
-            </button>
+            {isRecording ? (
+              <>
+                <button
+                  type="button"
+                  disabled={isSaving}
+                  onClick={handleStopAndSave}
+                  className="w-full sm:flex-1 py-3.5 bg-brand-success hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95 disabled:opacity-50"
+                >
+                  {isSaving ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Check className="w-4 h-4 stroke-[2.5]" />
+                  )}
+                  <span>{isSaving ? "Saving Evidence..." : "Stop & Save Evidence"}</span>
+                </button>
 
-            <button
-              type="button"
-              onClick={handleStopAndDiscard}
-              className="w-full sm:w-auto px-4 py-3.5 bg-surface-card hover:bg-red-50 text-brand-urgent rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-stone-200 transition-all shadow-xs"
-            >
-              <Trash2 className="w-4 h-4" />
-              <span>Stop & Discard</span>
-            </button>
+                <button
+                  type="button"
+                  disabled={isSaving}
+                  onClick={handleStopAndDiscard}
+                  className="w-full sm:w-auto px-4 py-3.5 bg-surface-card hover:bg-red-50 text-brand-urgent rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-stone-200 transition-all shadow-xs disabled:opacity-50"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  <span>Stop & Discard</span>
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                onClick={startAudioRecording}
+                className="w-full py-3.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
+              >
+                <Mic className="w-4 h-4" />
+                <span>Start Live Recording</span>
+              </button>
+            )}
           </div>
 
           <div className="flex items-center justify-between text-[11px] text-text-muted pt-1">
