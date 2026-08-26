@@ -40,12 +40,14 @@ interface AccessibilityPanelProps {
   currentLanguage: Language;
   onLanguageChange: (lang: Language) => void;
   onAudioFirstModeChange?: (enabled: boolean) => void;
+  onShowSignLanguageChange?: (enabled: boolean) => void;
 }
 
 export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
   currentLanguage,
   onLanguageChange,
-  onAudioFirstModeChange
+  onAudioFirstModeChange,
+  onShowSignLanguageChange
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [settings, setSettings] = useState<AccessibilitySettings>(DEFAULT_SETTINGS);
@@ -68,6 +70,9 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
         if (typeof parsed.audioFirstMode === "boolean" && onAudioFirstModeChange) {
           onAudioFirstModeChange(parsed.audioFirstMode);
         }
+        if (typeof parsed.showSignLanguage === "boolean" && onShowSignLanguageChange) {
+          onShowSignLanguageChange(parsed.showSignLanguage);
+        }
       } else {
         // Detect browser language default
         const browserLang = navigator.language?.slice(0, 2);
@@ -85,6 +90,9 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
         onLanguageChange(detected);
         if (onAudioFirstModeChange) {
           onAudioFirstModeChange(false);
+        }
+        if (onShowSignLanguageChange) {
+          onShowSignLanguageChange(false);
         }
       }
     } catch (e) {
@@ -122,6 +130,9 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
     }
     if (key === "audioFirstMode" && onAudioFirstModeChange) {
       onAudioFirstModeChange(value as boolean);
+    }
+    if (key === "showSignLanguage" && onShowSignLanguageChange) {
+      onShowSignLanguageChange(value as boolean);
     }
   };
 
@@ -416,15 +427,17 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
               </button>
             </div>
 
-            {/* 6. Sign Language Clips Preference */}
+            {/* 6. Sign Language Videos (Preview — Coming Soon) */}
             <div className="mb-6 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-1.5">
                   <Hand className="w-4 h-4 text-indigo-600" aria-hidden="true" />
-                  <span className="text-xs font-bold text-slate-900">Show Sign Language Clips</span>
+                  <span className="text-xs font-bold text-slate-900">
+                    Sign language videos (preview — coming soon)
+                  </span>
                 </div>
                 <p className="text-[11px] text-slate-500 mt-0.5">
-                  Display Indian Sign Language (ISL) video guides where available.
+                  Displays preview slots for upcoming Indian Sign Language (ISL) explainer videos for Deaf and hard-of-hearing users.
                 </p>
               </div>
 
@@ -433,7 +446,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                 role="switch"
                 aria-checked={settings.showSignLanguage}
                 onClick={() => updateSetting("showSignLanguage", !settings.showSignLanguage)}
-                aria-label="Toggle Sign Language Clips"
+                aria-label="Toggle Sign language videos preview"
                 className={`w-12 h-6 rounded-full transition-colors relative flex items-center p-1 shrink-0 ${
                   settings.showSignLanguage ? "bg-indigo-600" : "bg-slate-300"
                 }`}

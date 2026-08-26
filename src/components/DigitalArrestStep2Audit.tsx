@@ -23,11 +23,13 @@ import { IncidentProfile, Language } from "@/lib/types";
 import { getDictionary } from "@/lib/i18n";
 import { readLegalFactCheckAloud, stopSpeaking } from "@/lib/speechService";
 import { VoiceInputButton } from "@/components/VoiceInputButton";
+import { SignLanguageSlot } from "@/components/SignLanguageSlot";
 
 interface DigitalArrestStep2AuditProps {
   profile: IncidentProfile;
   language: Language;
   audioFirstMode?: boolean;
+  showSignLanguage?: boolean;
   onProfileChange: (updated: IncidentProfile) => void;
   onBack: () => void;
   onNext: () => void;
@@ -37,6 +39,7 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
   profile,
   language,
   audioFirstMode = false,
+  showSignLanguage = false,
   onProfileChange,
   onBack,
   onNext,
@@ -135,6 +138,11 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
           {dict.digitalArrest.step2Subtitle}
         </p>
       </div>
+
+      {/* ISL Video Explainer Slot (Roadmap Preview) */}
+      {showSignLanguage && (
+        <SignLanguageSlot slotTitle="Legal Fact Check Matrix (Myth vs Reality)" />
+      )}
 
       {/* 2. Side-by-Side Deconstruction Table & Audio Narration */}
       <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">

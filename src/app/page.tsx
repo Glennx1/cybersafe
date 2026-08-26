@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { SkipToContent } from "@/components/SkipToContent";
 import { AccessibilityPanel } from "@/components/AccessibilityPanel";
+import { SignLanguageSlot } from "@/components/SignLanguageSlot";
 import { Header } from "@/components/Header";
 import { WizardStep1Intake } from "@/components/WizardStep1Intake";
 import { WizardStep2Audit } from "@/components/WizardStep2Audit";
@@ -34,19 +35,22 @@ import confetti from "canvas-confetti";
 export default function Home() {
   const emptyProfile: IncidentProfile = {
     id: `INC-${Date.now()}`,
-    victimName: "Citizen",
-    victimPhone: "+91-9999999999",
-    victimAccountMasked: "XXXX-XXXX-0000",
-    scamCategory: "UPI_PHISHING",
-    cityState: "New Delhi, DL",
-    utrNumber: "",
-    fraudAmount: 0,
-    suspectVpa: "",
-    suspectBankIfsc: "",
-    suspectAccountNo: "",
-    transactionTime: new Date().toISOString(),
+    victimName: "Aditya Sharma",
+    victimPhone: "9876543210",
+    victimAccountMasked: "XXXX-XXXX-8821",
+    victimAccountNo: "918273645501",
     victimBank: "State Bank of India (SBI)",
+    victimBankIfsc: "SBIN0001234",
+    fraudAmount: 85500,
+    transactionTime: new Date(Date.now() - 15 * 60000).toISOString(),
+    utrNumber: "312345678901",
+    scamCategory: "UPI_PHISHING",
+    suspectVpa: "ramesh.traders@okaxis",
+    suspectAccountNo: "987654321098",
+    suspectBankIfsc: "PYTM0123456",
+    cityState: "Mumbai, Maharashtra",
     evidenceFileName: "",
+    evidenceHash: "",
     rawEvidenceText: "",
     impersonatedAgency: "Central Bureau of Investigation (CBI)",
     scammerCallerId: "",
@@ -55,6 +59,7 @@ export default function Home() {
 
   const [language, setLanguage] = useState<Language>("en");
   const [audioFirstMode, setAudioFirstMode] = useState<boolean>(false);
+  const [showSignLanguage, setShowSignLanguage] = useState<boolean>(false);
   const dict = getDictionary(language);
   const [flowType, setFlowType] = useState<FlowType>("digital_arrest");
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -408,6 +413,14 @@ export default function Home() {
                   </p>
                 </div>
 
+                {/* ISL Video Explainer Slot (Roadmap Preview) */}
+                {showSignLanguage && (
+                  <SignLanguageSlot
+                    slotTitle="Citizen Emergency Response Overview"
+                    className="max-w-4xl mx-auto"
+                  />
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
                   {/* Option 1: Financial Cyber Fraud */}
                   <div
@@ -579,6 +592,7 @@ export default function Home() {
                     profile={profile}
                     language={language}
                     audioFirstMode={audioFirstMode}
+                    showSignLanguage={showSignLanguage}
                     onProfileChange={setProfile}
                     onNext={() => {
                       setCurrentStep(2);
@@ -592,6 +606,7 @@ export default function Home() {
                     profile={profile}
                     language={language}
                     audioFirstMode={audioFirstMode}
+                    showSignLanguage={showSignLanguage}
                     onProfileChange={setProfile}
                     onBack={() => {
                       setCurrentStep(1);
@@ -861,6 +876,7 @@ export default function Home() {
         currentLanguage={language}
         onLanguageChange={setLanguage}
         onAudioFirstModeChange={setAudioFirstMode}
+        onShowSignLanguageChange={setShowSignLanguage}
       />
     </main>
     </>

@@ -23,12 +23,14 @@ import { parseForensicText } from "@/lib/forensicEngine";
 import { getDictionary } from "@/lib/i18n";
 import { readExtractedDetailsAloud, stopSpeaking } from "@/lib/speechService";
 import { VoiceInputButton } from "@/components/VoiceInputButton";
+import { SignLanguageSlot } from "@/components/SignLanguageSlot";
 import Tesseract from "tesseract.js";
 
 interface DigitalArrestStep1IntakeProps {
   profile: IncidentProfile;
   language: Language;
   audioFirstMode?: boolean;
+  showSignLanguage?: boolean;
   onProfileChange: (updated: IncidentProfile) => void;
   onNext: () => void;
 }
@@ -37,6 +39,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
   profile,
   language,
   audioFirstMode = false,
+  showSignLanguage = false,
   onProfileChange,
   onNext,
 }) => {
@@ -244,6 +247,11 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
           {dict.digitalArrest.heroSubtitle}
         </p>
       </div>
+
+      {/* ISL Video Explainer Slot (Roadmap Preview) */}
+      {showSignLanguage && (
+        <SignLanguageSlot slotTitle="Digital Arrest & Extortion Shield Intake" />
+      )}
 
       {/* Forensic Hash Mismatch Warning Banner */}
       {profile.hashMismatch && (
