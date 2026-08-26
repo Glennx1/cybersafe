@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   ShieldCheck,
@@ -17,6 +15,7 @@ import {
   ShieldAlert
 } from "lucide-react";
 import { ForensicAuditReport, IncidentProfile, Language } from "@/lib/types";
+import { getDictionary } from "@/lib/i18n";
 
 interface WizardStep2AuditProps {
   auditReport: ForensicAuditReport;
@@ -35,8 +34,36 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
   onBack,
   onNext,
 }) => {
+  const dict = getDictionary(language);
   const score = auditReport.overallCompletenessScore;
-  const isGoldenHour = auditReport.isGoldenHourValid;
+
+  // Localized vector helper
+  const getLocalizedVector = (vecName: string, status: string, originalDetails: string) => {
+    switch (vecName) {
+      case "utr_validation":
+        return {
+          label: dict.audit.vectorUtrLabel,
+          details: status === "PASSED" ? `${dict.audit.vectorUtrPassed}: ${profile.utrNumber}` : dict.audit.vectorUtrFailed
+        };
+      case "golden_hour_window":
+        return {
+          label: dict.audit.vectorGoldenHourLabel,
+          details: status === "PASSED" ? dict.audit.vectorGoldenHourPassed : dict.audit.vectorGoldenHourWarning
+        };
+      case "suspect_node":
+        return {
+          label: dict.audit.vectorSuspectLabel,
+          details: status === "PASSED" ? `${dict.audit.vectorSuspectPassed} ${profile.suspectVpa || profile.suspectAccountNo || ""}` : dict.audit.vectorSuspectWarning
+        };
+      case "rbi_protection":
+        return {
+          label: dict.audit.vectorRbiLabel,
+          details: dict.audit.vectorRbiDetails
+        };
+      default:
+        return { label: vecName, details: originalDetails };
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto py-6 animate-in fade-in duration-300">
@@ -69,30 +96,30 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
               <span className="text-base font-bold text-slate-900">
                 {score}%
               </span>
-              <span className="text-[9px] text-slate-500 font-semibold uppercase">Score</span>
+              <span className="text-[9px] text-slate-500 font-semibold uppercase">{dict.audit.scoreLabel}</span>
             </div>
           </div>
 
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="text-xs text-emerald-700 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                Details Checked
+                {dict.audit.detailsChecked}
               </span>
               <h2 className="text-lg font-bold text-slate-900 tracking-tight">
-                Incident Summary & Evidence
+                {dict.audit.summaryTitle}
               </h2>
             </div>
             <p className="text-xs text-slate-600 max-w-md leading-relaxed">
-              {auditReport.summaryVerdict}
+              {dict.audit.summaryVerdict}
             </p>
           </div>
         </div>
 
         <div className="bg-slate-50 px-4 py-3 rounded-xl border border-slate-200 text-xs shrink-0 space-y-1">
-          <div className="text-slate-500 font-medium text-[10px]">RECOVERY ELIGIBILITY</div>
+          <div className="text-slate-500 font-medium text-[10px] uppercase">{dict.audit.recoveryEligibility}</div>
           <div className="font-bold text-emerald-700 flex items-center gap-1.5 text-xs">
             <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-            <span>Eligible for Bank Freeze</span>
+            <span>{dict.audit.eligibleForBankFreeze}</span>
           </div>
         </div>
       </div>
@@ -101,18 +128,18 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
       <div className="mt-6 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
           <div className="text-xs font-bold text-slate-800">
-            Verify & Edit Incident Identifiers
+            {dict.audit.verifyEditTitle}
           </div>
           <div className="text-xs text-slate-500 flex items-center gap-1">
             <Edit3 className="w-3.5 h-3.5 text-indigo-600" />
-            <span>Click to update any detail</span>
+            <span>{dict.audit.clickToUpdate}</span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              12-Digit Banking UTR / RRN
+              {dict.audit.utrLabel}
             </label>
             <input
               type="text"
@@ -125,7 +152,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Fraud Amount (₹)
+              {dict.audit.fraudAmountLabel}
             </label>
             <input
               type="number"
@@ -138,7 +165,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Suspect UPI / VPA ID
+              {dict.audit.suspectVpaLabel}
             </label>
             <input
               type="text"
@@ -151,7 +178,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Suspect Account Number
+              {dict.audit.suspectAccountNoLabel}
             </label>
             <input
               type="text"
@@ -164,7 +191,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Suspect Account IFSC Code
+              {dict.audit.suspectIfscLabel}
             </label>
             <input
               type="text"
@@ -177,7 +204,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Victim Bank Name
+              {dict.audit.victimBankLabel}
             </label>
             <select
               value={profile.victimBank}
@@ -196,7 +223,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Victim Account Number
+              {dict.audit.victimAccountNoLabel}
             </label>
             <input
               type="text"
@@ -213,7 +240,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Victim Account IFSC Code
+              {dict.audit.victimIfscLabel}
             </label>
             <input
               type="text"
@@ -226,7 +253,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Victim Full Name
+              {dict.audit.victimNameLabel}
             </label>
             <input
               type="text"
@@ -238,7 +265,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Contact Phone Number
+              {dict.audit.contactPhoneLabel}
             </label>
             <input
               type="text"
@@ -253,11 +280,12 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
       {/* 3. Evidentiary Checkpoints */}
       <div className="mt-6 space-y-3">
         <h3 className="text-xs font-bold text-slate-700 px-1 uppercase tracking-wider">
-          Evidence Checklist
+          {dict.audit.evidenceChecklistTitle}
         </h3>
 
         <div className="space-y-3">
           {auditReport.vectors.map((vec, idx) => {
+            const localized = getLocalizedVector(vec.vectorName, vec.status, vec.details);
             return (
               <div
                 key={idx}
@@ -276,7 +304,7 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <span className="font-bold text-sm text-slate-900">
-                      {vec.label}
+                      {localized.label}
                     </span>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
                       vec.status === "PASSED"
@@ -285,12 +313,12 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
                         ? "bg-amber-50 text-amber-700 border-amber-200"
                         : "bg-rose-50 text-rose-700 border-rose-200"
                     }`}>
-                      {vec.status === "PASSED" ? "Verified" : vec.status === "WARNING" ? "Attention" : "Urgent"}
+                      {vec.status === "PASSED" ? dict.audit.statusVerified : vec.status === "WARNING" ? dict.audit.statusAttention : dict.audit.statusUrgent}
                     </span>
                   </div>
 
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    {vec.details}
+                    {localized.details}
                   </p>
                 </div>
               </div>
@@ -301,9 +329,9 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
 
       {/* 4. Statutory Compliance Notice */}
       <div className="mt-6 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed">
-        <h4 className="font-bold text-slate-800 mb-1">Notice on Cyber Safety Actions</h4>
+        <h4 className="font-bold text-slate-800 mb-1">{dict.audit.noticeCyberSafetyTitle}</h4>
         <p>
-          The generated documents are formatted according to Indian Cyber Crime Coordination Centre (I4C) guidelines. You can submit these directly to your bank or the 1930 Helpline.
+          {dict.audit.noticeCyberSafetyDesc}
         </p>
       </div>
 
@@ -314,14 +342,14 @@ export const WizardStep2Audit: React.FC<WizardStep2AuditProps> = ({
           className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 bg-white border border-slate-200 hover:border-slate-300 transition-all flex items-center gap-1.5 shadow-xs"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Intake</span>
+          <span>{dict.audit.backToIntake}</span>
         </button>
 
         <button
           onClick={onNext}
           className="h-12 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm flex items-center gap-2 shadow-sm transition-all active:scale-95"
         >
-          <span>Continue to Get Help</span>
+          <span>{dict.audit.continueToGetHelp}</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

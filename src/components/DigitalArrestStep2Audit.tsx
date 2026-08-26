@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   ShieldCheck,
@@ -17,6 +15,7 @@ import {
   HelpCircle
 } from "lucide-react";
 import { IncidentProfile, Language } from "@/lib/types";
+import { getDictionary } from "@/lib/i18n";
 
 interface DigitalArrestStep2AuditProps {
   profile: IncidentProfile;
@@ -33,25 +32,27 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
   onBack,
   onNext,
 }) => {
+  const dict = getDictionary(language);
+
   const comparisonData = [
     {
-      scammerMyth: "You are under 'Digital Arrest' and cannot leave your room.",
-      legalReality: "The term 'Digital Arrest' has 0% legal standing in Indian Law. Neither BNSS 2023 nor IT Act permits arrest via video call.",
+      scammerMyth: dict.digitalArrest.myth1Claim,
+      legalReality: dict.digitalArrest.myth1Truth,
       statute: "MHA Advisory / BNSS Sec 41A"
     },
     {
-      scammerMyth: "Keep WhatsApp/Skype video camera active 24x7 or police will raid.",
-      legalReality: "Summons must be served physically in writing by a designated IO. Confinement via video call is criminal extortion.",
+      scammerMyth: dict.digitalArrest.myth2Claim,
+      legalReality: dict.digitalArrest.myth2Truth,
       statute: "Sec 308(2) BNS 2023"
     },
     {
-      scammerMyth: "Transfer funds to 'RBI Security Escrow' for clearance/verification.",
-      legalReality: "No court, police agency, or RBI ever asks citizens to transfer money to clear their name.",
+      scammerMyth: dict.digitalArrest.myth3Claim,
+      legalReality: dict.digitalArrest.myth3Truth,
       statute: "Sec 319 BNS & 66D IT Act"
     },
     {
-      scammerMyth: "National Security secrecy: Do not contact family or lawyers.",
-      legalReality: "Every citizen has a fundamental right under Constitution Art 22 & Sec 36 BNSS to consult an advocate.",
+      scammerMyth: dict.digitalArrest.myth4Claim,
+      legalReality: dict.digitalArrest.myth4Truth,
       statute: "Art 22 & Sec 36 BNSS"
     }
   ];
@@ -63,21 +64,21 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-bold border border-amber-200">
             <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>Legal Fact Check & Reality</span>
+            <span>{dict.digitalArrest.factCheckBadge}</span>
           </div>
 
           <div className="flex items-center gap-1.5 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full font-bold">
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>You Are Not in Legal Danger</span>
+            <span>{dict.digitalArrest.notInDangerBadge}</span>
           </div>
         </div>
 
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-2">
-          Facts & Legal Truths Behind Digital Arrest
+          {dict.digitalArrest.step2Title}
         </h2>
 
         <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed">
-          Scammers use fake police uniforms, video calls, and forged stamps to cause fear. Here is how Indian law actually protects you against these unlawful demands.
+          {dict.digitalArrest.step2Subtitle}
         </p>
       </div>
 
@@ -86,7 +87,7 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
         <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
           <span className="text-xs font-bold text-slate-800 flex items-center gap-2">
             <Scale className="w-4 h-4 text-indigo-600" />
-            <span>What Scammers Claim vs. Actual Legal Rights</span>
+            <span>{dict.digitalArrest.claimVsRealityTitle}</span>
           </span>
         </div>
 
@@ -101,7 +102,7 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
                 <XCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                 <div>
                   <span className="text-[11px] font-bold text-rose-700 block">
-                    What the Scammer Claims:
+                    {dict.digitalArrest.scammerClaimLabel}:
                   </span>
                   <p className="text-xs text-slate-700 mt-0.5 leading-relaxed">{item.scammerMyth}</p>
                 </div>
@@ -113,7 +114,7 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
                 <div>
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-[11px] font-bold text-emerald-800">
-                      The Real Law:
+                      {dict.digitalArrest.legalRealityLabel}:
                     </span>
                     <span className="text-[10px] bg-emerald-100/70 text-emerald-800 px-2 py-0.5 rounded font-bold">
                       {item.statute}
@@ -131,13 +132,13 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
       <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
         <h3 className="text-xs font-bold text-slate-800 mb-3 flex items-center gap-2">
           <UserCheck className="w-4 h-4 text-indigo-600" />
-          <span>Confirm Your Details for Official Report</span>
+          <span>{dict.audit.verifyEditTitle}</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Your Full Legal Name
+              {dict.audit.victimNameLabel}
             </label>
             <input
               type="text"
@@ -150,7 +151,7 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Your Mobile Number
+              {dict.audit.contactPhoneLabel}
             </label>
             <input
               type="text"
@@ -163,7 +164,7 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Your City & State
+              City & State
             </label>
             <input
               type="text"
@@ -176,7 +177,7 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
 
           <div>
             <label className="text-slate-600 font-medium block mb-1">
-              Scammer Calling ID / WhatsApp Number
+              {dict.digitalArrest.callerIdLabel}
             </label>
             <input
               type="text"
@@ -196,14 +197,14 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
           className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 bg-white border border-slate-200 hover:border-slate-300 transition-all flex items-center gap-1.5 shadow-xs"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Details</span>
+          <span>{dict.step3Action.backToDetails}</span>
         </button>
 
         <button
           onClick={onNext}
           className="h-12 px-8 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-bold text-sm flex items-center gap-2 shadow-xs transition-all active:scale-95"
         >
-          <span>Continue to Take Action</span>
+          <span>{dict.digitalArrest.continueToSafetyBtn}</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

@@ -28,6 +28,7 @@ import {
   Share2
 } from "lucide-react";
 import { IncidentProfile, Language } from "@/lib/types";
+import { getDictionary } from "@/lib/i18n";
 
 interface DigitalArrestStep3ActionProps {
   profile: IncidentProfile;
@@ -42,6 +43,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
   onDownloadDigitalArrestFir,
   onBack,
 }) => {
+  const dict = getDictionary(language);
   const [copiedChakshu, setCopiedChakshu] = useState(false);
   const [sharingFir, setSharingFir] = useState(false);
   const [shareSuccess, setShareSuccess] = useState(false);
@@ -82,15 +84,15 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
       <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs mb-6">
         <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-3 border border-emerald-200 w-fit">
           <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span>You are Safe. Take Action Below.</span>
+          <span>{dict.digitalArrest.safeTakeActionBadge}</span>
         </div>
 
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-2">
-          Recommended Next Steps
+          {dict.digitalArrest.step3NextStepsTitle}
         </h2>
 
         <p className="text-xs sm:text-sm text-slate-600 max-w-xl leading-relaxed">
-          The scammers attempting to intimidate you have no legal authority. Follow these 3 immediate safety steps and file your official reports.
+          {dict.digitalArrest.step3NextStepsSubtitle}
         </p>
       </div>
 
@@ -98,7 +100,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
       <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
         <h3 className="text-xs font-bold text-slate-800 mb-4 flex items-center gap-2">
           <PhoneOff className="w-4 h-4 text-rose-600" />
-          <span>Immediate Safety Recommendations</span>
+          <span>{dict.step3Action.whatNextTitle}</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -106,9 +108,9 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
             <div className="w-6 h-6 rounded-md bg-rose-100 text-rose-700 text-xs font-bold flex items-center justify-center mb-2">
               1
             </div>
-            <h4 className="text-xs font-bold text-slate-900 mb-1">Hang Up the Call</h4>
+            <h4 className="text-xs font-bold text-slate-900 mb-1">{dict.digitalArrest.safetyStep1Title}</h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Disconnect any Skype or WhatsApp video calls immediately. Real police officers never conduct interrogations or arrest citizens over video.
+              {dict.digitalArrest.safetyStep1Desc}
             </p>
           </div>
 
@@ -116,9 +118,9 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
             <div className="w-6 h-6 rounded-md bg-amber-100 text-amber-800 text-xs font-bold flex items-center justify-center mb-2">
               2
             </div>
-            <h4 className="text-xs font-bold text-slate-900 mb-1">Block the Caller</h4>
+            <h4 className="text-xs font-bold text-slate-900 mb-1">{dict.digitalArrest.safetyStep2Title}</h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Block the caller's phone number and messaging accounts. They have no jurisdiction and cannot send police to your home.
+              {dict.digitalArrest.safetyStep2Desc}
             </p>
           </div>
 
@@ -126,9 +128,9 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
             <div className="w-6 h-6 rounded-md bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center mb-2">
               3
             </div>
-            <h4 className="text-xs font-bold text-slate-900 mb-1">Speak to Family or Friends</h4>
+            <h4 className="text-xs font-bold text-slate-900 mb-1">{dict.digitalArrest.safetyStep3Title}</h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Talk to a family member or trusted friend. Scammers rely on keeping you in secret panic to force transfers.
+              {dict.digitalArrest.safetyStep3Desc}
             </p>
           </div>
         </div>
@@ -146,10 +148,10 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
               <span className="text-xs text-slate-500 font-medium">BNS Sec 204 & 308</span>
             </div>
             <h3 className="font-bold text-sm text-slate-900 mb-1">
-              Police Impersonation Complaint Draft
+              {dict.digitalArrest.safetyStep3Title}
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed mb-4">
-              Download a pre-formatted legal complaint citing Impersonation of Public Servant and Extortion ready for your local police cyber cell or 1930 portal.
+              {dict.digitalArrest.safetyStep3Desc}
             </p>
           </div>
           <div className="space-y-2">
@@ -161,7 +163,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
                 className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
               >
                 <Share2 className="w-3.5 h-3.5" />
-                <span>{shareSuccess ? "Shared to WhatsApp!" : "Share via WhatsApp"}</span>
+                <span>{shareSuccess ? "Shared!" : dict.common.shareWhatsApp}</span>
               </button>
 
               <button
@@ -170,7 +172,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
                 title="Download PDF"
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>Download</span>
+                <span>{dict.common.downloadPdf}</span>
               </button>
             </div>
 
@@ -198,10 +200,10 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
               <span className="text-xs text-slate-500 font-medium">DoT Sanchar Saathi</span>
             </div>
             <h3 className="font-bold text-sm text-slate-900 mb-1">
-              Block Scammer on DoT Chakshu
+              {dict.digitalArrest.safetyStep2Title}
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed mb-4">
-              Report fraudulent numbers to the Department of Telecommunications Chakshu portal to have the scammer's SIM card and phone IMEI blocked.
+              {dict.digitalArrest.safetyStep2Desc}
             </p>
           </div>
           <div className="space-y-2">
@@ -210,7 +212,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
               className="w-full py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 border border-slate-200 transition-all"
             >
               {copiedChakshu ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
-              <span>{copiedChakshu ? "Details Copied!" : "Copy Scammer Details"}</span>
+              <span>{copiedChakshu ? dict.digitalArrest.chakshuCopiedBtn : dict.digitalArrest.copyChakshuBtn}</span>
             </button>
             <a
               href={chakshuUrl}
@@ -218,8 +220,8 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
               rel="noopener noreferrer"
               className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition-all active:scale-95"
             >
+              <span>{dict.digitalArrest.openChakshuBtn}</span>
               <ExternalLink className="w-3.5 h-3.5" />
-              <span>Open Chakshu Portal</span>
             </a>
           </div>
         </div>

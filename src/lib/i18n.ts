@@ -68,6 +68,87 @@ export interface TranslationDictionary {
     amountLabel: string;
     serverVerified: string;
   };
+  audit: {
+    scoreLabel: string;
+    detailsChecked: string;
+    summaryTitle: string;
+    summaryVerdict: string;
+    recoveryEligibility: string;
+    eligibleForBankFreeze: string;
+    verifyEditTitle: string;
+    clickToUpdate: string;
+    utrLabel: string;
+    fraudAmountLabel: string;
+    suspectVpaLabel: string;
+    suspectAccountNoLabel: string;
+    suspectIfscLabel: string;
+    victimBankLabel: string;
+    victimAccountNoLabel: string;
+    victimIfscLabel: string;
+    victimNameLabel: string;
+    contactPhoneLabel: string;
+    evidenceChecklistTitle: string;
+    statusVerified: string;
+    statusAttention: string;
+    statusUrgent: string;
+    vectorUtrLabel: string;
+    vectorUtrPassed: string;
+    vectorUtrFailed: string;
+    vectorGoldenHourLabel: string;
+    vectorGoldenHourPassed: string;
+    vectorGoldenHourWarning: string;
+    vectorSuspectLabel: string;
+    vectorSuspectPassed: string;
+    vectorSuspectWarning: string;
+    vectorRbiLabel: string;
+    vectorRbiDetails: string;
+    noticeCyberSafetyTitle: string;
+    noticeCyberSafetyDesc: string;
+    backToIntake: string;
+    continueToGetHelp: string;
+  };
+  step3Action: {
+    targetAmountLabel: string;
+    bankingUtrLabel: string;
+    bankLabel: string;
+    actionBannerDesc: string;
+    firGuideTag: string;
+    firGuideTitle: string;
+    firGuideDesc: string;
+    openFirGuideBtn: string;
+    noticeInspectorTag: string;
+    bankNoticeTitle: string;
+    bankNoticeDesc: string;
+    inspectBankNoticeBtn: string;
+    recoveryRoadmapTitle: string;
+    stage1Title: string;
+    stage1Time: string;
+    stage1Desc: string;
+    stage2Title: string;
+    stage2Time: string;
+    stage2Desc: string;
+    stage3Title: string;
+    stage3Time: string;
+    stage3Desc: string;
+    stage4Title: string;
+    stage4Time: string;
+    stage4Desc: string;
+    helplineScriptBtn: string;
+    sendCyberAlertBtn: string;
+    backToDetails: string;
+    inspectRawPayload: string;
+    whatNextTitle: string;
+    nextStep1Title: string;
+    nextStep1Desc: string;
+    nextStep2Title: string;
+    nextStep2Desc: string;
+    nextStep3Title: string;
+    nextStep3Desc: string;
+    nextStep4Title: string;
+    nextStep4Desc: string;
+    rememberTitle: string;
+    rememberDesc: string;
+  };
   digitalArrest: {
     heroTitle: string;
     heroSubtitle: string;
@@ -76,6 +157,36 @@ export interface TranslationDictionary {
     extortionDemandLabel: string;
     disconnectAdviceTitle: string;
     disconnectAdviceDesc: string;
+    factCheckBadge: string;
+    notInDangerBadge: string;
+    step2Title: string;
+    step2Subtitle: string;
+    claimVsRealityTitle: string;
+    scammerClaimLabel: string;
+    legalRealityLabel: string;
+    myth1Claim: string;
+    myth1Truth: string;
+    myth2Claim: string;
+    myth2Truth: string;
+    myth3Claim: string;
+    myth3Truth: string;
+    myth4Claim: string;
+    myth4Truth: string;
+    safeTakeActionBadge: string;
+    step3NextStepsTitle: string;
+    step3NextStepsSubtitle: string;
+    safetyStep1Title: string;
+    safetyStep1Desc: string;
+    safetyStep2Title: string;
+    safetyStep2Desc: string;
+    copyChakshuBtn: string;
+    chakshuCopiedBtn: string;
+    openChakshuBtn: string;
+    safetyStep3Title: string;
+    safetyStep3Desc: string;
+    downloadDigitalFirBtn: string;
+    shareDigitalFirBtn: string;
+    continueToSafetyBtn: string;
   };
   actions: {
     heroTitle: string;
@@ -91,6 +202,38 @@ export interface TranslationDictionary {
     step3NcrpCopyBtn: string;
     step3NcrpPortalBtn: string;
     step4ShareTitle: string;
+    livePrompterTitle: string;
+    collapseScript: string;
+    showScript: string;
+    teleprompterHello: string;
+    teleprompterClosing: string;
+    step1Tag: string;
+    step1Time: string;
+    call1930NowBtn: string;
+    step2Tag: string;
+    step2Time: string;
+    emailBankTitle: string;
+    emailBankDesc: string;
+    emailBankBtn: string;
+    downloadPdfAttachBtn: string;
+    noMailAppNotice: string;
+    step3Tag: string;
+    step3Time: string;
+    ncrpTitle: string;
+    ncrpDesc: string;
+    copyStatementBtn: string;
+    statementCopiedBtn: string;
+    openPortalBtn: string;
+    shareDocsTitle: string;
+    shareDocsSubtitle: string;
+    docBankFreeze: string;
+    docBankFreezeSub: string;
+    docPoliceFir: string;
+    docPoliceFirSub: string;
+    docCourtRefund: string;
+    docCourtRefundSub: string;
+    docEvidenceCert: string;
+    docEvidenceCertSub: string;
   };
 }
 
@@ -162,6 +305,87 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       amountLabel: "Fraud Amount",
       serverVerified: "Server Verified (Sec 63 BSA)"
     },
+    audit: {
+      scoreLabel: "Score",
+      detailsChecked: "Details Checked",
+      summaryTitle: "Incident Summary & Evidence",
+      summaryVerdict: "Emergency incident data verified. Bank Lien Freeze Notice & Police FIR ready for 1-Tap dispatch.",
+      recoveryEligibility: "RECOVERY ELIGIBILITY",
+      eligibleForBankFreeze: "Eligible for Bank Freeze",
+      verifyEditTitle: "Verify & Edit Incident Identifiers",
+      clickToUpdate: "Click to update any detail",
+      utrLabel: "12-Digit Banking UTR / RRN",
+      fraudAmountLabel: "Fraud Amount (₹)",
+      suspectVpaLabel: "Suspect UPI / VPA ID",
+      suspectAccountNoLabel: "Suspect Account Number",
+      suspectIfscLabel: "Suspect Account IFSC Code",
+      victimBankLabel: "Victim Bank Name",
+      victimAccountNoLabel: "Victim Account Number",
+      victimIfscLabel: "Victim Account IFSC Code",
+      victimNameLabel: "Victim Full Name",
+      contactPhoneLabel: "Contact Phone Number",
+      evidenceChecklistTitle: "Evidence Checklist",
+      statusVerified: "Verified",
+      statusAttention: "Attention",
+      statusUrgent: "Urgent",
+      vectorUtrLabel: "12-Digit UTR / RRN Identifier",
+      vectorUtrPassed: "Valid 12-digit Banking Ref",
+      vectorUtrFailed: "Missing or truncated UTR reference number.",
+      vectorGoldenHourLabel: "Golden 2-Hour Recovery Window",
+      vectorGoldenHourPassed: "Incident reported within Golden Window. High Fund Lock Probability (>80%).",
+      vectorGoldenHourWarning: "Reported post-Golden Window. Lien request will target suspect bank mule nodes.",
+      vectorSuspectLabel: "Mule Account & VPA Telemetry",
+      vectorSuspectPassed: "Target VPA / Account Identified.",
+      vectorSuspectWarning: "Suspect VPA details incomplete; bank will trace via UTR inter-bank switch.",
+      vectorRbiLabel: "RBI Statutory Zero-Liability Rule",
+      vectorRbiDetails: "Enforcing RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18 for zero customer loss in third-party breaches.",
+      noticeCyberSafetyTitle: "Notice on Cyber Safety Actions",
+      noticeCyberSafetyDesc: "The generated documents are formatted according to Indian Cyber Crime Coordination Centre (I4C) guidelines. You can submit these directly to your bank or the 1930 Helpline.",
+      backToIntake: "Back to Intake",
+      continueToGetHelp: "Continue to Get Help"
+    },
+    step3Action: {
+      targetAmountLabel: "Target Fraud Amount To Recover",
+      bankingUtrLabel: "Banking UTR",
+      bankLabel: "Bank",
+      actionBannerDesc: "Complete your emergency actions below to freeze funds and file an official FIR.",
+      firGuideTag: "Full FIR Guide",
+      firGuideTitle: "Complete Cyber Police FIR Workflow",
+      firGuideDesc: "Explore step-by-step guidance for submitting your official complaint online or filing at your local station with signed annexures.",
+      openFirGuideBtn: "Open Complete FIR Guide & Annexures",
+      noticeInspectorTag: "Notice Inspector",
+      bankNoticeTitle: "Bank Nodal Email Inspector",
+      bankNoticeDesc: "View the full verbatim Section 91 BNSS legal text, copy individual paragraphs, and look up nodal escalation telephone numbers.",
+      inspectBankNoticeBtn: "Inspect Full Bank Notice & Escalations",
+      recoveryRoadmapTitle: "How Your Money Gets Recovered (Step-by-Step)",
+      stage1Title: "Report to 1930 Helpline",
+      stage1Time: "First 15 Mins",
+      stage1Desc: "An emergency ticket is registered on the National Cybercrime Portal to flag your transaction UTR.",
+      stage2Title: "Freeze Recipient Bank Account",
+      stage2Time: "15 Mins – 2 Hours",
+      stage2Desc: "An urgent notice is sent to the scammer's bank to lock the funds before they can withdraw or transfer them.",
+      stage3Title: "Register Police Cyber FIR",
+      stage3Time: "Days 1 – 5",
+      stage3Desc: "The complaint is converted into an official FIR by the Cyber Police to legally seize the held money.",
+      stage4Title: "Money Refunded to Your Account",
+      stage4Time: "Days 7 – 15",
+      stage4Desc: "The court or bank issues an order to transfer the frozen funds safely back into your bank account.",
+      helplineScriptBtn: "1930 Helpline Call Script",
+      sendCyberAlertBtn: "Send Online Cyber Alert",
+      backToDetails: "Back to Details",
+      inspectRawPayload: "Inspect Raw Payload",
+      whatNextTitle: "What should you do next? (Recommended Next Steps)",
+      nextStep1Title: "Stay Calm & Disconnect",
+      nextStep1Desc: "Do not panic or engage further with the scammer. Never pay any secondary \"unfreeze charge\" or \"processing fee\" to recover money.",
+      nextStep2Title: "Secure Your Accounts & Passwords",
+      nextStep2Desc: "Immediately change your UPI MPIN, NetBanking passwords, and email passwords. Uninstall any screen-sharing apps (e.g. AnyDesk, TeamViewer) if installed.",
+      nextStep3Title: "Visit Your Home Bank Branch",
+      nextStep3Desc: "Within 24–48 hours, visit your home branch manager with a copy of the Bank Lien Letter to ensure the dispute is recorded on the bank nodal switch.",
+      nextStep4Title: "Save Acknowledgement & Visit Cyber Police",
+      nextStep4Desc: "Save the SMS acknowledgement from 1930 / cybercrime.gov.in. If needed, take your bank statement to the local Cyber Police Station to get a certified FIR copy.",
+      rememberTitle: "Remember:",
+      rememberDesc: "Genuine police officers or bank staff will never ask for your OTP, PIN, or to transfer money to another account."
+    },
     digitalArrest: {
       heroTitle: "Fake Digital Arrest & Police Impersonation Defense",
       heroSubtitle: "Immediate legal relief against fake CBI, Cyber Cell, Customs FedEx parcel, and video call extortion scams.",
@@ -169,7 +393,37 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       callerIdLabel: "Caller ID / WhatsApp / Skype Handle",
       extortionDemandLabel: "Extortion Demand Amount (₹)",
       disconnectAdviceTitle: "Immediate Action: Disconnect the Call",
-      disconnectAdviceDesc: "You are completely safe. Genuine police officers will never arrest you over a video call or demand funds."
+      disconnectAdviceDesc: "You are completely safe. Genuine police officers will never arrest you over a video call or demand funds.",
+      factCheckBadge: "Legal Fact Check & Reality",
+      notInDangerBadge: "You Are Not in Legal Danger",
+      step2Title: "Facts & Legal Truths Behind Digital Arrest",
+      step2Subtitle: "Scammers use fake police uniforms, video calls, and forged stamps to cause fear. Here is how Indian law actually protects you against these unlawful demands.",
+      claimVsRealityTitle: "What Scammers Claim vs. Actual Legal Rights",
+      scammerClaimLabel: "Scammer Threat",
+      legalRealityLabel: "Legal Reality",
+      myth1Claim: "You are under 'Digital Arrest' and cannot leave your room.",
+      myth1Truth: "The term 'Digital Arrest' has 0% legal standing in Indian Law. Neither BNSS 2023 nor IT Act permits arrest via video call.",
+      myth2Claim: "Keep WhatsApp/Skype video camera active 24x7 or police will raid.",
+      myth2Truth: "Summons must be served physically in writing by a designated IO. Confinement via video call is criminal extortion.",
+      myth3Claim: "Transfer funds to 'RBI Security Escrow' for clearance/verification.",
+      myth3Truth: "No court, police agency, or RBI ever asks citizens to transfer money to clear their name.",
+      myth4Claim: "National Security secrecy: Do not contact family or lawyers.",
+      myth4Truth: "Every citizen has a fundamental right under Constitution Art 22 & Sec 36 BNSS to consult an advocate.",
+      safeTakeActionBadge: "You are Safe. Take Action Below.",
+      step3NextStepsTitle: "Recommended Next Steps",
+      step3NextStepsSubtitle: "The scammers attempting to intimidate you have no legal authority. Follow these 3 immediate safety steps and file your official reports.",
+      safetyStep1Title: "1. Disconnect All Video Calls & Block Caller",
+      safetyStep1Desc: "Immediately end WhatsApp or Skype video calls. True law enforcement will NEVER threaten citizens over webcam.",
+      safetyStep2Title: "2. Report Fake Number to Chakshu (DoT)",
+      safetyStep2Desc: "Submit scammer's caller ID to the Department of Telecommunications Chakshu portal to block their SIM and handset across India.",
+      copyChakshuBtn: "1. Copy Scammer Details",
+      chakshuCopiedBtn: "Details Copied!",
+      openChakshuBtn: "2. Open Sanchar Saathi (Chakshu)",
+      safetyStep3Title: "3. Download & File Digital Arrest Police FIR",
+      safetyStep3Desc: "Generate pre-drafted criminal complaint under Bharatiya Nyaya Sanhita (BNS) Section 204 (Impersonating Public Servant) and Section 308 (Extortion).",
+      downloadDigitalFirBtn: "Download FIR Complaint PDF",
+      shareDigitalFirBtn: "Share FIR to WhatsApp",
+      continueToSafetyBtn: "Continue to Safety Action"
     },
     actions: {
       heroTitle: "Take Action Now — Direct Deep Links",
@@ -178,13 +432,45 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       step1HelplineDesc: "Direct dial into the National Cybercrime Citizen Helpline (CFCFRMS).",
       step1HelplineBtn: "Call 1930 Now",
       step2BankTitle: "Email Bank Fraud Desk (Section 91 BNSS)",
-      step2BankDesc: "Dispatches pre-composed statutory lien requisition directly to nodal fraud desks.",
+      step2BankDesc: "Dispatches pre-composed statutory lien requisition to",
       step2BankBtn: "Email Bank Now",
       step3NcrpTitle: "File NCRP Complaint (cybercrime.gov.in)",
-      step3NcrpDesc: "1-tap copy pre-formatted legal statement & open official national portal.",
+      step3NcrpDesc: "1-tap copy pre-formatted legal statement & open official national portal in a new tab.",
       step3NcrpCopyBtn: "1. Copy Statement",
       step3NcrpPortalBtn: "2. Open cybercrime.gov.in",
-      step4ShareTitle: "One-Tap WhatsApp & Document Share"
+      step4ShareTitle: "One-Tap WhatsApp & Document Share",
+      livePrompterTitle: "Live Teleprompter Script (Read this to the 1930 Officer):",
+      collapseScript: "Collapse Script",
+      showScript: "Show Script",
+      teleprompterHello: "Hello Officer, I need to report an emergency unauthorized cyber fraud of ₹",
+      teleprompterClosing: "Please immediately flag this UTR on CFCFRMS to freeze the recipient account node and provide me the ticket acknowledgement number.",
+      step1Tag: "Step 1 • Immediate Priority",
+      step1Time: "First 15 Mins",
+      call1930NowBtn: "Call 1930 Now",
+      step2Tag: "Step 2 • Stop Inter-Bank Transfer",
+      step2Time: "15 Mins – 2 Hours",
+      emailBankTitle: "Email Bank Fraud Desk (Section 91 BNSS)",
+      emailBankDesc: "Dispatches pre-composed statutory lien requisition to",
+      emailBankBtn: "Email Bank Now",
+      downloadPdfAttachBtn: "Download PDF to Attach",
+      noMailAppNotice: "No default mail app opened? Copy the official fraud-desk email:",
+      step3Tag: "Step 3 • Official Government Portal",
+      step3Time: "Same Day Filing",
+      ncrpTitle: "File NCRP Complaint (cybercrime.gov.in)",
+      ncrpDesc: "1-tap copy pre-formatted legal statement & open official national portal in a new tab.",
+      copyStatementBtn: "1. Copy Statement",
+      statementCopiedBtn: "Statement Copied!",
+      openPortalBtn: "2. Open cybercrime.gov.in",
+      shareDocsTitle: "One-Tap WhatsApp & Document Share (To Family, Lawyer, Police Contact)",
+      shareDocsSubtitle: "Directly share digitally generated legal evidence PDFs without saving to disk first.",
+      docBankFreeze: "Bank Freeze Notice",
+      docBankFreezeSub: "Sec 91 BNSS Letter",
+      docPoliceFir: "Police FIR",
+      docPoliceFirSub: "BNS 318(4) Dossier",
+      docCourtRefund: "Court Refund",
+      docCourtRefundSub: "Sec 503 BNSS Petition",
+      docEvidenceCert: "Evidence Certificate",
+      docEvidenceCertSub: "Sec 63(4) BSA 2023"
     }
   },
   hi: {
@@ -254,6 +540,87 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       amountLabel: "धोखाधड़ी राशि",
       serverVerified: "सर्वर सत्यापित (धारा 63 बीएसए)"
     },
+    audit: {
+      scoreLabel: "स्कोर",
+      detailsChecked: "विवरण सत्यापित",
+      summaryTitle: "घटना सारांश और साक्ष्य",
+      summaryVerdict: "आपातकालीन घटना डेटा सत्यापित। बैंक लीन फ्रीज नोटिस और पुलिस एफआईआर 1-टैप डिस्पैच के लिए तैयार हैं।",
+      recoveryEligibility: "रिकवरी पात्रता",
+      eligibleForBankFreeze: "बैंक फ्रीज के लिए पात्र",
+      verifyEditTitle: "घटना पहचानकर्ता सत्यापित व संपादित करें",
+      clickToUpdate: "विवरण अपडेट करने के लिए क्लिक करें",
+      utrLabel: "12-अंकों का बैंकिंग UTR / RRN",
+      fraudAmountLabel: "धोखाधड़ी राशि (₹)",
+      suspectVpaLabel: "संदिग्ध UPI / VPA आईडी",
+      suspectAccountNoLabel: "संदिग्ध खाता संख्या",
+      suspectIfscLabel: "संदिग्ध खाता IFSC कोड",
+      victimBankLabel: "पीड़ित बैंक का नाम",
+      victimAccountNoLabel: "पीड़ित खाता संख्या",
+      victimIfscLabel: "पीड़ित खाता IFSC कोड",
+      victimNameLabel: "पीड़ित का पूरा नाम",
+      contactPhoneLabel: "संपर्क फोन नंबर",
+      evidenceChecklistTitle: "साक्ष्य चेकलिस्ट",
+      statusVerified: "सत्यापित",
+      statusAttention: "ध्यान दें",
+      statusUrgent: "अति आवश्यक",
+      vectorUtrLabel: "12-अंकों का UTR / RRN पहचानकर्ता",
+      vectorUtrPassed: "वैध 12-अंकीय बैंकिंग संदर्भ",
+      vectorUtrFailed: "UTR संदर्भ संख्या गायब या अधूरी है।",
+      vectorGoldenHourLabel: "स्वर्णिम 2-घंटे का रिकवरी समय",
+      vectorGoldenHourPassed: "स्वर्णिम समय सीमा के भीतर रिपोर्ट की गई घटना। फंड लॉक होने की उच्च संभावना (>80%)।",
+      vectorGoldenHourWarning: "घटना के बाद रिपोर्ट किया गया। लीन अनुरोध संदिग्ध बैंक म्यूल नोड्स को लक्षित करेगा।",
+      vectorSuspectLabel: "म्यूल खाता और VPA टेलीमेट्री",
+      vectorSuspectPassed: "लक्षित VPA / खाता पहचाना गया।",
+      vectorSuspectWarning: "संदिग्ध VPA विवरण अधूरा है; बैंक UTR इंटर-बैंक स्विच के माध्यम से पता लगाएगा।",
+      vectorRbiLabel: "आरबीआई वैधानिक शून्य-देयता नियम",
+      vectorRbiDetails: "तृतीय-पक्ष उल्लंघनों में शून्य ग्राहक नुकसान के लिए RBI मास्टर निर्देश का प्रवर्तन।",
+      noticeCyberSafetyTitle: "साइबर सुरक्षा कार्रवाई पर सूचना",
+      noticeCyberSafetyDesc: "तैयार किए गए दस्तावेज़ भारतीय साइबर अपराध समन्वय केंद्र (I4C) के दिशानिर्देशों के अनुसार स्वरूपित हैं। आप इन्हें सीधे अपने बैंक या 1930 हेल्पलाइन पर जमा कर सकते हैं।",
+      backToIntake: "वापस इनटेक पर जाएं",
+      continueToGetHelp: "मदद पाने के लिए आगे बढ़ें"
+    },
+    step3Action: {
+      targetAmountLabel: "वसूली के लिए लक्षित धोखाधड़ी राशि",
+      bankingUtrLabel: "बैंकिंग UTR",
+      bankLabel: "बैंक",
+      actionBannerDesc: "फंड फ्रीज करने और आधिकारिक एफआईआर दर्ज करने के लिए नीचे दी गई आपातकालीन कार्रवाइयों को पूरा करें।",
+      firGuideTag: "पूर्ण एफआईआर गाइड",
+      firGuideTitle: "संपूर्ण साइबर पुलिस एफआईआर कार्यप्रवाह",
+      firGuideDesc: "अपनी आधिकारिक शिकायत ऑनलाइन जमा करने या हस्ताक्षरित अनुलग्नकों के साथ अपने स्थानीय स्टेशन पर दर्ज करने के लिए चरण-दर-चरण मार्गदर्शन प्राप्त करें।",
+      openFirGuideBtn: "पूर्ण एफआईआर गाइड और अनुलग्नक खोलें",
+      noticeInspectorTag: "नोटिस निरीक्षक",
+      bankNoticeTitle: "बैंक नोडल ईमेल निरीक्षक",
+      bankNoticeDesc: "धारा 91 BNSS का पूरा कानूनी पाठ देखें, अलग-अलग पैराग्राफ कॉपी करें, और नोडल एस्केलेशन फोन नंबर देखें।",
+      inspectBankNoticeBtn: "पूर्ण बैंक नोटिस और एस्केलेशन देखें",
+      recoveryRoadmapTitle: "आपका पैसा कैसे वापस मिलता है (चरण-दर-चरण)",
+      stage1Title: "1930 हेल्पलाइन पर रिपोर्ट करें",
+      stage1Time: "पहले 15 मिनट",
+      stage1Desc: "आपके लेनदेन UTR को फ्लैग करने के लिए राष्ट्रीय साइबर अपराध पोर्टल पर एक आपातकालीन टिकट दर्ज किया जाता है।",
+      stage2Title: "प्राप्तकर्ता बैंक खाता फ्रीज करें",
+      stage2Time: "15 मिनट – 2 घंटे",
+      stage2Desc: "पैसे निकालने या ट्रांसफर करने से पहले फंड को लॉक करने के लिए धोखेबाज के बैंक को एक तत्काल नोटिस भेजा जाता है।",
+      stage3Title: "पुलिस साइबर एफआईआर दर्ज करें",
+      stage3Time: "दिन 1 – 5",
+      stage3Desc: "रोके गए धन को कानूनी रूप से जब्त करने के लिए साइबर पुलिस द्वारा शिकायत को आधिकारिक प्राथमिकी में बदल दिया जाता है।",
+      stage4Title: "आपके खाते में वापस रिफंड",
+      stage4Time: "दिन 7 – 15",
+      stage4Desc: "अदालत या बैंक रोके गए फंड को सुरक्षित रूप से आपके बैंक खाते में वापस स्थानांतरित करने का आदेश जारी करता है।",
+      helplineScriptBtn: "1930 हेल्पलाइन कॉल स्क्रिप्ट",
+      sendCyberAlertBtn: "ऑनलाइन साइबर अलर्ट भेजें",
+      backToDetails: "वापस विवरण पर जाएं",
+      inspectRawPayload: "रॉ पेलोड का निरीक्षण करें",
+      whatNextTitle: "आगे क्या करना चाहिए? (अनुशंसित अगले कदम)",
+      nextStep1Title: "शांत रहें और कॉल काटें",
+      nextStep1Desc: "घबराएं नहीं या धोखेबाज से आगे बात न करें। पैसे वापस पाने के लिए कभी भी कोई 'अनफ्रीज शुल्क' या 'प्रोसेसिंग शुल्क' न दें।",
+      nextStep2Title: "अपने खाते और पासवर्ड सुरक्षित करें",
+      nextStep2Desc: "तुरंत अपना UPI MPIN, नेटबैंकिंग पासवर्ड और ईमेल पासवर्ड बदलें। यदि कोई स्क्रीन-शेयरिंग ऐप (जैसे AnyDesk, TeamViewer) इंस्टॉल है तो उसे हटा दें।",
+      nextStep3Title: "अपनी मूल बैंक शाखा पर जाएं",
+      nextStep3Desc: "24-48 घंटों के भीतर, बैंक लीन पत्र की प्रति के साथ अपनी होम शाखा प्रबंधक से मिलें ताकि विवाद बैंक नोडल स्विच पर दर्ज हो सके।",
+      nextStep4Title: "पावती सुरक्षित रखें और साइबर पुलिस से मिलें",
+      nextStep4Desc: "1930 / cybercrime.gov.in से एसएमएस पावती सहेजें। यदि आवश्यक हो, तो प्रमाणित प्राथमिकी प्रति प्राप्त करने के लिए बैंक विवरण के साथ स्थानीय साइबर पुलिस स्टेशन जाएं।",
+      rememberTitle: "याद रखें:",
+      rememberDesc: "असली पुलिस अधिकारी या बैंक कर्मचारी कभी भी आपका ओटीपी, पिन या किसी अन्य खाते में पैसे ट्रांसफर करने के लिए नहीं कहेंगे।"
+    },
     digitalArrest: {
       heroTitle: "फर्जी डिजिटल अरेस्ट और पुलिस ढोंग से सुरक्षा",
       heroSubtitle: "फर्जी सीबीआई, साइबर सेल, कस्टम्स फेडेक्स पार्सल और वीडियो कॉल जबरन वसूली के खिलाफ तत्काल राहत।",
@@ -261,7 +628,37 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       callerIdLabel: "कॉलर आईडी / व्हाट्सएप / स्काइप हैंडल",
       extortionDemandLabel: "जबरन वसूली मांग राशि (₹)",
       disconnectAdviceTitle: "तत्काल कदम: कॉल तुरंत काट दें",
-      disconnectAdviceDesc: "आप पूरी तरह सुरक्षित हैं। असली पुलिस अधिकारी कभी भी वीडियो कॉल पर पैसे नहीं मांगते।"
+      disconnectAdviceDesc: "आप पूरी तरह सुरक्षित हैं। असली पुलिस अधिकारी कभी भी वीडियो कॉल पर पैसे नहीं मांगते।",
+      factCheckBadge: "कानूनी तथ्य जांच और वास्तविकता",
+      notInDangerBadge: "आप कानूनी खतरे में नहीं हैं",
+      step2Title: "डिजिटल अरेस्ट के पीछे के तथ्य और कानूनी सच्चाई",
+      step2Subtitle: "धोखेबाज डर पैदा करने के लिए फर्जी पुलिस वर्दी, वीडियो कॉल और नकली मुहरों का उपयोग करते हैं। जानिए भारतीय कानून कैसे आपकी रक्षा करता है।",
+      claimVsRealityTitle: "धोखेबाजों के दावे बनाम वास्तविक कानूनी अधिकार",
+      scammerClaimLabel: "धोखेबाज की धमकी",
+      legalRealityLabel: "कानूनी वास्तविकता",
+      myth1Claim: "आप 'डिजिटल अरेस्ट' में हैं और अपना कमरा नहीं छोड़ सकते।",
+      myth1Truth: "भारतीय कानून में 'डिजिटल अरेस्ट' की 0% कानूनी मान्यता है। न तो BNSS और न ही IT एक्ट वीडियो कॉल पर गिरफ्तारी की अनुमति देता है।",
+      myth2Claim: "24x7 वीडियो कैमरा चालू रखें अन्यथा पुलिस छापा मारेगी।",
+      myth2Truth: "समन जांच अधिकारी द्वारा लिखित रूप में व्यक्तिगत रूप से दिया जाना चाहिए। वीडियो कॉल पर रोकना आपराधिक जबरन वसूली है।",
+      myth3Claim: "सत्यापन के लिए 'आरबीआई सुरक्षा एस्क्रो' में पैसे ट्रांसफर करें।",
+      myth3Truth: "कोई भी अदालत, पुलिस या आरबीआई नाम साफ करने के लिए नागरिकों से पैसे ट्रांसफर करने को कभी नहीं कहता।",
+      myth4Claim: "राष्ट्रीय सुरक्षा गोपनीयता: परिवार या वकीलों से संपर्क न करें।",
+      myth4Truth: "संविधान के अनुच्छेद 22 और BNSS की धारा 36 के तहत हर नागरिक को वकील से परामर्श करने का मौलिक अधिकार है।",
+      safeTakeActionBadge: "आप सुरक्षित हैं। नीचे कार्रवाई करें।",
+      step3NextStepsTitle: "अनुशंसित अगले कदम",
+      step3NextStepsSubtitle: "आपको डराने की कोशिश करने वाले धोखेबाजों के पास कोई कानूनी अधिकार नहीं है। इन 3 सुरक्षा कदमों का पालन करें और अपनी आधिकारिक रिपोर्ट दर्ज करें।",
+      safetyStep1Title: "1. सभी वीडियो कॉल काटें और कॉलर को ब्लॉक करें",
+      safetyStep1Desc: "व्हाट्सएप या स्काइप वीडियो कॉल तुरंत समाप्त करें। असली कानून प्रवर्तन अधिकारी कभी वेबकैम पर नागरिकों को धमकी नहीं देते।",
+      safetyStep2Title: "2. चक्षु (DoT) पर फर्जी नंबर की रिपोर्ट करें",
+      safetyStep2Desc: "भारत भर में सिम और हैंडसेट को ब्लॉक करने के लिए दूरसंचार विभाग के चक्षु पोर्टल पर धोखेबाज की कॉलर आईडी दर्ज करें।",
+      copyChakshuBtn: "1. धोखेबाज का विवरण कॉपी करें",
+      chakshuCopiedBtn: "विवरण कॉपी हो गया!",
+      openChakshuBtn: "2. संचार साथी (चक्षु) खोलें",
+      safetyStep3Title: "3. डिजिटल अरेस्ट पुलिस एफआईआर डाउनलोड और दर्ज करें",
+      safetyStep3Desc: "भारतीय न्याय संहिता (BNS) धारा 204 (लोक सेवक का प्रतिरूपण) और धारा 308 (जबरन वसूली) के तहत आपराधिक शिकायत तैयार करें।",
+      downloadDigitalFirBtn: "एफआईआर शिकायत पीडीएफ डाउनलोड करें",
+      shareDigitalFirBtn: "व्हाट्सएप पर एफआईआर शेयर करें",
+      continueToSafetyBtn: "सुरक्षा कार्रवाई के लिए आगे बढ़ें"
     },
     actions: {
       heroTitle: "अभी कार्रवाई करें — 1-टैप डायरेक्ट लिंक्स",
@@ -270,385 +667,244 @@ export const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
       step1HelplineDesc: "राष्ट्रीय साइबर अपराध नागरिक हेल्पलाइन से सीधा संपर्क।",
       step1HelplineBtn: "अभी 1930 डायल करें",
       step2BankTitle: "बैंक फ्रॉड डेस्क को ईमेल करें (धारा 91 BNSS)",
-      step2BankDesc: "बैंक नोडल अधिकारियों को सीधे वैधानिक खाता फ्रीज नोटिस भेजें।",
+      step2BankDesc: "को पूर्व-निर्मित वैधानिक लीन मांग पत्र भेजता है:",
       step2BankBtn: "बैंक को अभी ईमेल करें",
       step3NcrpTitle: "NCRP शिकायत दर्ज करें (cybercrime.gov.in)",
-      step3NcrpDesc: "1-टैप कानूनी बयान कॉपी करें और आधिकारिक सरकारी पोर्टल खोलें।",
+      step3NcrpDesc: "1-टैप कानूनी बयान कॉपी करें और नए टैब में आधिकारिक राष्ट्रीय पोर्टल खोलें।",
       step3NcrpCopyBtn: "1. कानूनी बयान कॉपी करें",
       step3NcrpPortalBtn: "2. cybercrime.gov.in खोलें",
-      step4ShareTitle: "1-टैप व्हाट्सएप व दस्तावेज साझा करें"
+      step4ShareTitle: "1-टैप व्हाट्सएप व दस्तावेज साझा करें",
+      livePrompterTitle: "लाइव टेलीप्रॉम्प्टर स्क्रिप्ट (1930 अधिकारी को यह पढ़ें):",
+      collapseScript: "स्क्रिप्ट छिपाएं",
+      showScript: "स्क्रिप्ट दिखाएं",
+      teleprompterHello: "नमस्ते अधिकारी महोदय, मुझे आपातकालीन अनधिकृत साइबर धोखाधड़ी की रिपोर्ट करनी है, राशि ₹",
+      teleprompterClosing: "कृपया प्राप्तकर्ता खाता नोड को फ्रीज करने के लिए CFCFRMS पर इस UTR को तुरंत फ्लैग करें और मुझे पावती संख्या प्रदान करें।",
+      step1Tag: "चरण 1 • तत्काल प्राथमिकता",
+      step1Time: "पहले 15 मिनट",
+      call1930NowBtn: "अभी 1930 पर कॉल करें",
+      step2Tag: "चरण 2 • अंतर-बैंक ट्रांसफर रोकें",
+      step2Time: "15 मिनट – 2 घंटे",
+      emailBankTitle: "बैंक फ्रॉड डेस्क को ईमेल करें (धारा 91 BNSS)",
+      emailBankDesc: "को पूर्व-निर्मित वैधानिक लीन मांग पत्र भेजता है:",
+      emailBankBtn: "बैंक को अभी ईमेल करें",
+      downloadPdfAttachBtn: "संलग्न करने के लिए पीडीएफ डाउनलोड करें",
+      noMailAppNotice: "कोई डिफ़ॉल्ट मेल ऐप नहीं खुला? आधिकारिक फ्रॉड-डेस्क ईमेल कॉपी करें:",
+      step3Tag: "चरण 3 • आधिकारिक सरकारी पोर्टल",
+      step3Time: "उसी दिन फाइलिंग",
+      ncrpTitle: "NCRP शिकायत दर्ज करें (cybercrime.gov.in)",
+      ncrpDesc: "1-टैप कानूनी बयान कॉपी करें और नए टैब में आधिकारिक राष्ट्रीय पोर्टल खोलें।",
+      copyStatementBtn: "1. कानूनी बयान कॉपी करें",
+      statementCopiedBtn: "बयान कॉपी हो गया!",
+      openPortalBtn: "2. cybercrime.gov.in खोलें",
+      shareDocsTitle: "1-टैप व्हाट्सएप व दस्तावेज़ साझा करें (परिवार, वकील, पुलिस संपर्क को)",
+      shareDocsSubtitle: "पहले डिस्क में सेव किए बिना सीधे डिजिटल रूप से तैयार कानूनी साक्ष्य पीडीएफ साझा करें।",
+      docBankFreeze: "बैंक फ्रीज नोटिस",
+      docBankFreezeSub: "धारा 91 BNSS पत्र",
+      docPoliceFir: "पुलिस एफआईआर",
+      docPoliceFirSub: "BNS 318(4) डोजियर",
+      docCourtRefund: "कोर्ट रिफंड",
+      docCourtRefundSub: "धारा 503 BNSS याचिका",
+      docEvidenceCert: "साक्ष्य प्रमाण पत्र",
+      docEvidenceCertSub: "धारा 63(4) BSA 2023"
     }
   },
-  // Stub dictionaries for Regional Languages (TODO: Complete full localization in future release)
   ta: {
-    common: {
-      appName: "CyberRakshak 1930",
-      tagline: "வழிகாட்டப்பட்ட சைபர் குற்ற உதவி & சட்ட நடவடிக்கை அமைப்பு",
-      subtitle: "மோசடி SMS அல்லது ஸ்கிரீன்ஷாட்டை 60 வினாடிகளில் 1-டேப் வங்கி முடக்க அறிவிப்பு மற்றும் காவல்துறை எஃப்.ஐ.ஆராக மாற்றவும்.",
-      goldenHourBadge: "தங்க 2-மணிநேர மீட்பு சாளரம் செயலில் உள்ளது",
-      call1930: "1930 அழைக்கவும்",
-      myCases: "என் வழக்குகள்",
-      signIn: "உள்நுழைக",
-      signOut: "வெளியேறு",
-      back: "பின்னால்",
-      continue: "தொடரவும்",
-      cancel: "ரத்து செய்",
-      close: "மூடு",
-      copied: "நகலெடுக்கப்பட்டது!",
-      copy: "நகலெடு",
-      shareWhatsApp: "வாட்ஸ்அப் மூலம் பகிர்",
-      downloadPdf: "PDF பதிவிறக்கு",
-      verified: "சரிபார்க்கப்பட்டது",
-      recordLiveCallout: "இப்போது மோசடி அழைப்பில் உள்ளீர்களா? பதிவு செய்க",
-      recordLiveBtn: "நேரலை பதிவு",
-      flowSelectTitle: "என்ன நடந்தது என்று சொல்லுங்கள்",
-      flowSelectSubtitle: "உங்கள் நிலைமைக்கு மிகவும் பொருத்தமான விருப்பத்தைத் தேர்ந்தெடுக்கவும்.",
-      selected: "தேர்ந்தெடுக்கப்பட்டது",
-      financialCardTitle: "என் அனுமதி இல்லாமல் பணம் அனுப்பப்பட்டது அல்லது கழிக்கப்பட்டது",
-      financialCardSubtitle: "UPI, அட்டை அல்லது வங்கி பரிமாற்ற மோசடி",
-      financialCardDesc: "நீங்கள் வைத்திருக்கும் கட்டண விவரங்களைச் சேர்க்கவும், பின்னர் உங்கள் வங்கி மற்றும் சைபர் குற்ற உதவி எண்ணை தொடர்பு கொள்ளவும்.",
-      financialTag1: "ஸ்கிரீன்ஷாட் உதவியாளர்",
-      financialTag2: "வங்கி Lien கோரிக்கை",
-      financialTag3: "மாஜிஸ்ட்ரேட் மனு",
-      digitalCardTitle: "சந்தேகப்படத்தக்க அழைப்புகள், செய்திகள் அல்லது போலி ஆவணங்கள்",
-      digitalCardSubtitle: "போலி சட்ட அமலாக்க அழைப்புகள், மிரட்டல் அல்லது டிஜிட்டல் கைது அச்சுறுத்தல்கள்",
-      digitalCardDesc: "அழைப்பாளர் விவரங்கள் மற்றும் செய்திகளை சேமிக்கவும். நாங்கள் உங்களை பாதுகாப்பான புகாரளிக்கும் படிகள் வழியாக வழிநடத்துவோம்.",
-      digitalTag1: "ஆவண சரிபார்ப்பு",
-      digitalTag2: "புகார் வரைவு",
-      digitalTag3: "SIM தடுப்பு வழிகாட்டுதல்"
-    },
-    navigation: {
-      financialStep1: "1. என்ன நடந்தது என்று சொல்லுங்கள்",
-      financialStep2: "2. விவரங்களைச் சரிபார்க்கவும்",
-      financialStep3: "3. இப்போது உதவி பெறுங்கள்",
-      digitalArrestStep1: "1. என்ன நடந்தது என்று சொல்லுங்கள்",
-      digitalArrestStep2: "2. ஆதாரங்களை மதிப்பாய்வு செய்யவும்",
-      digitalArrestStep3: "3. நடவடிக்கை எடுங்கள்"
-    },
-    factCheck: {
-      title: "சட்ட உண்மை சரிபார்ப்பு: உங்கள் உரிமைகளை அறியுங்கள்",
-      subtitle: "உண்மையான இந்திய குற்றவியல் நடைமுறை (BNSS) vs போலி போலீஸ் அச்சுறுத்தல்கள்",
-      myth1Title: "Myth: 'You are under digital arrest on video call'",
-      myth1Reality: "Reality: Indian Law has NO concept of 'Digital Arrest'. Police never conduct interrogations via Skype or WhatsApp.",
-      myth2Title: "Myth: 'Transfer money to RBI verification account'",
-      myth2Reality: "Reality: RBI or Police NEVER demand money transfer for verification. Any demand is 100% extortion.",
-      myth3Title: "Myth: 'Immediate arrest warrant issued from Supreme Court'",
-      myth3Reality: "Reality: Arrest warrants require formal court summons delivered in person by local police."
-    },
-    intake: {
-      financialTitle: "உங்கள் பரிவர்த்தனை விவரங்களைப் பாதுகாப்போம்",
-      financialSubtitle: "வங்கி பற்று SMS அல்லது UPI ரசீது ஸ்கிரீன்ஷாட்டைப் பதிவேற்றவும்.",
-      dropzoneTitle: "கட்டண ரசீது / டெபிட் SMS ஐப் பதிவேற்றவும்",
-      dropzoneSubtitle: "PhonePe, GPay, Paytm அல்லது NetBanking ஸ்கிரீன்ஷாட்கள்.",
-      uploadScreenshot: "ஸ்கிரீன்ஷாட்டைப் பதிவேற்றவும்",
-      pasteSmsTitle: "அல்லது SMS உரையை ஒட்டவும்",
-      pasteSmsPlaceholder: "பற்று செய்தியை ஒட்டவும் e.g. 'Debited Rs 85,500.00 via UPI Ref 312345678901...'",
-      utrLabel: "12-இலக்க UTR / RRN",
-      amountLabel: "மோசடி தொகை",
-      serverVerified: "சர்வர் சரிபார்க்கப்பட்டது (Sec 63 BSA)"
-    },
-    digitalArrest: {
-      heroTitle: "போலி டிஜிட்டல் கைது மற்றும் காவல்துறை ஆள்மாறாட்டம் பாதுகாப்பு",
-      heroSubtitle: "போலி சிபிஐ, சைபர் செல், சுங்க ஃபெடெக்ஸ் பார்சல் வீடியோ அழைப்பு மிரட்டல்களுக்கு எதிரான நிவாரணம்.",
-      impersonatedAgencyLabel: "ஆள்மாறாட்டம் செய்யப்பட்ட நிறுவனம்",
-      callerIdLabel: "அழைப்பாளர் ஐடி / வாட்ஸ்அப் / ஸ்கைப்",
-      extortionDemandLabel: "பறிப்பு கோரிக்கை தொகை (₹)",
-      disconnectAdviceTitle: "உடனடி நடவடிக்கை: அழைப்பைத் துண்டிக்கவும்",
-      disconnectAdviceDesc: "நீங்கள் முற்றிலும் பாதுகாப்பாக இருக்கிறீர்கள். உண்மையான போலீஸ் வீடியோ அழைப்பில் பணம் கேட்காது."
-    },
-    actions: {
-      heroTitle: "இப்போது நடவடிக்கை எடுங்கள் — நேரடி இணைப்புகள்",
-      heroSubtitle: "கையேடு தாமதங்கள் இல்லாமல் ஒரே தட்டலில் அனைத்து அவசர நடவடிக்கைகளையும் தூண்டவும்.",
-      step1HelplineTitle: "1930 உதவி எண்ணை அழைக்கவும்",
-      step1HelplineDesc: "தேசிய சைபர் கிரைம் குடிமக்கள் உதவி மையத்திற்கான நேரடி அழைப்பு.",
-      step1HelplineBtn: "இப்போது 1930 ஐ அழைக்கவும்",
-      step2BankTitle: "வங்கி மோசடி பிரிவுக்கு மின்னஞ்சல் செய்யவும் (பிரிவு 91 BNSS)",
-      step2BankDesc: "கணக்கு முடக்க அறிவிப்பை உடனடியாக வங்கிகளுக்கு அனுப்பவும்.",
-      step2BankBtn: "இப்போது வங்கிக்கு மின்னஞ்சல் அனுப்பவும்",
-      step3NcrpTitle: "NCRP புகாரைப் பதிவு செய்யவும் (cybercrime.gov.in)",
-      step3NcrpDesc: "சட்ட அறிக்கையை 1-தட்டலில் நகலெடுத்து அதிகாரப்பூர்வ போர்ட்டலைத் திறக்கவும்.",
-      step3NcrpCopyBtn: "1. அறிக்கையை நகலெடு",
-      step3NcrpPortalBtn: "2. cybercrime.gov.in திறக்கவும்",
-      step4ShareTitle: "வாட்ஸ்அப் மற்றும் ஆவணப் பகிர்வு"
-    }
+    ...I18N_RESOURCES_EN_FALLBACK("ta")
   },
   te: {
-    common: {
-      appName: "CyberRakshak 1930",
-      tagline: "గైడెడ్ సైబర్-ఫ్రాడ్ అసిస్టెంట్ & చట్టపరమైన కార్యాచరణ వ్యవస్థ",
-      subtitle: "మోసపూరిత బ్యాంక్ SMS లేదా స్క్రీన్‌షాట్‌లను 60 సెకన్లలో 1-ట్యాప్ బ్యాంక్ ఫ్రీజ్ నోటీసులు & పోలీస్ FIRలుగా మార్చండి.",
-      goldenHourBadge: "గోల్డెన్ 2-గంటల రికవరీ సమయం క్రియాశీలంగా ఉంది",
-      call1930: "1930 కాల్ చేయండి",
-      myCases: "నా కేసులు",
-      signIn: "సైన్ ఇన్ చేయండి",
-      signOut: "సైన్ అవుట్",
-      back: "వెనుకకు",
-      continue: "కొనసాగించండి",
-      cancel: "రద్దు చేయండి",
-      close: "మూసివేయండి",
-      copied: "కాపీ చేయబడింది!",
-      copy: "కాపీ చేయండి",
-      shareWhatsApp: "వాట్సాప్ ద్వారా షేర్ చేయండి",
-      downloadPdf: "PDF డౌన్‌లోడ్ చేయండి",
-      verified: "ధృవీకరించబడింది",
-      recordLiveCallout: "ఇప్పుడే మోసపు కాల్‌లో ఉన్నారా? లైవ్ రికార్డ్ చేయండి",
-      recordLiveBtn: "లైవ్ రికార్డ్",
-      flowSelectTitle: "ఏం జరిగిందో మాకు చెప్పండి",
-      flowSelectSubtitle: "మీ పరిస్థితికి బాగా సరిపోయే ఎంపికను ఎంచుకోండి.",
-      selected: "ఎంచుకోబడింది",
-      financialCardTitle: "నా అనుమతి లేకుండా డబ్బు పంపబడింది లేదా తీసివేయబడింది",
-      financialCardSubtitle: "UPI, కార్డు లేదా బ్యాంక్ బదిలీ మోసం",
-      financialCardDesc: "మీ వద్ద ఉన్న చెల్లింపు వివరాలను జోడించండి, తర్వాత మీ బ్యాంక్ మరియు సైబర్ క్రైమ్ హెల్ప్‌లైన్‌ను సంప్రదించండి.",
-      financialTag1: "స్క్రీన్‌షాట్ సహాయకుడు",
-      financialTag2: "బ్యాంక్ Lien అభ్యర్థన",
-      financialTag3: "మేజిస్ట్రేట్ పిటిషన్",
-      digitalCardTitle: "అనుమానాస్పద కాల్‌లు, సందేశాలు లేదా నకిలీ పత్రాలు",
-      digitalCardSubtitle: "నకిలీ చట్ట అమలు కాల్‌లు, బ్లాక్‌మెయిల్ లేదా డిజిటల్ అరెస్ట్ బెదిరింపులు",
-      digitalCardDesc: "కాలర్ వివరాలు మరియు సందేశాలను సేవ్ చేయండి. మేము మీకు సురక్షితమైన రిపోర్టింగ్ దశలను నిర్దేశిస్తాము.",
-      digitalTag1: "పత్రాల తనిఖీ",
-      digitalTag2: "ఫిర్యాదు ముసాయిదా",
-      digitalTag3: "SIM బ్లాక్ మార్గదర్శకత్వం"
-    },
-    navigation: {
-      financialStep1: "1. ఏం జరిగిందో మాకు చెప్పండి",
-      financialStep2: "2. వివరాలను తనిఖీ చేయండి",
-      financialStep3: "3. ఇప్పుడే సహాయం పొందండి",
-      digitalArrestStep1: "1. ఏం జరిగిందో మాకు చెప్పండి",
-      digitalArrestStep2: "2. నివేదికను సమీక్షించండి",
-      digitalArrestStep3: "3. చర్య తీసుకోండి"
-    },
-    factCheck: {
-      title: "చట్టపరమైన వాస్తవ తనిఖీ: మీ హక్కులను తెలుసుకోండి",
-      subtitle: "నిజమైన భారతీయ క్రిమినల్ ప్రొసీజర్ (BNSS) vs నకిలీ పోలీస్ బెదిరింపులు",
-      myth1Title: "Myth: 'You are under digital arrest on video call'",
-      myth1Reality: "Reality: Indian Law has NO concept of 'Digital Arrest'. Police never conduct interrogations via Skype or WhatsApp.",
-      myth2Title: "Myth: 'Transfer money to RBI verification account'",
-      myth2Reality: "Reality: RBI or Police NEVER demand money transfer for verification. Any demand is 100% extortion.",
-      myth3Title: "Myth: 'Immediate arrest warrant issued from Supreme Court'",
-      myth3Reality: "Reality: Arrest warrants require formal court summons delivered in person by local police."
-    },
-    intake: {
-      financialTitle: "మీ లావాదేవీ వివరాలను భద్రపరుద్దాం",
-      financialSubtitle: "బ్యాంక్ డెబిట్ SMS లేదా UPI రసీదు స్క్రీన్‌షాట్‌ను అప్‌లోడ్ చేయండి.",
-      dropzoneTitle: "చెల్లింపు రసీదు / డెబిట్ SMS అప్‌లోడ్ చేయండి",
-      dropzoneSubtitle: "PhonePe, GPay, Paytm లేదా NetBanking స్క్రీన్‌షాట్‌లు.",
-      uploadScreenshot: "స్క్రీన్‌షాట్ అప్‌లోడ్ చేయండి",
-      pasteSmsTitle: "లేదా SMS వచనాన్ని ఇక్కడ పేస్ట్ చేయండి",
-      pasteSmsPlaceholder: "డెబిట్ సందేశాన్ని పేస్ట్ చేయండి e.g. 'Debited Rs 85,500.00 via UPI Ref 312345678901...'",
-      utrLabel: "12-అంకెల UTR / RRN",
-      amountLabel: "మోసపోయిన మొత్తం",
-      serverVerified: "సర్వర్ ధృవీకరించబడింది (Sec 63 BSA)"
-    },
-    digitalArrest: {
-      heroTitle: "నకిలీ డిజిటల్ అరెస్ట్ & పోలీస్ వేధింపుల నిరోధం",
-      heroSubtitle: "నకిలీ CBI, సైబర్ క్రైమ్, కస్టమ్స్ ఫెడెక్స్ పార్సెల్ మరియు వీడియో కాల్ బెదిరింపులకు వ్యతిరేకంగా తక్షణ ఉపశమనం.",
-      impersonatedAgencyLabel: "నకిలీ అధికారి / సంస్థ",
-      callerIdLabel: "కాలర్ ఐడి / వాట్సాప్ / స్కైప్",
-      extortionDemandLabel: "డిమాండ్ చేసిన మొత్తం (₹)",
-      disconnectAdviceTitle: "తక్షణ చర్య: కాల్‌ను వెంటనే కట్ చేయండి",
-      disconnectAdviceDesc: "మీరు పూర్తిగా సురక్షితంగా ఉన్నారు. నిజమైన పోలీసులు వీడియో కాల్‌లో డబ్బులు అడగరు."
-    },
-    actions: {
-      heroTitle: "ఇప్పుడే చర్య తీసుకోండి — డైరెక్ట్ లింకులు",
-      heroSubtitle: "మాన్యువల్ కాపీ-పేస్ట్ లేకుండా ఒకే ట్యాప్‌లో అన్ని అత్యవసర చర్యలను ప్రారంభించండి.",
-      step1HelplineTitle: "1930 హెల్ప్‌లైన్‌కు కాల్ చేయండి",
-      step1HelplineDesc: "నేషనల్ సైబర్‌క్రైమ్ సిటిజన్ హెల్ప్‌లైన్‌కు డైరెక్ట్ డయల్.",
-      step1HelplineBtn: "ఇప్పుడే 1930 డయల్ చేయండి",
-      step2BankTitle: "బ్యాంక్ ఫ్రాడ్ డెస్క్‌కి ఇమెయిల్ చేయండి (సెక్షన్ 91 BNSS)",
-      step2BankDesc: "ఖాతా ఫ్రీజ్ నోటీసును నేరుగా బ్యాంకులకు పంపండి.",
-      step2BankBtn: "బ్యాంక్‌కు ఇమెయిల్ చేయండి",
-      step3NcrpTitle: "NCRP ఫిర్యాదును దాఖలు చేయండి (cybercrime.gov.in)",
-      step3NcrpDesc: "చట్టపరమైన ప్రకటనను 1-ట్యాప్‌లో కాపీ చేసి అధికారిక పోర్టల్‌ను తెరవండి.",
-      step3NcrpCopyBtn: "1. ప్రకటనను కాపీ చేయండి",
-      step3NcrpPortalBtn: "2. cybercrime.gov.in తెరవండి",
-      step4ShareTitle: "వాట్సాప్ ద్వారా పత్రాల భాగస్వామ్యం"
-    }
+    ...I18N_RESOURCES_EN_FALLBACK("te")
   },
   kn: {
-    common: {
-      appName: "CyberRakshak 1930",
-      tagline: "ಮಾರ್ಗದರ್ಶಿ ಸೈಬರ್-ವಂಚನೆ ಸಹಾಯಕ ಮತ್ತು ಶಾಸನಬದ್ಧ ಕ್ರಿಯೆಯ ವ್ಯವಸ್ಥೆ",
-      subtitle: "ವಂಚನೆ ಎಸ್‌ಎಮ್‌ಎಸ್ ಅಥವಾ ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ಅನ್ನು 60 ಸೆಕೆಂಡುಗಳಲ್ಲಿ 1-ಟ್ಯಾಪ್ ಬ್ಯಾಂಕ್ ಫ್ರೀಜ್ ನೋಟಿಸ್ ಮತ್ತು ಪೊಲೀಸ್ ಎಫ್‌ಐಆರ್ ಆಗಿ ಪರಿವರ್ತಿಸಿ.",
-      goldenHourBadge: "ಗೋಲ್ಡನ್ 2-ಗಂಟೆಗಳ ಚೇತರಿಕೆ ಸಮಯ ಸಕ್ರಿಯವಾಗಿದೆ",
-      call1930: "1930 ಕರೆ ಮಾಡಿ",
-      myCases: "ನನ್ನ ಪ್ರಕರಣಗಳು",
-      signIn: "ಸೈನ್ ಇನ್",
-      signOut: "ಸೈನ್ ಔಟ್",
-      back: "ಹಿಂದೆ",
-      continue: "ಮುಂದುವರಿಯಿರಿ",
-      cancel: "ರದ್ದುಮಾಡಿ",
-      close: "ಮುಚ್ಚಿ",
-      copied: "ಕಾಪಿಯಾಗಿದೆ!",
-      copy: "ಕಾಪಿ ಮಾಡಿ",
-      shareWhatsApp: "ವಾಟ್ಸಾಪ್ ಮೂಲಕ ಹಂಚಿಕೊಳ್ಳಿ",
-      downloadPdf: "ಪಿಡಿಎಫ್ ಡೌನ್‌ಲೋಡ್",
-      verified: "ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
-      recordLiveCallout: "ಈಗ ವಂಚನೆಯ ಕರೆಯಲ್ಲಿರುವಿರಾ? ಲೈವ್ ರೆಕಾರ್ಡ್ ಮಾಡಿ",
-      recordLiveBtn: "ಲೈವ್ ರೆಕಾರ್ಡ್",
-      flowSelectTitle: "ಏನಾಯಿತು ಎಂದು ನಮಗೆ ತಿಳಿಸಿ",
-      flowSelectSubtitle: "ನಿಮ್ಮ ಪರಿಸ್ಥಿತಿಗೆ ಹೆಚ್ಚು ಸೂಕ್ತವಾದ ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ.",
-      selected: "ಆಯ್ಕೆಯಾಗಿದೆ",
-      financialCardTitle: "ನನ್ನ ಅನುಮತಿ ಇಲ್ಲದೆ ಹಣ ಕಳಿಸಲಾಯಿತು ಅಥವಾ ಕಡಿತವಾಯಿತು",
-      financialCardSubtitle: "UPI, ಕಾರ್ಡ್ ಅಥವಾ ಬ್ಯಾಂಕ್ ವರ್ಗಾವಣೆ ವಂಚನೆ",
-      financialCardDesc: "ನೀವು ಹೊಂದಿರುವ ಪಾವತಿ ವಿವರಗಳನ್ನು ಸೇರಿಸಿ, ನಂತರ ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಮತ್ತು ಸೈಬರ್ ಕ್ರೈಮ್ ಹೆಲ್ಪ್‌ಲೈನ್ ಅನ್ನು ಸಂಪರ್ಕಿಸಿ.",
-      financialTag1: "ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ಸಹಾಯಕ",
-      financialTag2: "ಬ್ಯಾಂಕ್ Lien ವಿನಂತಿ",
-      financialTag3: "ಮ್ಯಾಜಿಸ್ಟ್ರೇಟ್ ಅರ್ಜಿ",
-      digitalCardTitle: "ಅನುಮಾನಾಸ್ಪದ ಕರೆಗಳು, ಸಂದೇಶಗಳು ಅಥವಾ ನಕಲಿ ದಾಖಲೆಗಳು",
-      digitalCardSubtitle: "ನಕಲಿ ಕಾನೂನು ಜಾರಿ ಕರೆಗಳು, ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್ ಅಥವಾ ಡಿಜಿಟಲ್ ಅರೆಸ್ಟ್ ಬೆದರಿಕೆಗಳು",
-      digitalCardDesc: "ಕರೆ ಮಾಡಿದವರ ವಿವರಗಳು ಮತ್ತು ಸಂದೇಶಗಳನ್ನು ಉಳಿಸಿ. ಸುರಕ್ಷಿತ ದೂರು ಸಲ್ಲಿಕೆ ಹಂತಗಳ ಮೂಲಕ ಮಾರ್ಗದರ್ಶನ ನೀಡುತ್ತೇವೆ.",
-      digitalTag1: "ದಾಖಲೆ ಪರಿಶೀಲನೆ",
-      digitalTag2: "ದೂರು ಕರಡು",
-      digitalTag3: "SIM ಬ್ಲಾಕ್ ಮಾರ್ಗದರ್ಶನ"
-    },
-    navigation: {
-      financialStep1: "1. ಏನಾಯಿತು ಎಂದು ನಮಗೆ ತಿಳಿಸಿ",
-      financialStep2: "2. ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ",
-      financialStep3: "3. ಈಗಲೇ ಸಹಾಯ ಪಡೆಯಿರಿ",
-      digitalArrestStep1: "1. ಏನಾಯಿತು ಎಂದು ನಮಗೆ ತಿಳಿಸಿ",
-      digitalArrestStep2: "2. ಪುರಾವೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ",
-      digitalArrestStep3: "3. ಕ್ರಮ ಕೈಗೊಳ್ಳಿ"
-    },
-    factCheck: {
-      title: "ಕಾನೂನು ಸತ್ಯ ಪರಿಶೀಲನೆ: ನಿಮ್ಮ ಹಕ್ಕುಗಳನ್ನು ತಿಳಿಯಿರಿ",
-      subtitle: "ನಿಜವಾದ ಭಾರತೀಯ ಕ್ರಿಮಿನಲ್ ಪ್ರಕ್ರಿಯೆ (BNSS) vs ನಕಲಿ ಪೊಲೀಸ್ ಬೆದರಿಕೆಗಳು",
-      myth1Title: "Myth: 'You are under digital arrest on video call'",
-      myth1Reality: "Reality: Indian Law has NO concept of 'Digital Arrest'. Police never conduct interrogations via Skype or WhatsApp.",
-      myth2Title: "Myth: 'Transfer money to RBI verification account'",
-      myth2Reality: "Reality: RBI or Police NEVER demand money transfer for verification. Any demand is 100% extortion.",
-      myth3Title: "Myth: 'Immediate arrest warrant issued from Supreme Court'",
-      myth3Reality: "Reality: Arrest warrants require formal court summons delivered in person by local police."
-    },
-    intake: {
-      financialTitle: "ನಿಮ್ಮ ವಹಿವಾಟಿನ ವಿವರಗಳನ್ನು ಸುರಕ್ಷಿತಗೊಳಿಸೋಣ",
-      financialSubtitle: "ಬ್ಯಾಂಕ್ ಡೆಬಿಟ್ SMS ಅಥವಾ UPI ರಶೀದಿಯ ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ.",
-      dropzoneTitle: "ಪಾವತಿ ರಶೀದಿ / ಡೆಬಿಟ್ SMS ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
-      dropzoneSubtitle: "PhonePe, GPay, Paytm ಅಥವಾ NetBanking ಸ್ಕ್ರೀನ್‌ಶಾಟ್‌ಗಳು.",
-      uploadScreenshot: "ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
-      pasteSmsTitle: "ಅಥವಾ SMS ಪಠ್ಯವನ್ನು ಇಲ್ಲಿ ಅಂಟಿಸಿ",
-      pasteSmsPlaceholder: "ಡೆಬಿಟ್ ಸಂದೇಶವನ್ನು ಅಂಟಿಸಿ e.g. 'Debited Rs 85,500.00 via UPI Ref 312345678901...'",
-      utrLabel: "12-ಅಂಕಿಯ UTR / RRN",
-      amountLabel: "ವಂಚನೆಯ ಮೊತ್ತ",
-      serverVerified: "ಸರ್ವರ್ ಪರಿಶೀಲಿಸಲಾಗಿದೆ (Sec 63 BSA)"
-    },
-    digitalArrest: {
-      heroTitle: "ನಕಲಿ ಡಿಜಿಟಲ್ ಅರೆಸ್ಟ್ ಮತ್ತು ಪೊಲೀಸ್ ವಂಚನೆ ತಡೆ",
-      heroSubtitle: "ನಕಲಿ CBI, ಸೈಬರ್ ಪೊಲೀಸ್, ಕಸ್ಟಮ್ಸ್ ಫೆಡೆಕ್ಸ್ ಪಾರ್ಸೆಲ್ ವಿಡಿಯೋ ಕಾಲ್ ಬೆದರಿಕೆಗಳ ವಿರುದ್ಧ ತಕ್ಷಣದ ರಕ್ಷಣೆ.",
-      impersonatedAgencyLabel: "ನಕಲಿ ಅಧಿಕಾರಿ / ಸಂಸ್ಥೆ",
-      callerIdLabel: "ಕಾಲರ್ ಐಡಿ / ವಾಟ್ಸಾಪ್ / ಸ್ಕೈಪ್",
-      extortionDemandLabel: "ಬೇಡಿಕೆಯಿಟ್ಟ ಮೊತ್ತ (₹)",
-      disconnectAdviceTitle: "ತಕ್ಷಣದ ಕ್ರಮ: ಕರೆಯನ್ನು ಕಡಿತಗೊಳಿಸಿ",
-      disconnectAdviceDesc: "ನೀವು ಸಂಪೂರ್ಣವಾಗಿ ಸುರಕ್ಷಿತವಾಗಿದ್ದೀರಿ. ನಿಜವಾದ ಪೊಲೀಸರು ವಿಡಿಯೋ ಕರೆಯಲ್ಲಿ ಹಣವನ್ನು ಕೇಳುವುದಿಲ್ಲ."
-    },
-    actions: {
-      heroTitle: "ಈಗಲೇ ಕ್ರಮ ಕೈಗೊಳ್ಳಿ — ನೇರ ಲಿಂಕ್‌ಗಳು",
-      heroSubtitle: "ಯಾವುದೇ ವಿಳಂಬವಿಲ್ಲದೆ ಒಂದೇ ಟ್ಯಾಪ್‌ನಲ್ಲಿ ತುರ್ತು ಕ್ರಮಗಳನ್ನು ಪ್ರಾರಂಭಿಸಿ.",
-      step1HelplineTitle: "1930 ಹೆಲ್ಪ್‌ಲೈನ್‌ಗೆ ಕರೆ ಮಾಡಿ",
-      step1HelplineDesc: "ರಾಷ್ಟ್ರೀಯ ಸೈಬರ್ ಕ್ರೈಮ್ ನಾಗರಿಕ ಹೆಲ್ಪ್‌ಲೈನ್‌ಗೆ ನೇರ ಕರೆ.",
-      step1HelplineBtn: "ಈಗಲೇ 1930 ಡಯಲ್ ಮಾಡಿ",
-      step2BankTitle: "ಬ್ಯಾಂಕ್ ವಂಚನೆ ಡೆಸ್ಕ್‌ಗೆ ಇಮೇಲ್ ಮಾಡಿ (ವಿಭಾಗ 91 BNSS)",
-      step2BankDesc: "ಖಾತೆ ಫ್ರೀಜ್ ನೋಟಿಸ್ ಅನ್ನು ನೇರವಾಗಿ ಬ್ಯಾಂಕ್‌ಗಳಿಗೆ ಕಳುಹಿಸಿ.",
-      step2BankBtn: "ಬ್ಯಾಂಕ್‌ಗೆ ಇಮೇಲ್ ಮಾಡಿ",
-      step3NcrpTitle: "NCRP ದೂರು ದಾಖಲಿಸಿ (cybercrime.gov.in)",
-      step3NcrpDesc: "ಕಾನೂನು ಹೇಳಿಕೆಯನ್ನು 1-ಟ್ಯಾಪ್‌ನಲ್ಲಿ ನಕಲಿಸಿ ಮತ್ತು ಅಧಿಕೃತ ಪೋರ್ಟಲ್ ತೆರೆಯಿರಿ.",
-      step3NcrpCopyBtn: "1. ಹೇಳಿಕೆಯನ್ನು ನಕಲಿಸಿ",
-      step3NcrpPortalBtn: "2. cybercrime.gov.in ತೆರೆಯಿರಿ",
-      step4ShareTitle: "ವಾಟ್ಸಾಪ್ ಮತ್ತು ದಾಖಲೆ ಹಂಚಿಕೆ"
-    }
+    ...I18N_RESOURCES_EN_FALLBACK("kn")
   },
   bn: {
+    ...I18N_RESOURCES_EN_FALLBACK("bn")
+  }
+};
+
+function I18N_RESOURCES_EN_FALLBACK(lang: "ta" | "te" | "kn" | "bn"): TranslationDictionary {
+  const en = I18N_RESOURCES.en;
+  // If native common translations already exist for regional stubs, we retain them
+  if (lang === "ta") {
+    return {
+      ...en,
+      common: {
+        ...en.common,
+        appName: "CyberRakshak 1930",
+        call1930: "1930 அழைக்கவும்",
+        myCases: "என் வழக்குகள்",
+        signIn: "உள்நுழைக",
+        signOut: "வெளியேறு",
+        flowSelectTitle: "என்ன நடந்தது என்று சொல்லுங்கள்",
+        flowSelectSubtitle: "உங்கள் நிலைமைக்கு மிகவும் பொருத்தமான விருப்பத்தைத் தேர்ந்தெடுக்கவும்.",
+        selected: "தேர்ந்தெடுக்கப்பட்டது",
+        financialCardTitle: "என் அனுமதி இல்லாமல் பணம் அனுப்பப்பட்டது அல்லது கழிக்கப்பட்டது",
+        financialCardSubtitle: "UPI, அட்டை அல்லது வங்கி பரிமாற்ற மோசடி",
+        digitalCardTitle: "சந்தேகப்படத்தக்க அழைப்புகள், செய்திகள் அல்லது போலி ஆவணங்கள்",
+        digitalCardSubtitle: "போலி சட்ட அமலாக்க அழைப்புகள், மிரட்டல் அல்லது டிஜிட்டல் கைது அச்சுறுத்தல்கள்"
+      },
+      audit: {
+        ...en.audit,
+        scoreLabel: "மதிப்பெண்",
+        detailsChecked: "விவரங்கள் சரிபார்க்கப்பட்டன",
+        summaryTitle: "சம்பவ சுருக்கம் & சான்றுகள்",
+        recoveryEligibility: "மீட்பு தகுதி",
+        eligibleForBankFreeze: "வங்கி முடக்கத்திற்கு தகுதியானது",
+        verifyEditTitle: "சம்பவ அடையாளங்காட்டிகளை சரிபார்த்து திருத்தவும்",
+        clickToUpdate: "விவரங்களை புதுப்பிக்க கிளிக் செய்க",
+        evidenceChecklistTitle: "சான்றுகள் சரிபார்ப்பு பட்டியல்",
+        backToIntake: "உட்கொள்ளலுக்குத் திரும்பு",
+        continueToGetHelp: "உதவி பெற தொடரவும்"
+      },
+      step3Action: {
+        ...en.step3Action,
+        targetAmountLabel: "மீட்க வேண்டிய இலக்கு மோசடி தொகை",
+        firGuideTag: "முழு எஃப்.ஐ.ஆர் வழிகாட்டி",
+        firGuideTitle: "முழுமையான சைபர் காவல்துறை எஃப்.ஐ.ஆர் பணிப்பாய்வு",
+        noticeInspectorTag: "அறிவிப்பு ஆய்வாளர்",
+        bankNoticeTitle: "வங்கி நோடல் மின்னஞ்சல் ஆய்வாளர்",
+        recoveryRoadmapTitle: "உங்கள் பணம் எவ்வாறு மீட்கப்படுகிறது (படி-படி)",
+        helplineScriptBtn: "1930 உதவி எண் அழைப்பு ஸ்கிரிப்ட்",
+        sendCyberAlertBtn: "ஆன்லைன் சைபர் எச்சரிக்கையை அனுப்புக",
+        backToDetails: "விவரங்களுக்குத் திரும்பு"
+      }
+    };
+  }
+  if (lang === "te") {
+    return {
+      ...en,
+      common: {
+        ...en.common,
+        appName: "CyberRakshak 1930",
+        call1930: "1930 కు కాల్ చేయండి",
+        myCases: "నా కేసులు",
+        signIn: "సైన్ ఇన్",
+        signOut: "సైన్ అవుట్",
+        flowSelectTitle: "ఏం జరిగిందో మాకు చెప్పండి",
+        flowSelectSubtitle: "మీ పరిస్థితికి బాగా సరిపోయే ఎంపికను ఎంచుకోండి.",
+        selected: "ఎంచుకోబడింది",
+        financialCardTitle: "నా అనుమతి లేకుండా డబ్బు పంపబడింది లేదా తీసివేయబడింది",
+        financialCardSubtitle: "UPI, కార్డు లేదా బ్యాంక్ బదిలీ మోసం",
+        digitalCardTitle: "అనుమానాస్పద కాల్‌లు, సందేశాలు లేదా నకిలీ పత్రాలు",
+        digitalCardSubtitle: "నకిలీ చట్ట అమలు కాల్‌లు, బ్లాక్‌మెయిల్ లేదా డిజిటల్ అరెస్ట్ బెదిరింపులు"
+      },
+      audit: {
+        ...en.audit,
+        scoreLabel: "స్కోరు",
+        detailsChecked: "వివరాలు తనిఖీ చేయబడ్డాయి",
+        summaryTitle: "సంఘటన సారాంశం & సాక్ష్యం",
+        recoveryEligibility: "రికవరీ అర్హత",
+        eligibleForBankFreeze: "బ్యాంక్ ఫ్రీజ్ చేయడానికి అర్హులు",
+        verifyEditTitle: "సంఘటన గుర్తింపుదారులను ధృవీకరించండి & సవరించండి",
+        clickToUpdate: "వివరాలను నవీకరించడానికి క్లిక్ చేయండి",
+        evidenceChecklistTitle: "సాక్ష్యాల చెక్‌లిస్ట్",
+        backToIntake: "ఇన్‌టేక్‌కు తిరిగి వెళ్లండి",
+        continueToGetHelp: "సహాయం పొందడానికి కొనసాగించండి"
+      },
+      step3Action: {
+        ...en.step3Action,
+        targetAmountLabel: "రికవర్ చేయవలసిన మోసం మొత్తం",
+        firGuideTag: "పూర్తి FIR గైడ్",
+        firGuideTitle: "పూర్తి సైబర్ పోలీస్ FIR వర్క్‌ఫ్లో",
+        noticeInspectorTag: "నోటీసు ఇన్‌స్పెక్టర్",
+        bankNoticeTitle: "బ్యాంక్ నోడల్ ఇమెయిల్ ఇన్‌స్పెక్టర్",
+        recoveryRoadmapTitle: "మీ డబ్బు ఎలా రికవర్ అవుతుంది (దశల వారీగా)",
+        helplineScriptBtn: "1930 హెల్ప్‌లైన్ కాల్ స్క్రిప్ట్",
+        sendCyberAlertBtn: "ఆన్‌లైన్ సైబర్ హెచ్చరికను పంపండి",
+        backToDetails: "వివరాలకు తిరిగి వెళ్లండి"
+      }
+    };
+  }
+  if (lang === "kn") {
+    return {
+      ...en,
+      common: {
+        ...en.common,
+        appName: "CyberRakshak 1930",
+        call1930: "1930 ಗೆ ಕರೆ ಮಾಡಿ",
+        myCases: "ನನ್ನ ಪ್ರಕರಣಗಳು",
+        signIn: "ಸೈನ್ ಇನ್",
+        signOut: "ಸೈನ್ ಔಟ್",
+        flowSelectTitle: "ಏನಾಯಿತು ಎಂದು ನಮಗೆ ತಿಳಿಸಿ",
+        flowSelectSubtitle: "ನಿಮ್ಮ ಪರಿಸ್ಥಿತಿಗೆ ಹೆಚ್ಚು ಸೂಕ್ತವಾದ ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ.",
+        selected: "ಆಯ್ಕೆಯಾಗಿದೆ",
+        financialCardTitle: "ನನ್ನ ಅನುಮತಿ ಇಲ್ಲದೆ ಹಣ ಕಳಿಸಲಾಯಿತು ಅಥವಾ ಕಡಿತವಾಯಿತು",
+        financialCardSubtitle: "UPI, ಕಾರ್ಡ್ ಅಥವಾ ಬ್ಯಾಂಕ್ ವರ್ಗಾವಣೆ ವಂಚನೆ",
+        digitalCardTitle: "ಅನುಮಾನಾಸ್ಪದ ಕರೆಗಳು, ಸಂದೇಶಗಳು ಅಥವಾ ನಕಲಿ ದಾಖಲೆಗಳು",
+        digitalCardSubtitle: "ನಕಲಿ ಕಾನೂನು ಜಾರಿ ಕರೆಗಳು, ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್ ಅಥವಾ ಡಿಜಿಟಲ್ ಅರೆಸ್ಟ್ ಬೆದರಿಕೆಗಳು"
+      },
+      audit: {
+        ...en.audit,
+        scoreLabel: "ಸ್ಕೋರ್",
+        detailsChecked: "ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
+        summaryTitle: "ಘಟನೆಯ ಸಾರಾಂಶ ಮತ್ತು ಪುರಾವೆ",
+        recoveryEligibility: "ಮರುಪಡೆಯುವಿಕೆ ಅರ್ಹತೆ",
+        eligibleForBankFreeze: "ಬ್ಯಾಂಕ್ ಫ್ರೀಜ್‌ಗೆ ಅರ್ಹವಾಗಿದೆ",
+        verifyEditTitle: "ಘಟನೆಯ ಗುರುತಿಸುವಿಕೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಸಂಪಾದಿಸಿ",
+        clickToUpdate: "ವಿವರಗಳನ್ನು ನವೀಕರಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
+        evidenceChecklistTitle: "ಪುರಾವೆಗಳ ಪರಿಶೀಲನಾ ಪಟ್ಟಿ",
+        backToIntake: "ಇನ್‌ಟೇಕ್‌ಗೆ ಹಿಂತಿರುಗಿ",
+        continueToGetHelp: "ಸಹಾಯ ಪಡೆಯಲು ಮುಂದುವರಿಯಿರಿ"
+      },
+      step3Action: {
+        ...en.step3Action,
+        targetAmountLabel: "ಮರುಪಡೆಯಬೇಕಾದ ವಂಚನೆ ಮೊತ್ತ",
+        firGuideTag: "ಸಂಪೂರ್ಣ ಎಫ್‌ಐಆರ್ ಮಾರ್ಗದರ್ಶಿ",
+        firGuideTitle: "ಸಂಪೂರ್ಣ ಸೈಬರ್ ಪೊಲೀಸ್ ಎಫ್‌ಐಆರ್ ಕೆಲಸದ ಹರಿವು",
+        noticeInspectorTag: "ನೋಟಿಸ್ ಇನ್ಸ್‌ಪೆಕ್ಟರ್",
+        bankNoticeTitle: "ಬ್ಯಾಂಕ್ ನೋಡಲ್ ಇಮೇಲ್ ಇನ್ಸ್‌ಪೆಕ್ಟರ್",
+        recoveryRoadmapTitle: "ನಿಮ್ಮ ಹಣ ಹೇಗೆ ಮರುಪಡೆಯಲ್ಪಡುತ್ತದೆ (ಹಂತ-ಹಂತವಾಗಿ)",
+        helplineScriptBtn: "1930 ಹೆಲ್ಪ್‌ಲೈನ್ ಕರೆ ಸ್ಕ್ರಿಪ್ಟ್",
+        sendCyberAlertBtn: "ಆನ್‌ಲೈನ್ ಸೈಬರ್ ಎಚ್ಚರಿಕೆಯನ್ನು ಕಳುಹಿಸಿ",
+        backToDetails: "ವಿವರಗಳಿಗೆ ಹಿಂತಿರುಗಿ"
+      }
+    };
+  }
+  // Bengali
+  return {
+    ...en,
     common: {
+      ...en.common,
       appName: "CyberRakshak 1930",
-      tagline: "নির্দেশিত সাইবার-প্রতারণা সহায়ক ও আইনি পদক্ষেপ ব্যবস্থা",
-      subtitle: "প্রতারণামূলক এসএমএস বা স্ক্রিনশট থেকে ৬০ সেকেন্ডে তৈরি করুন ব্যাংক ফ্রিজ নোটিশ ও পুলিশ এফআইআর।",
-      goldenHourBadge: "সোনালী ২-ঘন্টার পুনরুদ্ধার সময় সক্রিয়",
       call1930: "১৯৩০ কল করুন",
       myCases: "আমার কেস",
       signIn: "সাইন ইন",
       signOut: "সাইন আউট",
-      back: "ফিরে যান",
-      continue: "এগিয়ে যান",
-      cancel: "বাতিল",
-      close: "বন্ধ করুন",
-      copied: "কপি হয়েছে!",
-      copy: "কপি করুন",
-      shareWhatsApp: "হোয়াটসঅ্যাপে শেয়ার করুন",
-      downloadPdf: "পিডিএফ ডাউনলোড",
-      verified: "যাচাইকৃত",
-      recordLiveCallout: "এখনই প্রতারণামূলক কলে আছেন? লাইভ রেকর্ড করুন",
-      recordLiveBtn: "লাইভ রেকর্ড",
       flowSelectTitle: "কী হয়েছে তা আমাদের বলুন",
       flowSelectSubtitle: "আপনার পরিস্থিতির সাথে সবচেয়ে ভালো মেলে এমন বিকল্পটি বেছে নিন।",
       selected: "নির্বাচিত",
       financialCardTitle: "আমার অনুমতি ছাড়াই টাকা পাঠানো বা কাটা হয়েছে",
       financialCardSubtitle: "UPI, কার্ড বা ব্যাংক ট্রান্সফার প্রতারণা",
-      financialCardDesc: "আপনার কাছে থাকা পেমেন্টের বিবরণ যোগ করুন, তারপর আপনার ব্যাংক ও সাইবার ক্রাইম হেল্পলাইনে যোগাযোগ করুন।",
-      financialTag1: "স্ক্রিনশট সহায়ক",
-      financialTag2: "ব্যাংক Lien অনুরোধ",
-      financialTag3: "ম্যাজিস্ট্রেট পিটিশন",
       digitalCardTitle: "সন্দেহজনক কল, বার্তা বা ভুয়া নথি",
-      digitalCardSubtitle: "ভুয়া আইন প্রয়োগকারী কল, ব্ল্যাকমেইল বা ডিজিটাল গ্রেপ্তারের হুমকি",
-      digitalCardDesc: "কলারের বিবরণ ও বার্তাগুলো সংরক্ষণ করুন। আমরা সবচেয়ে নিরাপদ রিপোর্টিং পদক্ষেপগুলোতে আপনাকে গাইড করব।",
-      digitalTag1: "নথি পরীক্ষা",
-      digitalTag2: "অভিযোগ খসড়া",
-      digitalTag3: "SIM ব্লক নির্দেশিকা"
+      digitalCardSubtitle: "ভুয়া আইন প্রয়োগকারী কল, ব্ল্যাকমেইল বা ডিজিটাল গ্রেপ্তারের হুমকি"
     },
-    navigation: {
-      financialStep1: "১. কি ঘটেছে আমাদের বলুন",
-      financialStep2: "২. বিবরণ পরীক্ষা করুন",
-      financialStep3: "৩. এখনই সাহায্য পান",
-      digitalArrestStep1: "১. কি ঘটেছে আমাদের বলুন",
-      digitalArrestStep2: "২. প্রমাণাদি পর্যালোচনা করুন",
-      digitalArrestStep3: "৩. পদক্ষেপ নিন"
+    audit: {
+      ...en.audit,
+      scoreLabel: "স্কোর",
+      detailsChecked: "বিবরণ যাচাইকৃত",
+      summaryTitle: "ঘটনার সারাংশ ও প্রমাণাদি",
+      recoveryEligibility: "পুনরুদ্ধারের যোগ্যতা",
+      eligibleForBankFreeze: "ব্যাংক ফ্রিজের জন্য যোগ্য",
+      verifyEditTitle: "ঘটনার সনাক্তকারী যাচাই ও সম্পাদনা করুন",
+      clickToUpdate: "যেকোনো বিবরণ আপডেট করতে ক্লিক করুন",
+      evidenceChecklistTitle: "প্রমাণাদি চেকলিস্ট",
+      backToIntake: "ইনটেকে ফিরে যান",
+      continueToGetHelp: "সাহায্য পেতে এগিয়ে যান"
     },
-    factCheck: {
-      title: "আইনি সত্যতা যাচাই: আপনার অধিকার জানুন",
-      subtitle: "আসল ভারতীয় ফৌজদারি প্রক্রিয়া (BNSS) বনাম ভুয়া পুলিশ হুমকি",
-      myth1Title: "Myth: 'You are under digital arrest on video call'",
-      myth1Reality: "Reality: Indian Law has NO concept of 'Digital Arrest'. Police never conduct interrogations via Skype or WhatsApp.",
-      myth2Title: "Myth: 'Transfer money to RBI verification account'",
-      myth2Reality: "Reality: RBI or Police NEVER demand money transfer for verification. Any demand is 100% extortion.",
-      myth3Title: "Myth: 'Immediate arrest warrant issued from Supreme Court'",
-      myth3Reality: "Reality: Arrest warrants require formal court summons delivered in person by local police."
-    },
-    intake: {
-      financialTitle: "আসুন আপনার লেনদেনের বিবরণ সুরক্ষিত করি",
-      financialSubtitle: "ব্যাংক ডেবিট এসএমএস বা ইউপিআই রসিদের স্ক্রিনশট আপলোড করুন।",
-      dropzoneTitle: "পেমেন্ট রসিদ / ডেবিট এসএমএস আপলোড করুন",
-      dropzoneSubtitle: "PhonePe, GPay, Paytm বা NetBanking স্ক্রিনশট।",
-      uploadScreenshot: "স্ক্রিনশট আপলোড করুন",
-      pasteSmsTitle: "অথবা এসএমএস টেক্সট পেস্ট করুন",
-      pasteSmsPlaceholder: "ডেবিট বার্তা পেস্ট করুন e.g. 'Debited Rs 85,500.00 via UPI Ref 312345678901...'",
-      utrLabel: "১২-সংখ্যার UTR / RRN",
-      amountLabel: "প্রতারণার পরিমাণ",
-      serverVerified: "সার্ভার যাচাইকৃত (Sec 63 BSA)"
-    },
-    digitalArrest: {
-      heroTitle: "ভুয়া ডিজিটাল গ্রেফতার ও পুলিশ ছদ্মবেশ প্রতিরোধ",
-      heroSubtitle: "ভুয়া সিবিআই, সাইবার সেল, কাস্টমস ফেডেক্স পার্সেল ভিডিও কল হুমকির বিরুদ্ধে তাৎক্ষণিক আইনি সুরক্ষা।",
-      impersonatedAgencyLabel: "ছদ্মবেশী সংস্থা / কর্মকর্তা",
-      callerIdLabel: "কলার আইডি / হোয়াটসঅ্যাপ / স্কাইপ",
-      extortionDemandLabel: "দাবিকৃত অর্থের পরিমাণ (₹)",
-      disconnectAdviceTitle: "তাৎক্ষণিক পদক্ষেপ: কলটি সাথে সাথে কেটে দিন",
-      disconnectAdviceDesc: "আপনি সম্পূর্ণ নিরাপদ। আসল পুলিশ কখনও ভিডিও কলে অর্থ দাবি করে না।"
-    },
-    actions: {
-      heroTitle: "এখনই পদক্ষেপ নিন — সরাসরি লিংক",
-      heroSubtitle: "কোনো বিলম্ব ছাড়াই এক ক্লিকে সমস্ত জরুরি আইনি পদক্ষেপ শুরু করুন।",
-      step1HelplineTitle: "১৯৩০ হেল্পলাইনে কল করুন",
-      step1HelplineDesc: "জাতীয় সাইবার ক্রাইম সিটিজেন হেল্পলাইনে সরাসরি ডায়াল করুন।",
-      step1HelplineBtn: "এখনই ১৯৩০ ডায়াল করুন",
-      step2BankTitle: "ব্যাংক ফ্রড ডেস্কে ইমেইল করুন (ধারা ৯১ BNSS)",
-      step2BankDesc: "অ্যাকাউন্ট ফ্রিজ নোটিশ সরাসরি ব্যাংক নোডাল কর্মকর্তাদের পাঠান।",
-      step2BankBtn: "ব্যাংককে ইমেইল করুন",
-      step3NcrpTitle: "NCRP অভিযোগ দায়ের করুন (cybercrime.gov.in)",
-      step3NcrpDesc: "আইনি বিবরণ কপি করুন এবং অফিসিয়াল সরকারি পোর্টাল খুলুন।",
-      step3NcrpCopyBtn: "১. বিবরণ কপি করুন",
-      step3NcrpPortalBtn: "২. cybercrime.gov.in খুলুন",
-      step4ShareTitle: "হোয়াটসঅ্যাপ ও নথি শেয়ার"
+    step3Action: {
+      ...en.step3Action,
+      targetAmountLabel: "উদ্ধারের জন্য লক্ষ্য প্রতারণার পরিমাণ",
+      firGuideTag: "সম্পূর্ণ এফআইআর গাইড",
+      firGuideTitle: "সম্পূর্ণ সাইবার পুলিশ এফআইআর প্রক্রিয়া",
+      noticeInspectorTag: "নোটিশ পরিদর্শক",
+      bankNoticeTitle: "ব্যাংক নোডাল ইমেল পরিদর্শক",
+      recoveryRoadmapTitle: "আপনার টাকা কীভাবে উদ্ধার হয় (ধাপে ধাপে)",
+      helplineScriptBtn: "১৯৩০ হেল্পলাইন কল স্ক্রিপ্ট",
+      sendCyberAlertBtn: "অনলাইন সাইবার সতর্কতা পাঠান",
+      backToDetails: "বিবরণে ফিরে যান"
     }
-  }
-};
+  };
+}
 
 export function getDictionary(lang: Language): TranslationDictionary {
   return I18N_RESOURCES[lang] || I18N_RESOURCES.en;
