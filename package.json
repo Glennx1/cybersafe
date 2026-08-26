@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "npx tsx test_runner.mjs",
-    "test:a11y": "node scripts/test-a11y.js"
+    "test:a11y": "node scripts/test-a11y.js",
+    "test:pdf-a11y": "npx tsx scripts/test-pdf-a11y.mjs"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
