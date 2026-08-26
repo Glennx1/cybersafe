@@ -955,6 +955,106 @@
       "status": "AUDITED",
       "createdAt": "2026-08-26T07:22:46.984Z",
       "updatedAt": "2026-08-26T07:22:46.984Z"
+    },
+    {
+      "id": "INC-1787729524780",
+      "userId": "USR-DEFAULT-001",
+      "flowType": "financial_fraud",
+      "profile": {
+        "id": "INC-1787729524780",
+        "victimName": "Jivesh",
+        "victimPhone": "9999999999",
+        "victimAccountMasked": "XXXX-XXXX-8821",
+        "victimAccountNo": "918273645501",
+        "victimBank": "State Bank of India (SBI)",
+        "victimBankIfsc": "SBIN0001234",
+        "fraudAmount": 50000,
+        "transactionTime": "2026-08-26T07:17:04.780Z",
+        "utrNumber": "345678901234",
+        "scamCategory": "UPI_PHISHING",
+        "suspectVpa": "crypto.escrow@icicl",
+        "suspectAccountNo": "987654321098",
+        "suspectBankIfsc": "PYTM0123456",
+        "cityState": "Mumbai, Maharashtra",
+        "evidenceFileName": "fraud1.png",
+        "evidenceHash": "8279900b483234a4e19ae7070028d0dbd3fc9239120bc22f0a4886a87b74d6c7",
+        "rawEvidenceText": "103s Svais\n| Scammer +\nYour prepaid task is\ncomplete. To unlock your\nVIP earnings, deposit the\nsecurity foe\nOkay, wil send the money.\nWhat are the details?\na.\nSend INR 50,000 0 our\nmerchant VPA\ncrypto.escrow@icicl\nThe reference codes\n345678901234,\nSend a screenshot once done.\n« 0 .\nFake Telegram Task Scam Chat\n",
+        "impersonatedAgency": "Central Bureau of Investigation (CBI)",
+        "scammerCallerId": "",
+        "extortionDemandAmount": 250000,
+        "serverEvidenceHash": "8279900b483234a4e19ae7070028d0dbd3fc9239120bc22f0a4886a87b74d6c7",
+        "hashMismatch": false,
+        "evidenceFileDate": "2026-08-23T15:13:43.004Z",
+        "bsaCertificateDate": "2026-08-26T07:46:29.002Z"
+      },
+      "auditReport": {
+        "overallCompletenessScore": 85,
+        "isGoldenHourValid": false,
+        "minutesElapsed": 159,
+        "rbiZeroLiabilityEligible": true,
+        "rbiRuleCitation": "RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18",
+        "applicableBnsSections": [
+          "Section 318(4) BNS 2023 (Cheating and dishonestly inducing delivery of property)",
+          "Section 319 BNS 2023 (Cheating by personation)"
+        ],
+        "applicableItActSections": [
+          "Section 66C IT Act 2000 (Identity theft)",
+          "Section 66D IT Act 2000 (Cheating by personation using computer resource)"
+        ],
+        "summaryVerdict": "Golden 2-Hour window elapsed. Emergency Lien Notice will target suspect bank mule nodes immediately.",
+        "vectors": [
+          {
+            "vectorName": "utr_validation",
+            "label": "12-Digit UTR / RRN Identifier",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Valid 12-digit Banking Ref: 345678901234",
+            "iconName": "ShieldCheck"
+          },
+          {
+            "vectorName": "golden_hour_window",
+            "label": "Golden 2-Hour Recovery Window",
+            "score": 40,
+            "status": "WARNING",
+            "details": "Reported 159 mins post-incident. Lien request will target suspect bank mule nodes.",
+            "iconName": "Clock"
+          },
+          {
+            "vectorName": "suspect_node",
+            "label": "Mule Account & VPA Telemetry",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Target VPA / Account Identified: crypto.escrow@icicl (PYTM0123456)",
+            "iconName": "UserX"
+          },
+          {
+            "vectorName": "rbi_protection",
+            "label": "RBI Statutory Zero-Liability Rule",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Enforcing RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18 for zero customer loss in third-party breaches.",
+            "iconName": "FileCheck"
+          }
+        ],
+        "actionPlan": [
+          "Send 1-Click Freeze Lien Request to Bank Branch Manager & Nodal Officer under Sec 91 BNSS.",
+          "File Cyber Police Station FIR Dossier with verified UTR evidence.",
+          "Dial Helpline 1930 and read the generated high-contrast Tele-Script to the operator."
+        ]
+      },
+      "payload": {
+        "ackToken": "I4C-NCRP-2026-838BA0",
+        "timestamp": "2026-08-26T09:57:02.007Z",
+        "helplineReference": "1930-TICKET-550651",
+        "i4cNodeTarget": "NATIONAL_CYBER_CRIME_REPORTING_PORTAL_SANDBOX_V2",
+        "utrChecksum": "SHA256:345678901234-VERIFIED",
+        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-838BA0",
+        "status": "SUBMITTED"
+      },
+      "isSubmitted": false,
+      "status": "AUDITED",
+      "createdAt": "2026-08-26T07:46:13.901Z",
+      "updatedAt": "2026-08-26T09:57:02.243Z"
     }
   ],
   "ledger": {
@@ -1056,6 +1156,152 @@
         "payloadHash": "780147a99f39aaa36f7faa2a323b4eed152d8880b3fa5412e1c865eb67e6b743",
         "previousEntryHash": "0000000000000000000000000000000000000000000000000000000000000000",
         "entryHash": "0cd847cbb5f69eb34846d7d0a353bb900bf98dea9034e24584ffce92d782fc84"
+      }
+    ],
+    "INC-1787729524780": [
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 0,
+        "timestamp": "2026-08-26T07:46:13.903Z",
+        "eventType": "case_created",
+        "payloadHash": "e55d99e759d003e2edb7309e99d8e248ece2ad21b106e65d3cdc19c38744ab10",
+        "previousEntryHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "entryHash": "e4500eda7743746298c38f4fd70c130f50043cbb31a7c1d7307df8e2a13867c2"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 1,
+        "timestamp": "2026-08-26T07:46:14.909Z",
+        "eventType": "case_updated",
+        "payloadHash": "d81a81d6ba3045b04800a4c4e7bdb5e2d5351befef56864316cc497ad0abef2f",
+        "previousEntryHash": "e4500eda7743746298c38f4fd70c130f50043cbb31a7c1d7307df8e2a13867c2",
+        "entryHash": "4754852a69151e5644f7ba33fae89c93ed087c790d85254534c616c47e6eecc1"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 2,
+        "timestamp": "2026-08-26T07:46:29.002Z",
+        "eventType": "evidence_uploaded",
+        "payloadHash": "6d6f19bd6b4857f760a57801ff8e6f1bdd1cb1f5addc1b30e053c75930a23019",
+        "previousEntryHash": "4754852a69151e5644f7ba33fae89c93ed087c790d85254534c616c47e6eecc1",
+        "entryHash": "a2b46ed710e196f29428bb8b026b5772b48c65703edeae55847eeefbc9fe9161"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 3,
+        "timestamp": "2026-08-26T07:46:29.888Z",
+        "eventType": "evidence_uploaded",
+        "payloadHash": "6d05d0cb51dc46135e17df64acc5084588320edeccd565c597d4fd2e7b7746ec",
+        "previousEntryHash": "a2b46ed710e196f29428bb8b026b5772b48c65703edeae55847eeefbc9fe9161",
+        "entryHash": "3647982e7f7a2ddd34b2aee87d4a8b2d7268df19651b26517fffac19ff07fdba"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 4,
+        "timestamp": "2026-08-26T07:46:44.140Z",
+        "eventType": "case_updated",
+        "payloadHash": "4aaa72972980abd37605f5aa87d0fc554deb43302ca8430787241a9535739ac0",
+        "previousEntryHash": "3647982e7f7a2ddd34b2aee87d4a8b2d7268df19651b26517fffac19ff07fdba",
+        "entryHash": "3fe66d74a2d67af5a4624749e7522be85ec899cf73f8af9f22de6b14a9236c31"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 5,
+        "timestamp": "2026-08-26T07:46:44.335Z",
+        "eventType": "case_updated",
+        "payloadHash": "8b3168969bc3db4904e9497ea47ed9ff963b24270dbeb1959e00a530f5ac9dff",
+        "previousEntryHash": "3fe66d74a2d67af5a4624749e7522be85ec899cf73f8af9f22de6b14a9236c31",
+        "entryHash": "8d595ebd54630967cca8c2ea3b14bc258167f1f249f32c28e6488d13d5e5d402"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 6,
+        "timestamp": "2026-08-26T07:46:44.568Z",
+        "eventType": "case_updated",
+        "payloadHash": "316ede964f5772d8664752a7673ad8253ac3b05da21eff8765432f7be037c2c9",
+        "previousEntryHash": "8d595ebd54630967cca8c2ea3b14bc258167f1f249f32c28e6488d13d5e5d402",
+        "entryHash": "eca0a149f7462b1b83be1c469b383854805eeeb4d8fb20a011b2648498565195"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 7,
+        "timestamp": "2026-08-26T07:46:44.656Z",
+        "eventType": "case_updated",
+        "payloadHash": "2fa3d9f43a17029aa51a04475a0f49c9870ebcf6c24bbd82a686773def9ac12b",
+        "previousEntryHash": "eca0a149f7462b1b83be1c469b383854805eeeb4d8fb20a011b2648498565195",
+        "entryHash": "491c7d67867da2aebcd129a706cf4b41338a04dd089e819c5db3802ab8162f15"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 8,
+        "timestamp": "2026-08-26T07:46:44.828Z",
+        "eventType": "case_updated",
+        "payloadHash": "f96b2ec16e4713851fb026911e69f32d899a3bfc702c0adc369606a41b1e81f9",
+        "previousEntryHash": "491c7d67867da2aebcd129a706cf4b41338a04dd089e819c5db3802ab8162f15",
+        "entryHash": "fd3544073b134362bc9925855ea44dad7428242d1064ccd42d7143ad4f381bf6"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 9,
+        "timestamp": "2026-08-26T07:46:44.963Z",
+        "eventType": "case_updated",
+        "payloadHash": "250ba89217fd1b955856e583f7a9469d4a7f269bb82745458125f8e2e4cb9a13",
+        "previousEntryHash": "fd3544073b134362bc9925855ea44dad7428242d1064ccd42d7143ad4f381bf6",
+        "entryHash": "dffaa8262ee4857f1661e43e9756c874c1379c99179433616ec52cb8ab753e46"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 10,
+        "timestamp": "2026-08-26T07:46:59.987Z",
+        "eventType": "user_initiated_1930_call",
+        "payloadHash": "2ae9a8d70858de30a51e7b1ad2752f6d2999b1b0527d1aac4b0169bb2c4f7b87",
+        "previousEntryHash": "dffaa8262ee4857f1661e43e9756c874c1379c99179433616ec52cb8ab753e46",
+        "entryHash": "3bfb2487ca817bb6a3c09fadf86c4e11ef677822da941f9384b771eebf84bcea"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 11,
+        "timestamp": "2026-08-26T07:47:07.022Z",
+        "eventType": "user_emailed_bank",
+        "payloadHash": "d920e59a0acbe143d9b9485a4961b06458bec0e066fa24331a376b608b2f2cf6",
+        "previousEntryHash": "3bfb2487ca817bb6a3c09fadf86c4e11ef677822da941f9384b771eebf84bcea",
+        "entryHash": "e3c74970b67cd0286d5a5d4ff374620be101b360712d538003803d2160c06094"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 12,
+        "timestamp": "2026-08-26T07:47:44.905Z",
+        "eventType": "user_shared_document",
+        "payloadHash": "8a8db1d29e4ff1df28fc37bdfe6c0b897633b126f57bf15a69199a9ff81bfed6",
+        "previousEntryHash": "e3c74970b67cd0286d5a5d4ff374620be101b360712d538003803d2160c06094",
+        "entryHash": "8519a649192b0792bd53b0d481c6bc432786659a4d1f019d0a1921dfe06d09d7"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 13,
+        "timestamp": "2026-08-26T07:47:49.109Z",
+        "eventType": "user_shared_document",
+        "payloadHash": "429c5618483917dfc5d8da3599580516b9068c926f1033207ea350a8b7ecf5a2",
+        "previousEntryHash": "8519a649192b0792bd53b0d481c6bc432786659a4d1f019d0a1921dfe06d09d7",
+        "entryHash": "cf793479b9ccccf911b9e98e1e0f4535b925899a8c2a6d82681dfdd19f5cb836"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 14,
+        "timestamp": "2026-08-26T07:48:11.953Z",
+        "eventType": "case_updated",
+        "payloadHash": "250ba89217fd1b955856e583f7a9469d4a7f269bb82745458125f8e2e4cb9a13",
+        "previousEntryHash": "cf793479b9ccccf911b9e98e1e0f4535b925899a8c2a6d82681dfdd19f5cb836",
+        "entryHash": "1a8c80b4b3ee39e19c0ccc1b68027e885da17394a608095a8288c2911281f6f7"
+      },
+      {
+        "caseId": "INC-1787729524780",
+        "sequenceNumber": 15,
+        "timestamp": "2026-08-26T09:57:02.248Z",
+        "eventType": "case_updated",
+        "payloadHash": "c9d17883c6901083974d06977cad7657de96b3086a505f26c3d9be265aa53f53",
+        "previousEntryHash": "1a8c80b4b3ee39e19c0ccc1b68027e885da17394a608095a8288c2911281f6f7",
+        "entryHash": "6263c43d7274191088726af94c54f40f496f03400f94ee6805577c9973ea4671"
       }
     ]
   }

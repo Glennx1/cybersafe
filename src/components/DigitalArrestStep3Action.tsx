@@ -97,39 +97,39 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
       </div>
 
       {/* 2. Step-by-Step Safety Steps */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-6 shadow-xs">
-        <h3 className="text-xs font-bold text-slate-800 mb-4 flex items-center gap-2">
-          <PhoneOff className="w-4 h-4 text-rose-600" />
+      <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 sm:p-6 mb-6 shadow-sm">
+        <h3 className="text-xs font-bold text-text-primary mb-4 flex items-center gap-2">
+          <PhoneOff className="w-4 h-4 text-brand-primary" />
           <span>{dict.step3Action.whatNextTitle}</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="w-6 h-6 rounded-md bg-rose-100 text-rose-700 text-xs font-bold flex items-center justify-center mb-2">
+          <div className="p-4 rounded-xl bg-stone-50 border border-stone-200/60">
+            <div className="w-6 h-6 rounded-md bg-indigo-100 text-brand-primary text-xs font-bold flex items-center justify-center mb-2">
               1
             </div>
-            <h4 className="text-xs font-bold text-slate-900 mb-1">{dict.digitalArrest.safetyStep1Title}</h4>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <h4 className="text-xs font-bold text-text-primary mb-1">{dict.digitalArrest.safetyStep1Title}</h4>
+            <p className="text-xs text-text-muted leading-relaxed">
               {dict.digitalArrest.safetyStep1Desc}
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="w-6 h-6 rounded-md bg-amber-100 text-amber-800 text-xs font-bold flex items-center justify-center mb-2">
+          <div className="p-4 rounded-xl bg-stone-50 border border-stone-200/60">
+            <div className="w-6 h-6 rounded-md bg-amber-100 text-brand-warning text-xs font-bold flex items-center justify-center mb-2">
               2
             </div>
-            <h4 className="text-xs font-bold text-slate-900 mb-1">{dict.digitalArrest.safetyStep2Title}</h4>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <h4 className="text-xs font-bold text-text-primary mb-1">{dict.digitalArrest.safetyStep2Title}</h4>
+            <p className="text-xs text-text-muted leading-relaxed">
               {dict.digitalArrest.safetyStep2Desc}
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="w-6 h-6 rounded-md bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center mb-2">
+          <div className="p-4 rounded-xl bg-stone-50 border border-stone-200/60">
+            <div className="w-6 h-6 rounded-md bg-indigo-100 text-brand-primary text-xs font-bold flex items-center justify-center mb-2">
               3
             </div>
-            <h4 className="text-xs font-bold text-slate-900 mb-1">{dict.digitalArrest.safetyStep3Title}</h4>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <h4 className="text-xs font-bold text-text-primary mb-1">{dict.digitalArrest.safetyStep3Title}</h4>
+            <p className="text-xs text-text-muted leading-relaxed">
               {dict.digitalArrest.safetyStep3Desc}
             </p>
           </div>

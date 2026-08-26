@@ -229,7 +229,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
 
   return (
     <>
-      {/* Floating Trigger Button: Clean & distinct at bottom-left above Voice Guide */}
+      {/* Floating Trigger Button: Unified with brand-navy pill family */}
       <div className="fixed bottom-20 left-5 z-40">
         <button
           ref={triggerButtonRef}
@@ -238,9 +238,9 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
           aria-expanded={isOpen}
           aria-controls="a11y-settings-panel"
           aria-label="Open Accessibility & Language Preferences"
-          className="h-11 px-3.5 rounded-full bg-white text-slate-800 hover:text-indigo-600 shadow-md border border-slate-200/90 flex items-center gap-2 transition-all hover:scale-105 active:scale-95 text-xs font-bold"
+          className="h-11 px-4 rounded-full bg-brand-navy hover:bg-indigo-950 text-white shadow-lg border border-indigo-900/60 flex items-center gap-2 transition-all hover:scale-105 active:scale-95 text-xs font-bold font-sans"
         >
-          <Sliders className="w-4 h-4 text-indigo-600" aria-hidden="true" />
+          <Sliders className="w-4 h-4 text-indigo-200" aria-hidden="true" />
           <span className="hidden sm:inline">Accessibility</span>
         </button>
       </div>

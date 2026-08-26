@@ -58,20 +58,21 @@ export const EmergencyVoiceGuide: React.FC<EmergencyVoiceGuideProps> = ({
     <div className="fixed bottom-5 left-5 z-40">
       <button
         onClick={handleVoiceSpeak}
-        className={`px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-full shadow-xl border flex items-center gap-2 transition-all hover:scale-105 active:scale-95 backdrop-blur-xs ${
+        className={`h-11 px-4 rounded-full shadow-lg border flex items-center gap-2 transition-all hover:scale-105 active:scale-95 backdrop-blur-xs ${
           isSpeaking
-            ? "bg-rose-600 text-white border-rose-500 ring-4 ring-rose-500/30"
-            : "bg-slate-900/90 text-white border-slate-700/80 hover:bg-slate-900"
+            ? "bg-brand-navy text-white border-brand-primary ring-2 ring-brand-primary/40"
+            : "bg-brand-navy hover:bg-indigo-950 text-white border-indigo-900/60"
         }`}
         title="Listen to Vernacular Audio Guidance"
+        aria-label="Listen to Audio Guidance"
       >
-        <div className="flex items-center gap-1">
-          <span className={`w-1 h-3 rounded-full bg-rose-400 ${isSpeaking ? "animate-bounce" : "opacity-60"}`} />
-          <span className={`w-1 h-4 rounded-full bg-rose-400 ${isSpeaking ? "animate-bounce delay-75" : "opacity-60"}`} />
-          <span className={`w-1 h-2.5 rounded-full bg-amber-400 ${isSpeaking ? "animate-bounce delay-150" : "opacity-60"}`} />
+        <div className="flex items-center gap-1" aria-hidden="true">
+          <span className={`w-1 h-3 rounded-full bg-indigo-300 ${isSpeaking ? "animate-bounce" : "opacity-60"}`} />
+          <span className={`w-1 h-4 rounded-full bg-indigo-200 ${isSpeaking ? "animate-bounce delay-75" : "opacity-60"}`} />
+          <span className={`w-1 h-2.5 rounded-full bg-indigo-300 ${isSpeaking ? "animate-bounce delay-150" : "opacity-60"}`} />
         </div>
 
-        <Volume2 className="w-4 h-4 text-rose-400" />
+        <Volume2 className="w-4 h-4 text-indigo-200" aria-hidden="true" />
         <span className="text-xs font-bold font-sans hidden sm:inline">
           {isSpeaking ? "Speaking..." : "Voice Guide"}
         </span>
