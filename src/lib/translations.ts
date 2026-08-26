@@ -1,4 +1,4 @@
-﻿import { Language } from "./types";
+import { Language } from "./types";
 
 export const TRANSLATIONS: Record<Language, Record<string, string>> = {
   en: {
@@ -100,5 +100,25 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     rbiZeroLiability: "ఆర్‌బిఐ సున్నా-బాధ్యత అర్హత (3 రోజులలోపు నివేదించబడింది)",
     viewPayload: "I4C పేలోడ్‌ను పరిశీలించండి",
     footerText: "సైబర్ రక్షక్ 1930 • ఓపెన్‌ఏఐ బిల్డర్ ఛాలెంజ్ కోసం నిర్మించబడింది"
+  },
+  bn: {
+    appName: "সাইবার রক্ষক ১৯৩০",
+    tagline: "জরুরী সাইবার অপরাধ প্রতিরোধ ও তাত্ক্ষণিক ব্যাংক অ্যাকাউন্ট ফ্রিজ",
+    subtitle: "প্রতারণামূলক এসএমএস বা স্ক্রিনশট থেকে ৬০ সেকেন্ডে তৈরি করুন ব্যাংক ফ্রিজ নোটিশ ও পুলিশ এফআইআর।",
+    goldenHourBadge: "সোনালী ২-ঘন্টার পুনরুদ্ধার সময় সক্রিয়",
+    step1Title: "১. ঘটনাটি জানান",
+    step2Title: "২. ফরেনসিক এআই অডিট",
+    step3Title: "৩. ১-ট্যাপ পদক্ষেপ কেন্দ্র",
+    quickDemoScenarios: "দ্রুত ডেমো দৃশ্যপট",
+    dropzoneTitle: "ব্যাংক ডেবিট এসএমএস / রসিদ / চ্যাট স্ক্রিনশট আপলোড করুন",
+    dropzoneSubtitle: "আমাদের ইঞ্জিন স্বয়ংক্রিয়ভাবে ১২-সংখ্যার UTR এবং সন্দেহভাজন ব্যাংক বিবরণ বের করে।",
+    runAuditCta: "জরুরী ফরেনসিক অডিট চালান →",
+    bankFreezeNoticeBtn: "ব্যাংক ম্যানেজার ফ্রিজ নোটিশ ডাউনলোড করুন (PDF)",
+    policeFirBtn: "সাইবার পুলিশ এফআইআর ডসিয়ার ডাউনলোড করুন (PDF)",
+    teleScriptBtn: "১৯৩০ হেল্পলাইন টেলি-প্রম্পটার খুলুন",
+    dispatchBtn: "১-ট্যাপ জাতীয় পোর্টাল (I4C) নোটিশ পাঠান",
+    rbiZeroLiability: "আরবিআই জিরো-লায়াবিলিটি যোগ্য (৩ দিনের মধ্যে রিপোর্ট করা)",
+    viewPayload: "I4C স্ট্যান্ডার্ড এপিআই পেলোড পরিদর্শন করুন",
+    footerText: "সাইবার রক্ষক ১৯৩০ • ওপেনএআই বিল্ডার চ্যালেঞ্জের জন্য নির্মিত"
   }
 };

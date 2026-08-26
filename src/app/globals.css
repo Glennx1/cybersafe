@@ -4,12 +4,31 @@
 
 :root {
   --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --text-scale: 1;
+}
+
+html {
+  font-size: calc(16px * var(--text-scale));
 }
 
 body {
   font-family: var(--font-sans);
   background-color: #f8fafc;
   color: #1e293b;
+}
+
+/* Simplified / Panic Mode Styles */
+body.panic-mode-active {
+  --text-scale: 1.15;
+}
+body.panic-mode-active .panic-mode-hidden {
+  display: none !important;
+}
+body.panic-mode-active button,
+body.panic-mode-active a {
+  padding-top: 0.85rem !important;
+  padding-bottom: 0.85rem !important;
+  font-size: 1.05rem !important;
 }
 
 /* Custom Scrollbar */

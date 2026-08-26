@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { SkipToContent } from "@/components/SkipToContent";
+import { AccessibilityPanel } from "@/components/AccessibilityPanel";
 import { Header } from "@/components/Header";
 import { WizardStep1Intake } from "@/components/WizardStep1Intake";
 import { WizardStep2Audit } from "@/components/WizardStep2Audit";
@@ -846,6 +847,12 @@ export default function Home() {
           setShowLiveCaptureOverlay(false);
           setShowAuthModal(true);
         }}
+      />
+
+      {/* Persistent Accessibility & Language Opt-In Panel */}
+      <AccessibilityPanel
+        currentLanguage={language}
+        onLanguageChange={setLanguage}
       />
     </main>
     </>
