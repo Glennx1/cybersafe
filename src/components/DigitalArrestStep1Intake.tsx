@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { IncidentProfile, Language } from "@/lib/types";
 import { parseForensicText } from "@/lib/forensicEngine";
+import { getDictionary } from "@/lib/i18n";
 import Tesseract from "tesseract.js";
 
 interface DigitalArrestStep1IntakeProps {
@@ -33,6 +34,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
   onProfileChange,
   onNext,
 }) => {
+  const dict = getDictionary(language);
   const [isExtracting, setIsExtracting] = useState(false);
   const [pastedText, setPastedText] = useState(profile.rawEvidenceText);
   const [digitalArrestScore, setDigitalArrestScore] = useState<number | null>(profile.forgeryConfidence || null);
@@ -60,15 +62,15 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
       score += 25;
     }
 
-    if (flags.length === 0) {
-      flags.push("Unverified government agency syntax & suspicious legal terminology detected");
-      score = 50;
-    }
-
-    const finalScore = Math.min(99, Math.max(score, 92));
-    setDigitalArrestScore(finalScore);
+    setDigitalArrestScore(score);
     setDetectedRedFlags(flags);
-    return { finalScore, flags };
+
+    onProfileChange({
+      ...profile,
+      rawEvidenceText: text,
+      forgeryConfidence: score,
+      forgeryFlags: flags
+    });
   };
 
   const handleFileUpload = async (file: File) => {
@@ -108,7 +110,25 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
 
       // 3. Tesseract OCR
       const { data: { text } } = await Tesseract.recognize(file, 'eng');
-      const { finalScore, flags } = analyzeDigitalArrestText(text);
+      const lower = text.toLowerCase();
+      const flags: string[] = [];
+      let score = 0;
+
+      if (lower.includes("arrest") || lower.includes("warrant") || lower.includes("summons") || lower.includes("41a")) {
+        flags.push("Forged Arrest Warrant / Sec 41A Notice");
+        score += 30;
+      }
+      if (lower.includes("cbi") || lower.includes("police") || lower.includes("customs") || lower.includes("narcotics") || lower.includes("ed ")) {
+        flags.push("Unauthorized Emblem & Law Enforcement Seals");
+        score += 35;
+      }
+      if (lower.includes("clearance") || lower.includes("rbi") || lower.includes("deposit") || lower.includes("fund") || lower.includes("transfer")) {
+        flags.push("Financial Coercion: Demands Asset Verification Transfer");
+        score += 25;
+      }
+
+      setDigitalArrestScore(score);
+      setDetectedRedFlags(flags);
 
       const parsed = parseForensicText(text);
 
@@ -124,7 +144,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
         scamCategory: "DIGITAL_ARREST",
         impersonatedAgency: profile.impersonatedAgency || "Central Bureau of Investigation (CBI)",
         extortionDemandAmount: parsed.fraudAmount || profile.extortionDemandAmount || 250000,
-        forgeryConfidence: finalScore,
+        forgeryConfidence: score,
         forgeryFlags: flags
       });
       setPastedText(text);
@@ -136,9 +156,32 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
     }
   };
 
-  const handlePastedTextChange = (text: string) => {
+  const handlePastedChange = (text: string) => {
     setPastedText(text);
-    const { finalScore, flags } = analyzeDigitalArrestText(text);
+    const lower = text.toLowerCase();
+    const flags: string[] = [];
+    let score = 0;
+
+    if (lower.includes("arrest") || lower.includes("warrant") || lower.includes("summons") || lower.includes("41a")) {
+      flags.push("Contains illegal 'Arrest Warrant / Summons' terminology");
+      score += 25;
+    }
+    if (lower.includes("cbi") || lower.includes("police") || lower.includes("customs") || lower.includes("ed ") || lower.includes("supreme court") || lower.includes("narcotics")) {
+      flags.push("Impersonates Central Law Enforcement (CBI / ED / Police / Supreme Court)");
+      score += 30;
+    }
+    if (lower.includes("skype") || lower.includes("whatsapp") || lower.includes("video call") || lower.includes("digital arrest") || lower.includes("camera")) {
+      flags.push("Demands 24x7 WhatsApp / Skype Video Call confinement (100% Illegal)");
+      score += 30;
+    }
+    if (lower.includes("security deposit") || lower.includes("rbi verification") || lower.includes("transfer") || lower.includes("escrow") || lower.includes("clearance")) {
+      flags.push("Extortion: Coerces fund transfer into 'Verification / Clearance Account'");
+      score += 25;
+    }
+
+    setDigitalArrestScore(score);
+    setDetectedRedFlags(flags);
+
     const parsed = parseForensicText(text);
 
     onProfileChange({
@@ -146,7 +189,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
       rawEvidenceText: text,
       scamCategory: "DIGITAL_ARREST",
       extortionDemandAmount: parsed.fraudAmount || profile.extortionDemandAmount || 250000,
-      forgeryConfidence: finalScore,
+      forgeryConfidence: score,
       forgeryFlags: flags
     });
   };
@@ -156,10 +199,10 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
       {/* Step Header */}
       <div className="text-center mb-8">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-          Check suspicious call & document details
+          {dict.digitalArrest.heroTitle}
         </h2>
         <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl mx-auto font-sans">
-          Received a video call, message, or letter claiming you are under "Digital Arrest"? Upload the document or add caller details below to check for red flags.
+          {dict.digitalArrest.heroSubtitle}
         </p>
       </div>
 
@@ -190,7 +233,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
           <div>
             <label htmlFor="impersonated-agency-select" className="text-slate-600 font-medium block mb-1 cursor-pointer">
-              Impersonated Agency
+              {dict.digitalArrest.impersonatedAgencyLabel}
             </label>
             <select
               id="impersonated-agency-select"
@@ -209,7 +252,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
 
           <div>
             <label htmlFor="caller-id-input" className="text-slate-600 font-medium block mb-1 cursor-pointer">
-              Caller ID / WhatsApp / Skype Handle
+              {dict.digitalArrest.callerIdLabel}
             </label>
             <input
               id="caller-id-input"
@@ -223,7 +266,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
 
           <div>
             <label htmlFor="extortion-amount-input" className="text-slate-600 font-medium block mb-1 cursor-pointer">
-              Extortion Demand Amount (₹)
+              {dict.digitalArrest.extortionDemandLabel}
             </label>
             <input
               id="extortion-amount-input"
@@ -295,7 +338,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
             <textarea
               rows={6}
               value={pastedText}
-              onChange={(e) => handlePastedTextChange(e.target.value)}
+              onChange={(e) => handlePastedChange(e.target.value)}
               placeholder="Paste text e.g. 'You are under digital arrest by CBI Mumbai for drug parcel money laundering. Stay on Skype camera and deposit Rs 2,50,000 in RBI account...'"
               className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-amber-500 text-slate-800 placeholder-slate-400 leading-relaxed"
             />

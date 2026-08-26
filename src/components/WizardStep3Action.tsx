@@ -114,6 +114,7 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
       <OneTapActionPanel
         profile={profile}
         auditReport={auditReport}
+        language={language}
         onOpenTeleScript={onOpenTeleScript}
       />
 

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { IncidentProfile, Language } from "@/lib/types";
 import { parseForensicText } from "@/lib/forensicEngine";
+import { getDictionary } from "@/lib/i18n";
 import Tesseract from "tesseract.js";
 
 interface WizardStep1IntakeProps {
@@ -29,6 +30,7 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
   onProfileChange,
   onNext,
 }) => {
+  const dict = getDictionary(language);
   const [isExtracting, setIsExtracting] = useState(false);
   const [pastedText, setPastedText] = useState(profile.rawEvidenceText);
 
@@ -118,10 +120,10 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
       {/* 1. Step Header */}
       <div className="text-center mb-8">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-          Let's secure your transaction details
+          {dict.intake.financialTitle}
         </h2>
         <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl mx-auto font-sans">
-          Upload a screenshot of your bank debit SMS or UPI receipt (GPay / PhonePe / Paytm), or paste the message text below.
+          {dict.intake.financialSubtitle}
         </p>
       </div>
 
@@ -165,13 +167,13 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
                 <UploadCloud className="w-6 h-6" />
               </div>
               <h3 className="font-bold text-sm text-slate-900 mb-1">
-                Drop Payment Receipt / Debit SMS
+                {dict.intake.dropzoneTitle}
               </h3>
               <p className="text-xs text-slate-500 mb-4 max-w-xs leading-relaxed">
-                PNG, JPG, or PDF scans from PhonePe, GPay, Paytm, or NetBanking.
+                {dict.intake.dropzoneSubtitle}
               </p>
               <label className="cursor-pointer px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm active:scale-95">
-                <span>Upload Screenshot</span>
+                <span>{dict.intake.uploadScreenshot}</span>
                 <input
                   type="file"
                   accept="image/*,.pdf"
@@ -195,7 +197,7 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
             <div className="flex items-center justify-between mb-2">
               <label htmlFor="raw-sms-input" className="text-xs font-bold text-slate-700 flex items-center gap-1.5 cursor-pointer">
                 <FileText className="w-4 h-4 text-indigo-600" />
-                <span>Or Paste SMS / Transaction Text</span>
+                <span>{dict.intake.pasteSmsTitle}</span>
               </label>
             </div>
             <textarea
@@ -203,14 +205,14 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
               rows={6}
               value={pastedText}
               onChange={(e) => handlePastedTextChange(e.target.value)}
-              placeholder="Paste debit message e.g. 'Debited Rs 85,500.00 via UPI Ref 312345678901 to VPA ramesh.traders@okaxis...'"
+              placeholder={dict.intake.pasteSmsPlaceholder}
               className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-slate-800 placeholder-slate-400 leading-relaxed"
             />
           </div>
 
           <div className="pt-3 flex items-center justify-between text-xs text-slate-600 border-t border-slate-100" aria-live="polite">
-            <span>UTR: <strong className="text-slate-900 font-bold">{profile.utrNumber || "Not detected"}</strong></span>
-            <span>Amount: <strong className="text-emerald-700 font-bold">₹{profile.fraudAmount.toLocaleString("en-IN")}</strong></span>
+            <span>{dict.intake.utrLabel}: <strong className="text-slate-900 font-bold">{profile.utrNumber || "Not detected"}</strong></span>
+            <span>{dict.intake.amountLabel}: <strong className="text-emerald-700 font-bold">₹{profile.fraudAmount.toLocaleString("en-IN")}</strong></span>
           </div>
         </div>
       </div>

@@ -1,8 +1,7 @@
-"use client";
-
 import React from "react";
 import { Phone, Check, ChevronRight, Shield } from "lucide-react";
 import { Language, FlowType } from "@/lib/types";
+import { getDictionary } from "@/lib/i18n";
 
 interface HeaderProps {
   language: Language;
@@ -18,6 +17,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({
+  language,
   flowType,
   currentStep,
   onStepClick,
@@ -26,16 +26,18 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSavedCases,
   onLogout,
 }) => {
+  const dict = getDictionary(language);
+
   const financialSteps = [
-    { num: 1, label: "1. Tell us what happened" },
-    { num: 2, label: "2. Check the details" },
-    { num: 3, label: "3. Get help now" },
+    { num: 1, label: dict.navigation.financialStep1 },
+    { num: 2, label: dict.navigation.financialStep2 },
+    { num: 3, label: dict.navigation.financialStep3 },
   ];
 
   const digitalArrestSteps = [
-    { num: 1, label: "1. Tell us what happened" },
-    { num: 2, label: "2. Review proof & report" },
-    { num: 3, label: "3. Take action" },
+    { num: 1, label: dict.navigation.digitalArrestStep1 },
+    { num: 2, label: dict.navigation.digitalArrestStep2 },
+    { num: 3, label: dict.navigation.digitalArrestStep3 },
   ];
 
   const steps = flowType === "digital_arrest" ? digitalArrestSteps : financialSteps;
@@ -58,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({
                   className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-indigo-300 rounded-full font-bold transition-all border border-slate-700 flex items-center gap-1.5"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
-                  <span>My Cases</span>
+                  <span>{dict.common.myCases}</span>
                 </button>
                 <span className="text-slate-400 hidden md:inline font-mono">
                   {currentUser.phone}
@@ -67,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onClick={onLogout}
                   className="text-slate-500 hover:text-slate-300 underline text-[11px]"
                 >
-                  Sign Out
+                  {dict.common.signOut}
                 </button>
               </div>
             ) : (
@@ -75,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={onOpenAuth}
                 className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-full text-xs font-bold transition-all border border-slate-700"
               >
-                Sign In
+                {dict.common.signIn}
               </button>
             )}
 
@@ -85,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({
               className="flex items-center gap-1.5 px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full font-bold text-xs transition-all shadow-sm shrink-0"
             >
               <Phone className="w-3.5 h-3.5 fill-current" />
-              <span>Call 1930</span>
+              <span>{dict.common.call1930}</span>
             </a>
           </div>
         </div>
@@ -101,10 +103,10 @@ export const Header: React.FC<HeaderProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-base tracking-tight text-white">
-                CyberRakshak 1930
+                {dict.common.appName}
               </span>
             </div>
-            <p className="text-xs text-slate-400">A guided cyber-fraud assistant</p>
+            <p className="text-xs text-slate-400">{dict.common.tagline}</p>
           </div>
         </div>
 

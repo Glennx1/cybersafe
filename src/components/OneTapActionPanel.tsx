@@ -19,9 +19,10 @@ import {
   Sparkles,
   FileCheck
 } from "lucide-react";
-import { IncidentProfile, ForensicAuditReport } from "@/lib/types";
+import { IncidentProfile, ForensicAuditReport, Language } from "@/lib/types";
 import { lookupBankNode } from "@/lib/bankRegistry";
 import { logCaseAction } from "@/lib/actionLogger";
+import { getDictionary } from "@/lib/i18n";
 import {
   createBankFreezeDoc,
   generateBankFreezePdf,
@@ -37,14 +38,17 @@ import {
 interface OneTapActionPanelProps {
   profile: IncidentProfile;
   auditReport: ForensicAuditReport;
+  language?: Language;
   onOpenTeleScript?: () => void;
 }
 
 export const OneTapActionPanel: React.FC<OneTapActionPanelProps> = ({
   profile,
   auditReport,
+  language = "en",
   onOpenTeleScript
 }) => {
+  const dict = getDictionary(language);
   // Tele-script toggle state
   const [showInlineScript, setShowInlineScript] = useState(true);
 
@@ -219,15 +223,15 @@ PRAYER:
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[11px] font-extrabold uppercase tracking-wide flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-rose-600 animate-ping" />
-              Golden Hour Recovery
+              {dict.common.goldenHourBadge}
             </span>
             <span className="text-xs text-slate-500 font-medium">One-Tap Action Matrix</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-            Take Action Now — Direct Deep Links
+            {dict.actions.heroTitle}
           </h2>
           <p className="text-xs text-slate-600 mt-0.5">
-            Trigger all statutory emergency actions in a single tap without manual copy-paste delays.
+            {dict.actions.heroSubtitle}
           </p>
         </div>
       </div>
@@ -247,10 +251,10 @@ PRAYER:
                 <span className="text-xs text-slate-500">First 15 Mins</span>
               </div>
               <h3 className="text-base font-bold text-slate-900 mt-0.5">
-                Call Helpline 1930
+                {dict.actions.step1HelplineTitle}
               </h3>
               <p className="text-xs text-slate-600">
-                Direct dial into the National Cybercrime Citizen Helpline (CFCFRMS).
+                {dict.actions.step1HelplineDesc}
               </p>
             </div>
           </div>
