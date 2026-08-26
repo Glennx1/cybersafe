@@ -12,8 +12,8 @@ import {
   Minimize2,
   Loader2,
   Volume2,
-  PhoneCall,
-  Play
+  Play,
+  AlertCircle
 } from "lucide-react";
 import {
   appendCovertNote,
@@ -22,7 +22,6 @@ import {
   clearCovertSession
 } from "@/lib/covertStore";
 import { Language } from "@/lib/types";
-import { VoiceInputButton } from "@/components/VoiceInputButton";
 
 interface LiveCaptureOverlayProps {
   isOpen: boolean;
@@ -33,6 +32,26 @@ interface LiveCaptureOverlayProps {
 
 type RecordingState = "idle" | "recording" | "mic-unavailable" | "saved";
 
+function getSupportedMimeType(): string {
+  if (typeof MediaRecorder === "undefined") return "";
+  const types = [
+    "audio/webm;codecs=opus",
+    "audio/webm",
+    "audio/mp4",
+    "audio/ogg;codecs=opus",
+    "audio/ogg",
+    "audio/aac"
+  ];
+  for (const t of types) {
+    try {
+      if (MediaRecorder.isTypeSupported(t)) {
+        return t;
+      }
+    } catch (e) {}
+  }
+  return "";
+}
+
 export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
   isOpen,
   language = "en",
@@ -42,6 +61,7 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
   const [recordingState, setRecordingState] = useState<RecordingState>("idle");
   const [displayTime, setDisplayTime] = useState<string>("00:00");
   const [isSaving, setIsSaving] = useState(false);
+  const [micErrorMessage, setMicErrorMessage] = useState<string>("");
 
   // Quick notes state
   const [notes, setNotes] = useState<Array<{ id: string; text: string; deviceTimestamp: string }>>([]);
@@ -77,7 +97,11 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
 
   const cleanup = () => {
     if (streamRef.current) {
-      streamRef.current.getTracks().forEach((t) => t.stop());
+      streamRef.current.getTracks().forEach((t) => {
+        try {
+          t.stop();
+        } catch (e) {}
+      });
       streamRef.current = null;
     }
     mediaRecorderRef.current = null;
@@ -90,35 +114,48 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
       return;
     }
 
+    setMicErrorMessage("");
+
     try {
       if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
         setRecordingState("mic-unavailable");
+        setMicErrorMessage("Audio recording is not supported in this browser.");
         return;
       }
 
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      // Laptop & mobile resilient getUserMedia audio constraints
+      let stream: MediaStream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: false,
+            noiseSuppression: false,
+            autoGainControl: true
+          }
+        });
+      } catch (errFallback) {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      }
+
       streamRef.current = stream;
 
       const audioTracks = stream.getAudioTracks();
-      if (!audioTracks || audioTracks.length === 0 || audioTracks[0].readyState !== "live") {
-        console.warn("Microphone granted but audio track is not live:", audioTracks);
+      if (!audioTracks || audioTracks.length === 0) {
+        console.warn("No audio tracks found in stream");
         setRecordingState("mic-unavailable");
+        setMicErrorMessage("No microphone detected. Use text notes below.");
         return;
       }
 
-      // Pick supported MIME type
-      const mimeType = typeof MediaRecorder !== "undefined"
-        ? MediaRecorder.isTypeSupported("audio/webm")
-          ? "audio/webm"
-          : MediaRecorder.isTypeSupported("audio/ogg")
-          ? "audio/ogg"
-          : ""
-        : "";
+      const audioTrack = audioTracks[0];
+      audioTrack.enabled = true;
 
-      const recorder = new MediaRecorder(
-        stream,
-        mimeType ? { mimeType } : {}
-      );
+      // Detect supported MIME type
+      const mimeType = getSupportedMimeType();
+      const recorder = mimeType
+        ? new MediaRecorder(stream, { mimeType })
+        : new MediaRecorder(stream);
+
       mediaRecorderRef.current = recorder;
       audioChunksRef.current = [];
 
@@ -128,6 +165,10 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
         }
       };
 
+      recorder.onerror = (e: Event) => {
+        console.error("MediaRecorder runtime error:", e);
+      };
+
       recorder.onstop = () => {
         // Handled in stopAndSave / stopAndDiscard
       };
@@ -135,14 +176,20 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
       recorder.start(1000); // timeslice: fire ondataavailable every 1s
       setRecordingState("recording");
       startTimer();
-    } catch (err) {
-      // Permission denied or mic unavailable — fail silently with calm inline message
-      console.warn("Microphone access unavailable or denied:", err);
+    } catch (err: any) {
+      console.warn("Microphone access unavailable or dismissed:", err);
       setRecordingState("mic-unavailable");
+      if (err?.name === "NotAllowedError" || err?.name === "PermissionDeniedError") {
+        setMicErrorMessage("Microphone permission was not granted. Tap below to allow, or use text notes.");
+      } else if (err?.name === "NotFoundError" || err?.name === "DevicesNotFoundError") {
+        setMicErrorMessage("No microphone hardware found on this device.");
+      } else {
+        setMicErrorMessage("Microphone unavailable. Use text notes below.");
+      }
     }
   }, []);
 
-  // Initialize session and start recording when modal is opened
+  // Initialize covert database session on modal open
   useEffect(() => {
     if (!isOpen) return;
 
@@ -153,12 +200,13 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
       setNotes(session.notes || []);
     });
 
+    // Auto-attempt start on open
     if (!mediaRecorderRef.current) {
       startRecording();
     }
   }, [isOpen, startRecording]);
 
-  // Clean up on component unmount only (empty dep array protects against dev re-render kills)
+  // Clean up on component unmount only
   useEffect(() => {
     return () => {
       if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
@@ -167,7 +215,11 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
         } catch (e) {}
       }
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach((t) => t.stop());
+        streamRef.current.getTracks().forEach((t) => {
+          try {
+            t.stop();
+          } catch (e) {}
+        });
       }
       if (timerRef.current) clearInterval(timerRef.current);
     };
@@ -184,7 +236,7 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
       mediaRecorderRef.current.onstop = async () => {
         try {
-          const mimeType = mediaRecorderRef.current?.mimeType || "audio/webm";
+          const mimeType = mediaRecorderRef.current?.mimeType || getSupportedMimeType() || "audio/webm";
           const blob = new Blob(audioChunksRef.current, { type: mimeType });
           await saveCovertAudioBlob(blob, finalDuration);
         } catch (err) {
@@ -311,16 +363,16 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
             <div className="flex items-center gap-3">
               <button
                 type="button"
-                onClick={recordingState === "idle" ? startRecording : undefined}
+                onClick={recordingState !== "recording" ? startRecording : undefined}
                 disabled={isRecording}
-                className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold transition-all shrink-0 ${
+                className={`w-11 h-11 rounded-xl flex items-center justify-center font-bold transition-all shrink-0 ${
                   isRecording
                     ? "bg-red-50 text-brand-urgent border border-brand-urgent/30 cursor-default"
-                    : "bg-brand-primary text-white hover:bg-indigo-700 cursor-pointer shadow-xs active:scale-95"
+                    : "bg-brand-primary text-white hover:bg-indigo-700 cursor-pointer shadow-sm active:scale-95 ring-2 ring-brand-primary/20"
                 }`}
                 title={isRecording ? "Microphone active & recording" : "Click to start recording"}
               >
-                {isRecording ? <Mic className="w-5 h-5 animate-pulse" /> : <Play className="w-4 h-4 ml-0.5" />}
+                {isRecording ? <Mic className="w-5 h-5 animate-pulse" /> : <Play className="w-5 h-5 ml-0.5" />}
               </button>
               <div>
                 <h3 className="text-xs font-bold text-text-primary">
@@ -329,10 +381,21 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
                     : "Recording Your Voice Notes"}
                 </h3>
                 <p className="text-[11px] text-text-muted leading-tight mt-0.5">
-                  {recordingState === "mic-unavailable"
-                    ? "Use text notes below instead."
-                    : "Quietly speak key details aloud — caller name, number, demands. Captured only on this device. Zero network traffic."}
+                  {micErrorMessage ||
+                    (recordingState === "mic-unavailable"
+                      ? "Use text notes below instead."
+                      : "Quietly speak key details aloud — caller name, number, demands. Captured only on this device. Zero network traffic.")}
                 </p>
+                {!isRecording && (
+                  <button
+                    type="button"
+                    onClick={startRecording}
+                    className="mt-1 text-[11px] text-brand-primary font-bold hover:underline flex items-center gap-1"
+                  >
+                    <span>Tap to start recording</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+                )}
               </div>
             </div>
 
@@ -353,20 +416,11 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
             </p>
           </div>
 
-          {/* Quick Note Input (Instruction 3: Updated label and placeholder) */}
+          {/* Quick Note Input (Instruction 3: Pure text input, zero hardware contention) */}
           <div className="bg-surface-section border border-stone-200/80 rounded-2xl p-3.5 shadow-xs">
-            <div className="flex items-center justify-between mb-2">
-              <label htmlFor="quick-note-input" className="text-xs font-bold text-text-primary">
-                Or type key details instead (faster and always reliable):
-              </label>
-              <VoiceInputButton
-                language={language}
-                fieldLabel="Quick incident note"
-                buttonTitle="Dictate quick note"
-                className="bg-surface-card hover:bg-stone-50 text-text-primary border-stone-200"
-                onTranscript={(text) => setQuickNoteText((prev) => (prev ? `${prev} ${text}` : text))}
-              />
-            </div>
+            <label htmlFor="quick-note-input" className="block text-xs font-bold text-text-primary mb-2">
+              Or type key details instead (faster and always reliable):
+            </label>
             <form onSubmit={handleAddQuickNote} className="flex gap-2">
               <input
                 id="quick-note-input"
@@ -407,7 +461,7 @@ export const LiveCaptureOverlay: React.FC<LiveCaptureOverlayProps> = ({
           )}
         </div>
 
-        {/* Bottom Actions Bar (Instruction 5: Button labels preserved) */}
+        {/* Bottom Actions Bar */}
         <div className="pt-4 border-t border-stone-100 space-y-2.5 mt-3">
           <div className="flex flex-col sm:flex-row items-center gap-2.5">
             {isRecording ? (
