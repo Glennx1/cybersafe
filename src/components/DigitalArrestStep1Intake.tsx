@@ -290,7 +290,7 @@ export const DigitalArrestStep1Intake: React.FC<DigitalArrestStep1IntakeProps> =
             }`}
           >
             {isReadingAloud ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-brand-warning" />}
-            <span>{isReadingAloud ? "Stop Audio" : "Read Details Aloud"}</span>
+            <span>{isReadingAloud ? dict.common.stopAudio : dict.common.readDetailsAloud}</span>
           </button>
         </div>
 

@@ -849,7 +849,7 @@ export default function Home() {
               className="bg-surface-card/95 hover:bg-surface-card text-text-primary border border-stone-200/90 shadow-sm px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 backdrop-blur-xs group"
             >
               <span className="w-2 h-2 rounded-full bg-brand-primary shrink-0" />
-              <span>Being scammed right now? <strong className="text-brand-primary group-hover:underline">Record live</strong></span>
+              <span>{dict.common.recordLiveCallout}</span>
             </button>
           )}
 
@@ -863,7 +863,7 @@ export default function Home() {
           >
             <div className="w-2 h-2 rounded-full bg-indigo-300/60 shrink-0" />
             <Mic className="w-4 h-4 text-indigo-200 group-hover:text-white" />
-            <span className="text-xs font-bold font-sans">Record Live</span>
+            <span className="text-xs font-bold font-sans">{dict.common.recordLiveBtn}</span>
           </button>
         </div>
       )}

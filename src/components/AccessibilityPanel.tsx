@@ -15,6 +15,7 @@ import {
   HelpCircle
 } from "lucide-react";
 import { Language } from "@/lib/types";
+import { getDictionary } from "@/lib/i18n";
 
 export interface AccessibilitySettings {
   language: Language;
@@ -52,6 +53,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [settings, setSettings] = useState<AccessibilitySettings>(DEFAULT_SETTINGS);
   const [isReadingPage, setIsReadingPage] = useState(false);
+  const dict = getDictionary(currentLanguage);
 
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -241,7 +243,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
           className="h-11 px-4 rounded-full bg-brand-navy hover:bg-indigo-950 text-white shadow-lg border border-indigo-900/60 flex items-center gap-2 transition-all hover:scale-105 active:scale-95 text-xs font-bold font-sans"
         >
           <Sliders className="w-4 h-4 text-indigo-200" aria-hidden="true" />
-          <span className="hidden sm:inline">Accessibility</span>
+          <span className="hidden sm:inline">{dict.common.accessibilityBtn}</span>
         </button>
       </div>
 
@@ -266,9 +268,9 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                 </div>
                 <div>
                   <h2 id="a11y-panel-title" className="text-base font-extrabold text-text-primary">
-                    Accessibility & Language
+                    {dict.a11y.panelTitle}
                   </h2>
-                  <p className="text-xs text-text-muted">Customise display & reading preferences</p>
+                  <p className="text-xs text-text-muted">{dict.a11y.panelSubtitle}</p>
                 </div>
               </div>
 
@@ -290,7 +292,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
             <div className="mb-5">
               <label className="text-xs font-bold text-text-primary flex items-center gap-1.5 mb-2.5">
                 <Globe className="w-4 h-4 text-brand-primary" aria-hidden="true" />
-                <span>Select Language</span>
+                <span>{dict.a11y.selectLanguage}</span>
               </label>
               <div className="grid grid-cols-2 gap-2">
                 {languages.map((lang) => (
@@ -317,13 +319,13 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
             <div className="mb-5">
               <label className="text-xs font-bold text-text-primary flex items-center gap-1.5 mb-2.5">
                 <Type className="w-4 h-4 text-brand-primary" aria-hidden="true" />
-                <span>Text Size</span>
+                <span>{dict.a11y.textSize}</span>
               </label>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { value: "1", label: "Default (1x)" },
-                  { value: "1.25", label: "Large (1.25x)" },
-                  { value: "1.5", label: "Extra Large (1.5x)" }
+                  { value: "1", label: dict.a11y.sizeDefault },
+                  { value: "1.25", label: dict.a11y.sizeLarge },
+                  { value: "1.5", label: dict.a11y.sizeExtraLarge }
                 ].map((scale) => (
                   <button
                     key={scale.value}
@@ -346,10 +348,10 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
               <div>
                 <div className="flex items-center gap-1.5">
                   <Eye className="w-4 h-4 text-brand-primary" aria-hidden="true" />
-                  <span className="text-xs font-bold text-text-primary">Simplified / Panic Mode</span>
+                  <span className="text-xs font-bold text-text-primary">{dict.a11y.panicModeTitle}</span>
                 </div>
                 <p className="text-[11px] text-text-muted mt-0.5">
-                  Reduces visual clutter, hides secondary options, and enlarges main buttons.
+                  {dict.a11y.panicModeDesc}
                 </p>
               </div>
 
@@ -376,10 +378,10 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
               <div>
                 <div className="flex items-center gap-1.5">
                   <Volume2 className="w-4 h-4 text-brand-primary" aria-hidden="true" />
-                  <span className="text-xs font-bold text-text-primary">Read Page Aloud</span>
+                  <span className="text-xs font-bold text-text-primary">{dict.a11y.readPageAloudTitle}</span>
                 </div>
                 <p className="text-[11px] text-text-muted mt-0.5">
-                  Plays speech audio of the current page content via browser speech synthesis.
+                  {dict.a11y.readPageAloudDesc}
                 </p>
               </div>
 
@@ -393,7 +395,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                 }`}
               >
                 {isReadingPage ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                <span>{isReadingPage ? "Stop" : "Read"}</span>
+                <span>{isReadingPage ? dict.a11y.stopBtn : dict.a11y.readBtn}</span>
               </button>
             </div>
 
@@ -402,10 +404,10 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
               <div>
                 <div className="flex items-center gap-1.5">
                   <Sparkles className="w-4 h-4 text-brand-warning" aria-hidden="true" />
-                  <span className="text-xs font-bold text-text-primary">Audio-First Mode (Auto Read-Back)</span>
+                  <span className="text-xs font-bold text-text-primary">{dict.a11y.audioFirstTitle}</span>
                 </div>
                 <p className="text-[11px] text-text-muted mt-0.5">
-                  Automatically speaks extracted OCR data and Legal Fact Check points aloud without tapping read-aloud buttons.
+                  {dict.a11y.audioFirstDesc}
                 </p>
               </div>
 
@@ -433,11 +435,11 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
                 <div className="flex items-center gap-1.5">
                   <Hand className="w-4 h-4 text-brand-primary" aria-hidden="true" />
                   <span className="text-xs font-bold text-text-primary">
-                    Sign language videos (preview — coming soon)
+                    {dict.a11y.islTitle}
                   </span>
                 </div>
                 <p className="text-[11px] text-text-muted mt-0.5">
-                  Displays preview slots for upcoming Indian Sign Language (ISL) explainer videos for Deaf and hard-of-hearing users.
+                  {dict.a11y.islDesc}
                 </p>
               </div>
 

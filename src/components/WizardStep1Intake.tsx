@@ -267,7 +267,7 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
             <div className="flex items-center gap-2">
               <Eye className="w-4 h-4 text-brand-primary" />
               <h3 className="text-xs font-bold text-text-primary">
-                Extracted Information & Section 63 BSA Hash
+                {dict.audit.summaryTitle}
               </h3>
             </div>
             <div className="flex items-center gap-2">
@@ -283,39 +283,39 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
                 }`}
               >
                 {isReadingAloud ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                <span>{isReadingAloud ? "Stop Audio" : "Read Details Aloud"}</span>
+                <span>{isReadingAloud ? dict.common.stopAudio : dict.common.readDetailsAloud}</span>
               </button>
 
               <span className="text-xs bg-emerald-50 text-brand-success px-2.5 py-0.5 rounded-full border border-emerald-200 font-medium">
-                Server Verified
+                {dict.intake.serverVerified}
               </span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
             <div className="bg-surface-section rounded-xl p-3 border border-stone-200/60">
-              <span className="text-[10px] text-text-muted block">12-Digit Banking UTR</span>
+              <span className="text-[10px] text-text-muted block">{dict.intake.utrLabel}</span>
               <span className="text-xs font-bold text-brand-success truncate block mt-0.5">
                 {profile.utrNumber || "N/A"}
               </span>
             </div>
 
             <div className="bg-surface-section rounded-xl p-3 border border-stone-200/60">
-              <span className="text-[10px] text-text-muted block">Fraud Amount</span>
+              <span className="text-[10px] text-text-muted block">{dict.intake.amountLabel}</span>
               <span className="text-xs font-bold text-text-primary truncate block mt-0.5">
                 ₹{profile.fraudAmount.toLocaleString("en-IN")}
               </span>
             </div>
 
             <div className="bg-surface-section rounded-xl p-3 border border-stone-200/60">
-              <span className="text-[10px] text-text-muted block">Suspect Account / VPA</span>
+              <span className="text-[10px] text-text-muted block">{dict.audit.suspectVpaLabel}</span>
               <span className="text-xs font-bold text-brand-primary truncate block mt-0.5">
                 {profile.suspectVpa || profile.suspectAccountNo || "Tracing..."}
               </span>
             </div>
 
             <div className="bg-surface-section rounded-xl p-3 border border-stone-200/60">
-              <span className="text-[10px] text-text-muted block">Sec 63 BSA SHA-256</span>
+              <span className="text-[10px] text-text-muted block">{dict.intake.serverVerified}</span>
               <span className="text-xs font-bold text-brand-primary font-mono truncate block mt-0.5" title={profile.serverEvidenceHash || profile.evidenceHash}>
                 {(profile.serverEvidenceHash || profile.evidenceHash)?.substring(0, 16)}...
               </span>
@@ -334,7 +334,7 @@ export const WizardStep1Intake: React.FC<WizardStep1IntakeProps> = ({
           }}
           className="h-12 px-8 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-sm flex items-center gap-2 shadow-sm transition-all mx-auto active:scale-95"
         >
-          <span>Continue to check details</span>
+          <span>{dict.common.continue}</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

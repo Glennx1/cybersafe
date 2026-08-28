@@ -49,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-brand-secondary shrink-0" />
-            <span className="text-slate-300">Reporting quickly can improve the chance of stopping the transfer.</span>
+            <span className="text-slate-300">{dict.common.topBannerAlert}</span>
           </div>
 
           <div className="flex items-center gap-3">

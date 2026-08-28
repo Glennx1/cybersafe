@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Volume2, VolumeX, Sparkles } from "lucide-react";
 import { IncidentProfile, ForensicAuditReport, Language } from "@/lib/types";
+import { getDictionary } from "@/lib/i18n";
 
 interface EmergencyVoiceGuideProps {
   profile: IncidentProfile;
@@ -18,6 +19,7 @@ export const EmergencyVoiceGuide: React.FC<EmergencyVoiceGuideProps> = ({
   currentStep,
 }) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const dict = getDictionary(language);
 
   const handleVoiceSpeak = () => {
     if (!("speechSynthesis" in window)) {
@@ -33,15 +35,17 @@ export const EmergencyVoiceGuide: React.FC<EmergencyVoiceGuideProps> = ({
 
     let text = "";
     if (language === "hi") {
-      text = `साइबर रक्षक 1930 सहायता। आपका 12-अंकों का यूटीआर नंबर ${profile.utrNumber} दर्ज किया गया है। चोरी हुई राशि ₹${profile.fraudAmount} के लिए आपातकालीन बैंक फ्रीज नोटिस तैयार है।`;
+      text = `साइबर रक्षक 1930 सहायता। आपका 12-अंकों का यूटीआर नंबर ${profile.utrNumber || ""} दर्ज किया गया है। चोरी हुई राशि ₹${profile.fraudAmount} के लिए आपातकालीन बैंक फ्रीज नोटिस तैयार है।`;
     } else if (language === "kn") {
-      text = `ಸೈಬರ್ ರಕ್ಷಕ್ 1930 ಸಹಾಯ. ನಿಮ್ಮ 12-ಅಂಕಿಗಳ ಯುಟಿಆರ್ ಸಂಖ್ಯೆ ${profile.utrNumber} ಪರಿಶೀಲಿಸಲಾಗಿದೆ. ₹${profile.fraudAmount} ಮೊತ್ತಕ್ಕಾಗಿ ಬ್ಯಾಂಕ್ ಫ್ರೀಜ್ ನೋಟಿಸ್ ಸಿದ್ಧವಾಗಿದೆ.`;
+      text = `ಸೈಬರ್ ರಕ್ಷಕ್ 1930 ಸಹಾಯ. ನಿಮ್ಮ 12-ಅಂಕಿಗಳ ಯುಟಿಆರ್ ಸಂಖ್ಯೆ ${profile.utrNumber || ""} ಪರಿಶೀಲಿಸಲಾಗಿದೆ. ₹${profile.fraudAmount} ಮೊತ್ತಕ್ಕಾಗಿ ಬ್ಯಾಂಕ್ ಫ್ರೀಜ್ ನೋಟಿಸ್ ಸಿದ್ಧವಾಗಿದೆ.`;
     } else if (language === "ta") {
-      text = `சைபர் ரக்ஷக் 1930 உதவி. உங்களின் 12-இலக்க UTR எண் ${profile.utrNumber} சரிபார்க்கப்பட்டது. ₹${profile.fraudAmount} தொகைக்கு வங்கி முடக்க அறிவிப்பு தயார்.`;
+      text = `சைபர் ரக்ஷக் 1930 உதவி. உங்களின் 12-இலக்க UTR எண் ${profile.utrNumber || ""} சரிபார்க்கப்பட்டது. ₹${profile.fraudAmount} தொகைக்கு வங்கி முடக்க அறிவிப்பு தயார்.`;
     } else if (language === "te") {
-      text = `సైబర్ రక్షక్ 1930 సహాయం. మీ 12-అంకెల UTR సంఖ్య ${profile.utrNumber} నిర్ధారించబడింది. ₹${profile.fraudAmount} కోసం బ్యాంక్ ఫ్రీజ్ నోటీస్ సిద్ధంగా ఉంది.`;
+      text = `సైబర్ రక్షక్ 1930 సహాయం. మీ 12-అంకెల UTR సంఖ్య ${profile.utrNumber || ""} నిర్ధారించబడింది. ₹${profile.fraudAmount} కోసం బ్యాంక్ ఫ్రీజ్ నోటీస్ సిద్ధంగా ఉంది.`;
+    } else if (language === "bn") {
+      text = `সাইবার রক্ষক 1930 সহায়তা। আপনার 12-সংখ্যার ইউটিআর নম্বর ${profile.utrNumber || ""} যাচাই করা হয়েছে। ₹${profile.fraudAmount} টাকার জন্য জরুরি ব্যাঙ্ক ফ্রিজ নোটিশ প্রস্তুত।`;
     } else {
-      text = `CyberRakshak 1930 Emergency Assistance. Your 12-digit UTR ${profile.utrNumber} is verified. Your Golden 2-Hour Recovery Window is active for Rs. ${profile.fraudAmount.toLocaleString("en-IN")}. Standard Bank Freeze Notice & Cyber Police FIR ready for download.`;
+      text = `CyberRakshak 1930 Emergency Assistance. Your 12-digit UTR ${profile.utrNumber || ""} is verified. Your Golden 2-Hour Recovery Window is active for Rs. ${profile.fraudAmount.toLocaleString("en-IN")}. Standard Bank Freeze Notice & Cyber Police FIR ready for download.`;
     }
 
     const utterance = new SpeechSynthesisUtterance(text);
@@ -74,7 +78,7 @@ export const EmergencyVoiceGuide: React.FC<EmergencyVoiceGuideProps> = ({
 
         <Volume2 className="w-4 h-4 text-indigo-200" aria-hidden="true" />
         <span className="text-xs font-bold font-sans hidden sm:inline">
-          {isSpeaking ? "Speaking..." : "Voice Guide"}
+          {isSpeaking ? dict.common.speaking : dict.common.voiceGuideBtn}
         </span>
       </button>
     </div>
