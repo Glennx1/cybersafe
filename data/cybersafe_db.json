@@ -1151,6 +1151,294 @@
       "status": "AUDITED",
       "createdAt": "2026-08-26T10:11:40.257Z",
       "updatedAt": "2026-08-26T10:11:40.257Z"
+    },
+    {
+      "id": "INC-1787739957142",
+      "userId": "USR-DEFAULT-001",
+      "flowType": "digital_arrest",
+      "profile": {
+        "id": "INC-1787739957142",
+        "victimName": "Citizen Demo User",
+        "victimPhone": "9999999999",
+        "victimAccountMasked": "XXXX-XXXX-8821",
+        "victimAccountNo": "918273645501",
+        "victimBank": "State Bank of India (SBI)",
+        "victimBankIfsc": "SBIN0001234",
+        "fraudAmount": 85500,
+        "transactionTime": "2026-08-26T10:10:57.142Z",
+        "utrNumber": "312345678901",
+        "scamCategory": "UPI_PHISHING",
+        "suspectVpa": "ramesh.traders@okaxis",
+        "suspectAccountNo": "987654321098",
+        "suspectBankIfsc": "PYTM0123456",
+        "cityState": "Mumbai, Maharashtra",
+        "evidenceFileName": "",
+        "evidenceHash": "",
+        "rawEvidenceText": "",
+        "impersonatedAgency": "Central Bureau of Investigation (CBI)",
+        "scammerCallerId": "",
+        "extortionDemandAmount": 250000
+      },
+      "auditReport": {
+        "overallCompletenessScore": 100,
+        "isGoldenHourValid": true,
+        "minutesElapsed": 15,
+        "rbiZeroLiabilityEligible": true,
+        "rbiRuleCitation": "RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18",
+        "applicableBnsSections": [
+          "Section 318(4) BNS 2023 (Cheating and dishonestly inducing delivery of property)",
+          "Section 319 BNS 2023 (Cheating by personation)"
+        ],
+        "applicableItActSections": [
+          "Section 66C IT Act 2000 (Identity theft)",
+          "Section 66D IT Act 2000 (Cheating by personation using computer resource)"
+        ],
+        "summaryVerdict": "Emergency incident data verified. Bank Lien Freeze Notice & Police FIR ready for 1-Tap dispatch.",
+        "vectors": [
+          {
+            "vectorName": "utr_validation",
+            "label": "12-Digit UTR / RRN Identifier",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Valid 12-digit Banking Ref: 312345678901",
+            "iconName": "ShieldCheck"
+          },
+          {
+            "vectorName": "golden_hour_window",
+            "label": "Golden 2-Hour Recovery Window",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Incident reported within Golden Window (15 mins ago). High Fund Lock Probability (>80%).",
+            "iconName": "Clock"
+          },
+          {
+            "vectorName": "suspect_node",
+            "label": "Mule Account & VPA Telemetry",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Target VPA / Account Identified: ramesh.traders@okaxis (PYTM0123456)",
+            "iconName": "UserX"
+          },
+          {
+            "vectorName": "rbi_protection",
+            "label": "RBI Statutory Zero-Liability Rule",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Enforcing RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18 for zero customer loss in third-party breaches.",
+            "iconName": "FileCheck"
+          }
+        ],
+        "actionPlan": [
+          "Send 1-Click Freeze Lien Request to Bank Branch Manager & Nodal Officer under Sec 91 BNSS.",
+          "File Cyber Police Station FIR Dossier with verified UTR evidence.",
+          "Dial Helpline 1930 and read the generated high-contrast Tele-Script to the operator."
+        ]
+      },
+      "payload": {
+        "ackToken": "I4C-NCRP-2026-9E9943",
+        "timestamp": "2026-08-26T10:26:00.942Z",
+        "helplineReference": "1930-TICKET-518280",
+        "i4cNodeTarget": "NATIONAL_CYBER_CRIME_REPORTING_PORTAL_SANDBOX_V2",
+        "utrChecksum": "SHA256:312345678901-VERIFIED",
+        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-9E9943",
+        "status": "SUBMITTED"
+      },
+      "isSubmitted": false,
+      "status": "AUDITED",
+      "createdAt": "2026-08-26T10:26:01.214Z",
+      "updatedAt": "2026-08-26T10:26:01.214Z"
+    },
+    {
+      "id": "INC-1787740150605",
+      "userId": "USR-DEFAULT-001",
+      "flowType": "digital_arrest",
+      "profile": {
+        "id": "INC-1787740150605",
+        "victimName": "Citizen Demo User",
+        "victimPhone": "9999999999",
+        "victimAccountMasked": "XXXX-XXXX-8821",
+        "victimAccountNo": "918273645501",
+        "victimBank": "State Bank of India (SBI)",
+        "victimBankIfsc": "SBIN0001234",
+        "fraudAmount": 85500,
+        "transactionTime": "2026-08-26T10:14:10.605Z",
+        "utrNumber": "312345678901",
+        "scamCategory": "UPI_PHISHING",
+        "suspectVpa": "ramesh.traders@okaxis",
+        "suspectAccountNo": "987654321098",
+        "suspectBankIfsc": "PYTM0123456",
+        "cityState": "Mumbai, Maharashtra",
+        "evidenceFileName": "",
+        "evidenceHash": "",
+        "rawEvidenceText": "",
+        "impersonatedAgency": "Central Bureau of Investigation (CBI)",
+        "scammerCallerId": "",
+        "extortionDemandAmount": 250000
+      },
+      "auditReport": {
+        "overallCompletenessScore": 100,
+        "isGoldenHourValid": true,
+        "minutesElapsed": 15,
+        "rbiZeroLiabilityEligible": true,
+        "rbiRuleCitation": "RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18",
+        "applicableBnsSections": [
+          "Section 318(4) BNS 2023 (Cheating and dishonestly inducing delivery of property)",
+          "Section 319 BNS 2023 (Cheating by personation)"
+        ],
+        "applicableItActSections": [
+          "Section 66C IT Act 2000 (Identity theft)",
+          "Section 66D IT Act 2000 (Cheating by personation using computer resource)"
+        ],
+        "summaryVerdict": "Emergency incident data verified. Bank Lien Freeze Notice & Police FIR ready for 1-Tap dispatch.",
+        "vectors": [
+          {
+            "vectorName": "utr_validation",
+            "label": "12-Digit UTR / RRN Identifier",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Valid 12-digit Banking Ref: 312345678901",
+            "iconName": "ShieldCheck"
+          },
+          {
+            "vectorName": "golden_hour_window",
+            "label": "Golden 2-Hour Recovery Window",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Incident reported within Golden Window (15 mins ago). High Fund Lock Probability (>80%).",
+            "iconName": "Clock"
+          },
+          {
+            "vectorName": "suspect_node",
+            "label": "Mule Account & VPA Telemetry",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Target VPA / Account Identified: ramesh.traders@okaxis (PYTM0123456)",
+            "iconName": "UserX"
+          },
+          {
+            "vectorName": "rbi_protection",
+            "label": "RBI Statutory Zero-Liability Rule",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Enforcing RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18 for zero customer loss in third-party breaches.",
+            "iconName": "FileCheck"
+          }
+        ],
+        "actionPlan": [
+          "Send 1-Click Freeze Lien Request to Bank Branch Manager & Nodal Officer under Sec 91 BNSS.",
+          "File Cyber Police Station FIR Dossier with verified UTR evidence.",
+          "Dial Helpline 1930 and read the generated high-contrast Tele-Script to the operator."
+        ]
+      },
+      "payload": {
+        "ackToken": "I4C-NCRP-2026-213FC1",
+        "timestamp": "2026-08-26T10:29:19.273Z",
+        "helplineReference": "1930-TICKET-157188",
+        "i4cNodeTarget": "NATIONAL_CYBER_CRIME_REPORTING_PORTAL_SANDBOX_V2",
+        "utrChecksum": "SHA256:312345678901-VERIFIED",
+        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-213FC1",
+        "status": "SUBMITTED"
+      },
+      "isSubmitted": false,
+      "status": "AUDITED",
+      "createdAt": "2026-08-26T10:29:19.307Z",
+      "updatedAt": "2026-08-26T10:29:19.307Z"
+    },
+    {
+      "id": "INC-1787740241113",
+      "userId": "USR-DEFAULT-001",
+      "flowType": "financial_fraud",
+      "profile": {
+        "id": "INC-1787740241113",
+        "victimName": "Citizen Demo User",
+        "victimPhone": "9999999999",
+        "victimAccountMasked": "XXXX-XXXX-8821",
+        "victimAccountNo": "918273645501",
+        "victimBank": "State Bank of India (SBI)",
+        "victimBankIfsc": "SBIN0001234",
+        "fraudAmount": 85500,
+        "transactionTime": "2026-08-26T10:15:41.113Z",
+        "utrNumber": "312345678901",
+        "scamCategory": "UPI_PHISHING",
+        "suspectVpa": "ramesh.traders@okaxis",
+        "suspectAccountNo": "987654321098",
+        "suspectBankIfsc": "PYTM0123456",
+        "cityState": "Mumbai, Maharashtra",
+        "evidenceFileName": "",
+        "evidenceHash": "",
+        "rawEvidenceText": "",
+        "impersonatedAgency": "Central Bureau of Investigation (CBI)",
+        "scammerCallerId": "",
+        "extortionDemandAmount": 250000
+      },
+      "auditReport": {
+        "overallCompletenessScore": 100,
+        "isGoldenHourValid": true,
+        "minutesElapsed": 22,
+        "rbiZeroLiabilityEligible": true,
+        "rbiRuleCitation": "RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18",
+        "applicableBnsSections": [
+          "Section 318(4) BNS 2023 (Cheating and dishonestly inducing delivery of property)",
+          "Section 319 BNS 2023 (Cheating by personation)"
+        ],
+        "applicableItActSections": [
+          "Section 66C IT Act 2000 (Identity theft)",
+          "Section 66D IT Act 2000 (Cheating by personation using computer resource)"
+        ],
+        "summaryVerdict": "Emergency incident data verified. Bank Lien Freeze Notice & Police FIR ready for 1-Tap dispatch.",
+        "vectors": [
+          {
+            "vectorName": "utr_validation",
+            "label": "12-Digit UTR / RRN Identifier",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Valid 12-digit Banking Ref: 312345678901",
+            "iconName": "ShieldCheck"
+          },
+          {
+            "vectorName": "golden_hour_window",
+            "label": "Golden 2-Hour Recovery Window",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Incident reported within Golden Window (22 mins ago). High Fund Lock Probability (>80%).",
+            "iconName": "Clock"
+          },
+          {
+            "vectorName": "suspect_node",
+            "label": "Mule Account & VPA Telemetry",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Target VPA / Account Identified: ramesh.traders@okaxis (PYTM0123456)",
+            "iconName": "UserX"
+          },
+          {
+            "vectorName": "rbi_protection",
+            "label": "RBI Statutory Zero-Liability Rule",
+            "score": 100,
+            "status": "PASSED",
+            "details": "Enforcing RBI Master Direction DPSS.CO.PD.No.1417/02.14.006/2017-18 for zero customer loss in third-party breaches.",
+            "iconName": "FileCheck"
+          }
+        ],
+        "actionPlan": [
+          "Send 1-Click Freeze Lien Request to Bank Branch Manager & Nodal Officer under Sec 91 BNSS.",
+          "File Cyber Police Station FIR Dossier with verified UTR evidence.",
+          "Dial Helpline 1930 and read the generated high-contrast Tele-Script to the operator."
+        ]
+      },
+      "payload": {
+        "ackToken": "I4C-NCRP-2026-32CB11",
+        "timestamp": "2026-08-26T10:38:08.822Z",
+        "helplineReference": "1930-TICKET-996017",
+        "i4cNodeTarget": "NATIONAL_CYBER_CRIME_REPORTING_PORTAL_SANDBOX_V2",
+        "utrChecksum": "SHA256:312345678901-VERIFIED",
+        "bankFreezeLienReference": "LIEN-NOTICE-BANK-Stat-32CB11",
+        "status": "SUBMITTED"
+      },
+      "isSubmitted": false,
+      "status": "AUDITED",
+      "createdAt": "2026-08-26T10:30:45.620Z",
+      "updatedAt": "2026-08-26T10:38:08.844Z"
     }
   ],
   "ledger": {
@@ -1409,6 +1697,66 @@
         "payloadHash": "d9be38c14584a5041932f148199f8fd7ebaee040896595e276b753a1005c293a",
         "previousEntryHash": "0000000000000000000000000000000000000000000000000000000000000000",
         "entryHash": "0f1f25bbec2824fde4b74fc560cc5ccde96ee8ab8dd28290cdfc278a3632b2ba"
+      }
+    ],
+    "INC-1787739957142": [
+      {
+        "caseId": "INC-1787739957142",
+        "sequenceNumber": 0,
+        "timestamp": "2026-08-26T10:26:01.217Z",
+        "eventType": "case_created",
+        "payloadHash": "fd8157a38c1699753881da45eaea790af2690075490ea83697386517b4149002",
+        "previousEntryHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "entryHash": "52c67de5844049cbdf159dc5220e41bb1f53f716dad008fcda4687d65f60fae5"
+      }
+    ],
+    "INC-1787740150605": [
+      {
+        "caseId": "INC-1787740150605",
+        "sequenceNumber": 0,
+        "timestamp": "2026-08-26T10:29:19.311Z",
+        "eventType": "case_created",
+        "payloadHash": "6ce438f6e3ab03b0109c4ab892c5a57c0ca02e8bb1c0facd30c75817ac9913c1",
+        "previousEntryHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "entryHash": "bded46092292a247a93074a3f0d397d378655b2f5cccfc93bd53db086db9b635"
+      }
+    ],
+    "INC-1787740241113": [
+      {
+        "caseId": "INC-1787740241113",
+        "sequenceNumber": 0,
+        "timestamp": "2026-08-26T10:30:45.622Z",
+        "eventType": "case_created",
+        "payloadHash": "41af08d7e6bca7c6bb9ba6e314ac43bc1a232974a097f26286fb106604589ca8",
+        "previousEntryHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "entryHash": "f2de9364ab6ea84fbefeb2317d57e5d78bcc244705afe882724a8951be1023f5"
+      },
+      {
+        "caseId": "INC-1787740241113",
+        "sequenceNumber": 1,
+        "timestamp": "2026-08-26T10:38:07.041Z",
+        "eventType": "case_updated",
+        "payloadHash": "fc583e147a8cdf666c2085fb8bfaf2ab11ec8a524a4ca4adcc425c4e8e779d02",
+        "previousEntryHash": "f2de9364ab6ea84fbefeb2317d57e5d78bcc244705afe882724a8951be1023f5",
+        "entryHash": "1f56c8e179a11d292868a0de1b8684a7e7464541998de456da3f7f38330a6c2b"
+      },
+      {
+        "caseId": "INC-1787740241113",
+        "sequenceNumber": 2,
+        "timestamp": "2026-08-26T10:38:08.255Z",
+        "eventType": "case_updated",
+        "payloadHash": "fc583e147a8cdf666c2085fb8bfaf2ab11ec8a524a4ca4adcc425c4e8e779d02",
+        "previousEntryHash": "1f56c8e179a11d292868a0de1b8684a7e7464541998de456da3f7f38330a6c2b",
+        "entryHash": "ed7b4e29827ac19dc9b4db468a1d30821c88e6bc917c290848937e7c2ae4fc8e"
+      },
+      {
+        "caseId": "INC-1787740241113",
+        "sequenceNumber": 3,
+        "timestamp": "2026-08-26T10:38:08.848Z",
+        "eventType": "case_updated",
+        "payloadHash": "fc583e147a8cdf666c2085fb8bfaf2ab11ec8a524a4ca4adcc425c4e8e779d02",
+        "previousEntryHash": "ed7b4e29827ac19dc9b4db468a1d30821c88e6bc917c290848937e7c2ae4fc8e",
+        "entryHash": "ab9900e51a7b7bf4b5afdcba524e36ca9f90c1755cc5edd60421b513c057a120"
       }
     ]
   }

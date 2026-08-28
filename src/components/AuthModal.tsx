@@ -1,19 +1,22 @@
-"use client";
-
 import React, { useState } from "react";
 import { X, Lock, Phone, User, Check, ArrowRight, ShieldCheck } from "lucide-react";
+import { Language } from "@/lib/types";
+import { getDictionary } from "@/lib/i18n";
 
 interface AuthModalProps {
   isOpen: boolean;
+  language?: Language;
   onClose: () => void;
   onLoginSuccess: (user: { id: string; phone: string; name: string }) => void;
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({
   isOpen,
+  language = "en",
   onClose,
   onLoginSuccess
 }) => {
+  const dict = getDictionary(language);
   const [isRegister, setIsRegister] = useState(false);
   const [phone, setPhone] = useState("9999999999");
   const [password, setPassword] = useState("password123");
@@ -83,10 +86,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           </div>
           <div>
             <h3 className="font-bold text-base text-text-primary">
-              {isRegister ? "Create Citizen Account" : "Access Your Saved Cases"}
+              {isRegister ? dict.modals.auth.registerTitle : dict.modals.auth.loginTitle}
             </h3>
             <p className="text-xs text-text-muted">
-              All screenshots, bank records & queries link to this account
+              {dict.modals.auth.subtitle}
             </p>
           </div>
         </div>
@@ -96,14 +99,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <div className="flex items-center justify-between font-bold text-text-primary mb-1">
             <span className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-brand-success" />
-              Demo Account Available
+              {dict.modals.auth.demoAvailable}
             </span>
             <button
               type="button"
               onClick={handleQuickDemoFill}
               className="text-xs text-brand-primary hover:text-indigo-800 font-bold underline"
             >
-              Fill Credentials
+              {dict.modals.auth.fillCredentials}
             </button>
           </div>
           <div className="text-[11px] text-text-muted space-y-0.5">
@@ -121,7 +124,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           {isRegister && (
             <div>
-              <label className="block text-text-primary font-bold mb-1">Full Name</label>
+              <label className="block text-text-primary font-bold mb-1">{dict.modals.auth.fullNameLabel}</label>
               <div className="relative">
                 <User className="w-4 h-4 text-stone-400 absolute left-3 top-3" />
                 <input
@@ -137,7 +140,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           )}
 
           <div>
-            <label className="block text-text-primary font-bold mb-1">Mobile Phone Number</label>
+            <label className="block text-text-primary font-bold mb-1">{dict.modals.auth.phoneLabel}</label>
             <div className="relative">
               <Phone className="w-4 h-4 text-stone-400 absolute left-3 top-3" />
               <input
@@ -152,7 +155,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-text-primary font-bold mb-1">Account Password</label>
+            <label className="block text-text-primary font-bold mb-1">{dict.modals.auth.passwordLabel}</label>
             <div className="relative">
               <Lock className="w-4 h-4 text-stone-400 absolute left-3 top-3" />
               <input
@@ -171,7 +174,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             disabled={loading}
             className="w-full py-2.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-50"
           >
-            {loading ? "Verifying..." : isRegister ? "Create Account & Save Session" : "Login & Link Case Sessions"}
+            {loading ? dict.modals.auth.verifying : isRegister ? dict.modals.auth.createAccountBtn : dict.modals.auth.loginBtn}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
@@ -179,24 +182,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         <div className="mt-4 pt-4 border-t border-stone-100 text-center text-xs text-text-muted">
           {isRegister ? (
             <span>
-              Already have an account?{" "}
+              {dict.modals.auth.alreadyHaveAccount}{" "}
               <button
                 type="button"
                 onClick={() => { setIsRegister(false); setError(null); }}
                 className="text-brand-primary font-bold hover:underline"
               >
-                Sign In
+                {dict.modals.auth.signIn}
               </button>
             </span>
           ) : (
             <span>
-              Need a new account?{" "}
+              {dict.modals.auth.needNewAccount}{" "}
               <button
                 type="button"
                 onClick={() => { setIsRegister(true); setError(null); }}
                 className="text-brand-primary font-bold hover:underline"
               >
-                Register
+                {dict.modals.auth.register}
               </button>
             </span>
           )}
@@ -205,3 +208,4 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     </div>
   );
 };
+

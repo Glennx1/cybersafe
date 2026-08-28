@@ -1,4 +1,10 @@
-import { Language } from "./types";
+import fs from "fs";
+import path from "path";
+
+const i18nFilePath = path.join(process.cwd(), "src/lib/i18n.ts");
+
+// Let's read and rewrite i18n.ts with complete exhaustive dictionaries for EN, HI, TE, TA, KN, BN
+const fullI18nCode = `import { Language } from "./types";
 
 export interface TranslationDictionary {
   common: {
@@ -2301,3 +2307,7 @@ const I18N_RESOURCES: Record<Language, TranslationDictionary> = {
 export const getDictionary = (lang: Language): TranslationDictionary => {
   return I18N_RESOURCES[lang] || I18N_RESOURCES.en;
 };
+`;
+
+fs.writeFileSync(i18nFilePath, fullI18nCode, "utf8");
+console.log("Successfully wrote complete multilingual i18n.ts with 6 full languages!");

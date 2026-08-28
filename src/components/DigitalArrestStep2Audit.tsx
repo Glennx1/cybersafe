@@ -164,7 +164,7 @@ export const DigitalArrestStep2Audit: React.FC<DigitalArrestStep2AuditProps> = (
             }`}
           >
             {isPlayingFactCheck ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-brand-primary" />}
-            <span>{isPlayingFactCheck ? "Stop Audio Narration" : "Listen to Fact Check Aloud"}</span>
+            <span>{isPlayingFactCheck ? dict.common.stopAudio : dict.digitalArrest.listenFactCheckAloud}</span>
           </button>
         </div>
 

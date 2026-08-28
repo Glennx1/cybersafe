@@ -652,11 +652,11 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <Shield className="w-4 h-4 text-brand-primary" />
             <span className="text-slate-200">
-              <strong>CyberRakshak 1930</strong> // Dual-Engine Citizen Cyber Command
+              {dict.common.footerCommand}
             </span>
           </div>
           <div className="text-indigo-200/60 text-center sm:text-right text-[11px]">
-            DPDP Act 2023 Compliant • On-Device Cryptographic Hashing • Sec 63 BSA Certified
+            {dict.common.footerCompliance}
           </div>
         </div>
       </footer>
@@ -736,17 +736,17 @@ export default function Home() {
               </div>
               <div>
                 <h3 id="covert-modal-title" className="text-base font-bold text-text-primary">
-                  Unsaved Covert Notes Found
+                  {dict.modals.covertMerge.title}
                 </h3>
                 <p className="text-xs text-text-muted">
-                  Notes captured on this device on {new Date(pendingCovertSessions[0].startedAt).toLocaleString("en-IN")}
+                  {dict.modals.covertMerge.subtitle}
                 </p>
               </div>
             </div>
 
             <div className="space-y-4 text-xs text-text-muted mb-6">
               <p className="leading-relaxed">
-                We found <strong>{pendingCovertSessions[0].notes.length} note(s)</strong> captured during a covert session on this device. Would you like to start a case from them?
+                {dict.modals.covertMerge.prompt}
               </p>
 
               {/* Notes Preview Box */}
@@ -754,7 +754,7 @@ export default function Home() {
                 {pendingCovertSessions[0].notes.map((note, idx) => (
                   <div key={note.id} className="pb-1.5 border-b border-stone-200/60 last:border-none last:pb-0">
                     <div className="text-[10px] text-text-muted font-sans">
-                      Note #{idx + 1} • {new Date(note.deviceTimestamp).toLocaleTimeString()} (Device Timestamp)
+                      {dict.common.step} #{idx + 1} • {new Date(note.deviceTimestamp).toLocaleTimeString()}
                     </div>
                     <div className="text-text-primary font-bold mt-0.5">{note.text}</div>
                   </div>
@@ -764,7 +764,7 @@ export default function Home() {
               {/* Flow Selector */}
               <div>
                 <label className="font-bold text-text-primary block mb-1.5">
-                  Select Incident Flow to Open:
+                  {dict.common.flowSelectTitle}:
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
@@ -776,8 +776,8 @@ export default function Home() {
                         : "bg-stone-50 border-stone-200 text-text-muted hover:border-stone-300"
                     }`}
                   >
-                    <span className="block font-bold">Digital Arrest</span>
-                    <span className="text-[10px] text-text-muted font-normal">Fake video calls & extortion</span>
+                    <span className="block font-bold">{dict.modals.covertMerge.digitalArrestOption}</span>
+                    <span className="text-[10px] text-text-muted font-normal">{dict.modals.covertMerge.digitalArrestSub}</span>
                   </button>
 
                   <button
@@ -789,8 +789,8 @@ export default function Home() {
                         : "bg-stone-50 border-stone-200 text-text-muted hover:border-stone-300"
                     }`}
                   >
-                    <span className="block font-bold">Financial Cyber Theft</span>
-                    <span className="text-[10px] text-text-muted font-normal">UPI, bank, card fraud</span>
+                    <span className="block font-bold">{dict.modals.covertMerge.financialOption}</span>
+                    <span className="text-[10px] text-text-muted font-normal">{dict.modals.covertMerge.financialSub}</span>
                   </button>
                 </div>
               </div>
@@ -803,14 +803,14 @@ export default function Home() {
                 onClick={handleDismissCovertMerge}
                 className="px-4 py-2 text-xs font-bold text-text-muted hover:text-text-primary"
               >
-                Discard Notes
+                {dict.modals.covertMerge.discardBtn}
               </button>
               <button
                 type="button"
                 onClick={handleAcceptCovertMerge}
                 className="px-5 py-2.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs transition-all active:scale-95 flex items-center gap-1.5"
               >
-                <span>Import & Start Case</span>
+                <span>{dict.modals.covertMerge.importBtn}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -821,6 +821,7 @@ export default function Home() {
       {/* Authentication Modal */}
       <AuthModal
         isOpen={showAuthModal}
+        language={language}
         onClose={() => setShowAuthModal(false)}
         onLoginSuccess={(user) => {
           setCurrentUser(user);
@@ -833,6 +834,7 @@ export default function Home() {
         <SavedCasesModal
           isOpen={showSavedCasesModal}
           userId={currentUser.id}
+          language={language}
           onClose={() => setShowSavedCasesModal(false)}
           onSelectSession={handleResumeSession}
         />

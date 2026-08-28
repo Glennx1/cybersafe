@@ -145,7 +145,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
               <div className="w-9 h-9 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold border border-indigo-100">
                 <FileCheck className="w-5 h-5" />
               </div>
-              <span className="text-xs text-text-muted font-medium">BNS Sec 204 & 308</span>
+              <span className="text-xs text-text-muted font-medium">{dict.digitalArrest.bns204_308Tag}</span>
             </div>
             <h3 className="font-bold text-sm text-text-primary mb-1">
               {dict.digitalArrest.safetyStep3Title}
@@ -163,7 +163,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
                 className="flex-1 py-2.5 bg-brand-success hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-xs"
               >
                 <Share2 className="w-3.5 h-3.5" />
-                <span>{shareSuccess ? "Shared!" : dict.common.shareWhatsApp}</span>
+                <span>{shareSuccess ? dict.common.copied : dict.common.shareWhatsApp}</span>
               </button>
 
               <button
@@ -184,7 +184,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
                 title="Section 63(4) BSA 2023 Certificate of Authenticity for submitted evidence"
               >
                 <Download className="w-3.5 h-3.5 text-brand-success" />
-                <span>Download Sec 63 BSA Certificate</span>
+                <span>{dict.digitalArrest.downloadSec63BsaCert}</span>
               </button>
             )}
           </div>
@@ -197,7 +197,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
               <div className="w-9 h-9 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold border border-indigo-100">
                 <Radio className="w-5 h-5" />
               </div>
-              <span className="text-xs text-text-muted font-medium">DoT Sanchar Saathi</span>
+              <span className="text-xs text-text-muted font-medium">{dict.digitalArrest.dotSancharSaathiTag}</span>
             </div>
             <h3 className="font-bold text-sm text-text-primary mb-1">
               {dict.digitalArrest.safetyStep2Title}
@@ -231,26 +231,26 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
       <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 sm:p-6 mb-6 shadow-sm">
         <h3 className="text-xs font-bold text-text-primary mb-3 flex items-center gap-2">
           <Building2 className="w-4 h-4 text-brand-primary" />
-          <span>Official Verified Helplines & Numbers</span>
+          <span>{dict.digitalArrest.officialHelplinesTitle}</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
           <div className="bg-surface-section rounded-xl p-3 border border-stone-200/60">
-            <span className="text-text-muted block text-xs font-medium">National Cybercrime Helpline:</span>
-            <span className="text-brand-success text-sm font-bold mt-0.5 block">1930 (Toll Free)</span>
-            <span className="text-[11px] text-text-muted block mt-0.5">24x7 Citizen Cyber Defense</span>
+            <span className="text-text-muted block text-xs font-medium">{dict.digitalArrest.nationalCyberHelpline}</span>
+            <span className="text-brand-success text-sm font-bold mt-0.5 block">{dict.digitalArrest.tollFree}</span>
+            <span className="text-[11px] text-text-muted block mt-0.5">{dict.digitalArrest.citizenCyberDefense}</span>
           </div>
 
           <div className="bg-surface-section rounded-xl p-3 border border-stone-200/60">
-            <span className="text-text-muted block text-xs font-medium">CBI Control Room:</span>
+            <span className="text-text-muted block text-xs font-medium">{dict.digitalArrest.cbiControlRoom}</span>
             <span className="text-text-primary text-xs font-bold mt-0.5 block">011-24362755</span>
-            <span className="text-[11px] text-text-muted block mt-0.5">HQ Lodhi Road, New Delhi</span>
+            <span className="text-[11px] text-text-muted block mt-0.5">{dict.digitalArrest.cbiAddress}</span>
           </div>
 
           <div className="bg-surface-section rounded-xl p-3 border border-stone-200/60">
-            <span className="text-text-muted block text-xs font-medium">Enforcement Directorate (ED):</span>
+            <span className="text-text-muted block text-xs font-medium">{dict.digitalArrest.edControlRoom}</span>
             <span className="text-text-primary text-xs font-bold mt-0.5 block">011-23339100</span>
-            <span className="text-[11px] text-text-muted block mt-0.5">Headquarters, New Delhi</span>
+            <span className="text-[11px] text-text-muted block mt-0.5">{dict.digitalArrest.edAddress}</span>
           </div>
         </div>
       </div>
@@ -262,7 +262,7 @@ export const DigitalArrestStep3Action: React.FC<DigitalArrestStep3ActionProps> =
           className="px-5 py-2.5 rounded-xl text-xs font-bold text-text-muted hover:text-text-primary bg-surface-card border border-stone-200 hover:border-stone-300 transition-all flex items-center gap-1.5 shadow-xs"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Legal Reality</span>
+          <span>{dict.digitalArrest.backToLegalReality}</span>
         </button>
       </div>
     </div>

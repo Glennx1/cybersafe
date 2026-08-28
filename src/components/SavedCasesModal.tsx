@@ -1,14 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X, FolderClock, ArrowRight, ShieldAlert, Zap, Calendar, CheckCircle2, FileText, Download } from "lucide-react";
+import { X, FolderClock, ArrowRight, ShieldAlert, Zap, Calendar, FileText, Download } from "lucide-react";
 import { UserSessionRecord } from "@/lib/db";
-import { generateBankFreezePdf, generatePoliceFirPdf, generateMagistratePetitionPdf, generateDigitalArrestFirPdf, generateSection63BsaCertificatePdf } from "@/lib/pdfGenerator";
+import { generateBankFreezePdf, generatePoliceFirPdf, generateDigitalArrestFirPdf, generateSection63BsaCertificatePdf } from "@/lib/pdfGenerator";
 import { CaseLedgerBadge } from "./CaseLedgerBadge";
+import { Language } from "@/lib/types";
+import { getDictionary } from "@/lib/i18n";
 
 interface SavedCasesModalProps {
   isOpen: boolean;
   userId: string;
+  language?: Language;
   onClose: () => void;
   onSelectSession: (session: UserSessionRecord) => void;
 }
@@ -16,9 +19,11 @@ interface SavedCasesModalProps {
 export const SavedCasesModal: React.FC<SavedCasesModalProps> = ({
   isOpen,
   userId,
+  language = "en",
   onClose,
   onSelectSession
 }) => {
+  const dict = getDictionary(language);
   const [sessions, setSessions] = useState<UserSessionRecord[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -55,10 +60,10 @@ export const SavedCasesModal: React.FC<SavedCasesModalProps> = ({
             </div>
             <div>
               <h3 className="font-bold text-base text-text-primary">
-                Your Linked Incident Cases
+                {dict.modals.savedCases.title}
               </h3>
               <p className="text-xs text-text-muted">
-                Stored persistently in the database under your phone account
+                {dict.modals.savedCases.subtitle}
               </p>
             </div>
           </div>
@@ -73,12 +78,12 @@ export const SavedCasesModal: React.FC<SavedCasesModalProps> = ({
         <div className="flex-1 overflow-y-auto space-y-3 pr-1">
           {loading ? (
             <div className="py-12 text-center text-xs text-text-muted">
-              Loading your linked sessions from database...
+              {dict.modals.savedCases.loading}
             </div>
           ) : sessions.length === 0 ? (
             <div className="py-12 text-center text-xs text-text-muted space-y-2">
-              <p className="font-bold text-text-primary">No past cases recorded yet.</p>
-              <p>When you enter incident details or upload screenshots, they will automatically save to your database.</p>
+              <p className="font-bold text-text-primary">{dict.modals.savedCases.emptyTitle}</p>
+              <p>{dict.modals.savedCases.emptyDesc}</p>
             </div>
           ) : (
             sessions.map((sess) => {
@@ -97,7 +102,7 @@ export const SavedCasesModal: React.FC<SavedCasesModalProps> = ({
                       </div>
                       <div>
                         <span className="font-bold text-xs text-text-primary block">
-                          {isFinancial ? "Financial Cyber Theft" : "Extortion & Digital Arrest"}
+                          {isFinancial ? dict.modals.covertMerge.financialOption : dict.modals.covertMerge.digitalArrestOption}
                         </span>
                         <span className="text-[11px] text-text-muted flex items-center gap-1 font-mono">
                           <Calendar className="w-3 h-3 text-stone-400" />
@@ -113,37 +118,37 @@ export const SavedCasesModal: React.FC<SavedCasesModalProps> = ({
                           ? "bg-emerald-50 text-brand-success border-emerald-200"
                           : "bg-indigo-50 text-brand-primary border-indigo-200"
                       }`}>
-                        {sess.status === "DISPATCHED" ? "Dispatched" : "Saved Draft"}
+                        {sess.status === "DISPATCHED" ? dict.common.verified : "Draft"}
                       </span>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                     <div className="bg-surface-card p-2 rounded-lg border border-stone-200/60">
-                      <span className="text-[10px] text-text-muted block">Fraud Amount</span>
+                      <span className="text-[10px] text-text-muted block">{dict.intake.amountLabel}</span>
                       <strong className="text-text-primary font-bold">
                         ₹{(sess.profile.fraudAmount || sess.profile.extortionDemandAmount || 0).toLocaleString("en-IN")}
                       </strong>
                     </div>
 
                     <div className="bg-surface-card p-2 rounded-lg border border-stone-200/60">
-                      <span className="text-[10px] text-text-muted block">Banking UTR</span>
+                      <span className="text-[10px] text-text-muted block">{isFinancial ? dict.intake.utrLabel : dict.digitalArrest.callerIdLabel}</span>
                       <strong className="text-text-primary font-mono font-bold truncate block">
-                        {sess.profile.utrNumber || "N/A"}
+                        {isFinancial ? (sess.profile.utrNumber || "N/A") : (sess.profile.scammerCallerId || "N/A")}
                       </strong>
                     </div>
 
                     <div className="bg-surface-card p-2 rounded-lg border border-stone-200/60">
-                      <span className="text-[10px] text-text-muted block">Bank Name</span>
+                      <span className="text-[10px] text-text-muted block">{dict.audit.victimBankLabel}</span>
                       <strong className="text-text-primary truncate block">
                         {sess.profile.victimBank || "Unknown"}
                       </strong>
                     </div>
 
                     <div className="bg-surface-card p-2 rounded-lg border border-stone-200/60">
-                      <span className="text-[10px] text-text-muted block">Evidence File</span>
+                      <span className="text-[10px] text-text-muted block">{dict.audit.victimNameLabel}</span>
                       <strong className="text-brand-success truncate block">
-                        {sess.profile.evidenceFileName ? "Screenshot Attached" : "Manual Log"}
+                        {sess.profile.victimName || "Anonymous"}
                       </strong>
                     </div>
                   </div>
@@ -202,7 +207,7 @@ export const SavedCasesModal: React.FC<SavedCasesModalProps> = ({
                       }}
                       className="px-3 py-1.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center gap-1 shadow-sm transition-all active:scale-95"
                     >
-                      <span>Resume Case</span>
+                      <span>{dict.modals.savedCases.resumeBtn}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>

@@ -4,19 +4,16 @@ import React, { useState } from "react";
 import {
   Phone,
   Mail,
-  FileText,
-  ExternalLink,
   Copy,
   Check,
   Share2,
   Download,
   AlertCircle,
   Clock,
-  ShieldAlert,
   Send,
-  Building,
-  Scale,
   Sparkles,
+  ExternalLink,
+  X,
   FileCheck
 } from "lucide-react";
 import { IncidentProfile, ForensicAuditReport, Language } from "@/lib/types";
@@ -52,12 +49,10 @@ export const OneTapActionPanel: React.FC<OneTapActionPanelProps> = ({
   // Tele-script toggle state
   const [showInlineScript, setShowInlineScript] = useState(true);
 
-  // Email fallback indicator
-  const [showEmailFallback, setShowEmailFallback] = useState(false);
+  // Email dispatch modal & copy states
+  const [showEmailModal, setShowEmailModal] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
-
-  // NCRP Copy state
-  const [copiedNcrpStatement, setCopiedNcrpStatement] = useState(false);
+  const [copiedEmailBody, setCopiedEmailBody] = useState(false);
 
   // Document share states
   const [sharingDoc, setSharingDoc] = useState<string | null>(null);
@@ -66,26 +61,9 @@ export const OneTapActionPanel: React.FC<OneTapActionPanelProps> = ({
   const bank = lookupBankNode(profile.victimBank);
   const fraudDeskEmail = bank.cyberEmail || bank.nodalEmail || "cybercell@bank.com";
 
-  // 1. Call 1930 action
-  const handleCall1930 = () => {
-    logCaseAction(profile.id, "user_initiated_1930_call", {
-      phoneDialed: "1930",
-      utr: profile.utrNumber,
-      fraudAmount: profile.fraudAmount
-    });
-  };
-
-  // 2. Email Bank Action (mailto: with length-safe body)
-  const handleEmailBank = () => {
-    logCaseAction(profile.id, "user_emailed_bank", {
-      bankName: bank.name,
-      toEmail: fraudDeskEmail,
-      utr: profile.utrNumber
-    });
-
-    const subject = `URGENT: Section 91 BNSS Lien Request — Account ${profile.victimAccountMasked} — UTR ${profile.utrNumber || "N/A"}`;
-    
-    const conciseBody = `To: Principal Nodal Officer & Cyber Fraud Desk, ${bank.name}
+  // Pre-formatted legal email text
+  const emailSubject = `URGENT: Section 91 BNSS Lien Request — Account ${profile.victimAccountMasked} — UTR ${profile.utrNumber || "N/A"}`;
+  const emailBody = `To: Principal Nodal Officer & Cyber Fraud Desk, ${bank.name}
 
 SUBJECT: IMMEDIATE LIEN MARKING & BENEFICIARY ACCOUNT FREEZE UNDER SECTION 91 BNSS 2023 & RBI ZERO LIABILITY RULES
 
@@ -109,67 +87,50 @@ Reported within the Golden Recovery Window pursuant to RBI Master Direction (DPS
 Complainant: ${profile.victimName}
 Helpline 1930 Reference Active.`;
 
-    const mailtoUrl = `mailto:${encodeURIComponent(fraudDeskEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(conciseBody)}`;
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(fraudDeskEmail)}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+  const mailtoUrl = `mailto:${encodeURIComponent(fraudDeskEmail)}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
-    // Set best-effort detection for mail client fallback
-    const timeout = setTimeout(() => {
-      setShowEmailFallback(true);
-    }, 1500);
-
-    window.location.href = mailtoUrl;
-
-    window.addEventListener(
-      "blur",
-      () => {
-        clearTimeout(timeout);
-        setShowEmailFallback(false);
-      },
-      { once: true }
-    );
+  // 1. Call 1930 action
+  const handleCall1930 = () => {
+    logCaseAction(profile.id, "user_initiated_1930_call", {
+      phoneDialed: "1930",
+      utr: profile.utrNumber,
+      fraudAmount: profile.fraudAmount
+    });
   };
 
-  // 3. Copy NCRP Statement
-  const ncrpComplaintStatement = `FORMAL CYBER CRIME COMPLAINT — SECTION 318(4) & 319 BNS 2023 / IT ACT 66D
+  // 2. Email Bank Actions
+  const handleEmailBank = () => {
+    logCaseAction(profile.id, "user_emailed_bank", {
+      bankName: bank.name,
+      toEmail: fraudDeskEmail,
+      utr: profile.utrNumber
+    });
 
-Complainant: ${profile.victimName} | Mobile: ${profile.victimPhone}
-Location / Jurisdiction: ${profile.cityState || "State Jurisdiction"}
-Date & Time of Incident: ${new Date(profile.transactionTime).toLocaleString("en-IN")}
+    // Open options modal so user can pick Gmail webmail, mail client, or copy text
+    setShowEmailModal(true);
 
-INCIDENT & FINANCIAL TRAIL:
-1. Debited Account: ${profile.victimAccountNo || profile.victimAccountMasked} (${profile.victimBank})
-2. Total Defrauded Amount: Rs. ${profile.fraudAmount.toLocaleString("en-IN")}
-3. Banking UTR / RRN: ${profile.utrNumber || "N/A"}
-4. Suspect UPI ID / VPA: ${profile.suspectVpa || "N/A"}
-5. Suspect Account Number: ${profile.suspectAccountNo || "N/A"}
-6. Suspect Bank IFSC: ${profile.suspectBankIfsc || "N/A"}
-7. Evidence Authenticity: SHA-256 Hashed on-device under Sec 63 BSA 2023 (${profile.serverEvidenceHash || profile.evidenceHash || "Verified"})
-
-PRAYER:
-1. Register formal FIR under BNS Sections 318(4) (Cheating) and 319 (Cheating by Impersonation) and IT Act 66D.
-2. Issue urgent Section 91 BNSS freeze requisition to beneficiary bank.
-3. Issue NCRP Acknowledgement Number.`;
-
-  const handleCopyNcrp = async () => {
+    // Attempt direct mailto client as well
     try {
-      await navigator.clipboard.writeText(ncrpComplaintStatement);
-      setCopiedNcrpStatement(true);
-      logCaseAction(profile.id, "user_copied_ncrp_statement", {
-        utr: profile.utrNumber,
-        statementLength: ncrpComplaintStatement.length
-      });
-      setTimeout(() => setCopiedNcrpStatement(false), 2500);
-    } catch (e) {
-      console.warn("Failed to copy statement:", e);
+      window.location.href = mailtoUrl;
+    } catch {
+      // Handled via modal
     }
   };
 
   const handleCopyBankEmail = () => {
     navigator.clipboard.writeText(fraudDeskEmail);
     setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
+    setTimeout(() => setCopiedEmail(false), 2500);
   };
 
-  // 4. WhatsApp / Web Share Handler
+  const handleCopyEmailBody = () => {
+    navigator.clipboard.writeText(`Subject: ${emailSubject}\n\n${emailBody}`);
+    setCopiedEmailBody(true);
+    setTimeout(() => setCopiedEmailBody(false), 2500);
+  };
+
+  // 3. WhatsApp / Web Share Handler
   const handleShareDoc = async (
     docType: "freeze" | "fir" | "court" | "bsa"
   ) => {
@@ -324,7 +285,7 @@ PRAYER:
                 {dict.actions.emailBankTitle}
               </h3>
               <p className="text-xs text-text-muted">
-                {dict.actions.emailBankDesc} <strong className="text-text-primary">{fraudDeskEmail}</strong>.
+                {dict.actions.emailBankDesc} <strong className="text-text-primary font-mono">{fraudDeskEmail}</strong>.
               </p>
             </div>
           </div>
@@ -351,78 +312,39 @@ PRAYER:
           </div>
         </div>
 
-        {/* Fallback box if no mail client opens */}
-        {showEmailFallback && (
-          <div role="alert" className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-950 flex flex-col sm:flex-row sm:items-center justify-between gap-2 animate-in fade-in">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-brand-warning shrink-0" aria-hidden="true" />
-              <span>{dict.actions.noMailAppNotice} <strong className="font-mono">{fraudDeskEmail}</strong></span>
-            </div>
-            <button
-              type="button"
-              onClick={handleCopyBankEmail}
-              aria-label="Copy bank fraud desk email address"
-              className="px-3 py-1 bg-amber-200 hover:bg-amber-300 text-amber-950 font-bold rounded-lg text-xs flex items-center justify-center gap-1 shrink-0"
-            >
-              {copiedEmail ? <Check className="w-3.5 h-3.5 text-brand-success" aria-hidden="true" /> : <Copy className="w-3.5 h-3.5" aria-hidden="true" />}
-              <span>{copiedEmail ? "Email Copied!" : "Copy Email"}</span>
-            </button>
-          </div>
-        )}
-      </div>
+        {/* Quick Send Options Drawer */}
+        <div className="mt-4 pt-3 border-t border-stone-100 flex flex-wrap items-center gap-2 text-xs">
+          <a
+            href={gmailUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 font-bold rounded-lg flex items-center gap-1.5 border border-red-200 transition-all"
+          >
+            <Mail className="w-3.5 h-3.5 text-red-600" />
+            <span>Open in Gmail (Web)</span>
+            <ExternalLink className="w-3 h-3 text-red-400" />
+          </a>
 
-      {/* Action 3: File NCRP Online Complaint (Urgency #3) */}
-      <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 mb-4 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center font-bold shadow-xs shrink-0 mt-0.5">
-              <FileText className="w-5 h-5" aria-hidden="true" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold text-brand-primary bg-indigo-50 px-2 py-0.5 rounded-md uppercase">
-                  {dict.actions.step3Tag}
-                </span>
-                <span className="text-xs text-text-muted">{dict.actions.step3Time}</span>
-              </div>
-              <h3 className="text-base font-bold text-text-primary mt-0.5">
-                {dict.actions.ncrpTitle}
-              </h3>
-              <p className="text-xs text-text-muted">
-                {dict.actions.ncrpDesc}
-              </p>
-            </div>
-          </div>
+          <a
+            href={mailtoUrl}
+            className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-brand-primary font-bold rounded-lg flex items-center gap-1.5 border border-indigo-200 transition-all"
+          >
+            <Send className="w-3.5 h-3.5 text-brand-primary" />
+            <span>Open in Default Mail App</span>
+          </a>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0" aria-live="polite">
-            <button
-              type="button"
-              onClick={handleCopyNcrp}
-              aria-label="Copy legal complaint statement to clipboard"
-              className={`px-5 py-3.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 ${
-                copiedNcrpStatement
-                  ? "bg-brand-success text-white"
-                  : "bg-brand-primary hover:bg-indigo-700 text-white"
-              }`}
-            >
-              {copiedNcrpStatement ? <Check className="w-4 h-4 text-emerald-200" aria-hidden="true" /> : <Copy className="w-4 h-4" aria-hidden="true" />}
-              <span>{copiedNcrpStatement ? dict.actions.statementCopiedBtn : dict.actions.copyStatementBtn}</span>
-            </button>
-
-            <a
-              href="https://cybercrime.gov.in/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 py-3.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
-            >
-              <span>{dict.actions.openPortalBtn}</span>
-              <ExternalLink className="w-4 h-4" aria-hidden="true" />
-            </a>
-          </div>
+          <button
+            type="button"
+            onClick={handleCopyBankEmail}
+            className="px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-text-primary font-bold rounded-lg flex items-center gap-1.5 border border-stone-200 transition-all"
+          >
+            {copiedEmail ? <Check className="w-3.5 h-3.5 text-brand-success" /> : <Copy className="w-3.5 h-3.5 text-text-muted" />}
+            <span>{copiedEmail ? "Email Copied!" : "Copy Bank Email"}</span>
+          </button>
         </div>
       </div>
 
-      {/* Action 4: Share Documents via WhatsApp (Urgency #4) */}
+      {/* Action 3: Share Documents via WhatsApp (Urgency #3) */}
       <div className="bg-surface-card border border-stone-200/80 rounded-2xl p-5 shadow-sm">
         <div className="flex items-center gap-2 mb-3">
           <div className="w-7 h-7 rounded-lg bg-emerald-50 text-brand-success flex items-center justify-center font-bold text-xs">
@@ -556,6 +478,119 @@ PRAYER:
           </div>
         </div>
       </div>
+
+      {/* Interactive Email Dispatch Modal */}
+      {showEmailModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="bank-email-modal-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brand-navy/60 backdrop-blur-xs animate-in fade-in"
+          onClick={() => setShowEmailModal(false)}
+        >
+          <div
+            className="bg-surface-card text-text-primary border border-stone-200 rounded-3xl shadow-2xl max-w-xl w-full p-6 sm:p-7 max-h-[85vh] flex flex-col font-sans relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowEmailModal(false)}
+              className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-lg bg-surface-section text-text-muted hover:text-text-primary"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-brand-success border border-emerald-100 flex items-center justify-center font-bold">
+                <Mail className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 id="bank-email-modal-title" className="text-base font-bold text-text-primary">
+                  Email Bank Fraud Desk (Section 91 BNSS)
+                </h3>
+                <p className="text-xs text-text-muted">
+                  Dispatched to {bank.name} Nodal Cyber Cell
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-3 text-xs mb-5 flex-1 overflow-y-auto pr-1">
+              <div className="bg-surface-section p-3 rounded-xl border border-stone-200/80 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] text-text-muted font-bold">To Recipient:</span>
+                  <button
+                    type="button"
+                    onClick={handleCopyBankEmail}
+                    className="text-[11px] text-brand-primary font-bold hover:underline flex items-center gap-1"
+                  >
+                    {copiedEmail ? <Check className="w-3 h-3 text-brand-success" /> : <Copy className="w-3 h-3" />}
+                    <span>{copiedEmail ? "Copied!" : "Copy Email"}</span>
+                  </button>
+                </div>
+                <div className="font-mono text-xs font-bold text-text-primary bg-white p-2 rounded-lg border border-stone-200">
+                  {fraudDeskEmail}
+                </div>
+              </div>
+
+              <div className="bg-surface-section p-3 rounded-xl border border-stone-200/80 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] text-text-muted font-bold">Subject:</span>
+                </div>
+                <div className="font-mono text-[11px] font-semibold text-text-primary bg-white p-2 rounded-lg border border-stone-200">
+                  {emailSubject}
+                </div>
+              </div>
+
+              <div className="bg-surface-section p-3 rounded-xl border border-stone-200/80 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] text-text-muted font-bold">Pre-composed Statutory Body:</span>
+                  <button
+                    type="button"
+                    onClick={handleCopyEmailBody}
+                    className="text-[11px] text-brand-primary font-bold hover:underline flex items-center gap-1"
+                  >
+                    {copiedEmailBody ? <Check className="w-3 h-3 text-brand-success" /> : <Copy className="w-3 h-3" />}
+                    <span>{copiedEmailBody ? "Copied Entire Notice!" : "Copy Body"}</span>
+                  </button>
+                </div>
+                <div className="font-mono text-[11px] text-text-primary bg-white p-3 rounded-lg border border-stone-200 max-h-36 overflow-y-auto whitespace-pre-wrap leading-relaxed">
+                  {emailBody}
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-stone-100 flex flex-wrap items-center justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => generateBankFreezePdf(profile, auditReport)}
+                className="px-4 py-2.5 bg-stone-100 hover:bg-stone-200 text-text-primary rounded-xl text-xs font-bold flex items-center gap-1.5 border border-stone-200"
+              >
+                <Download className="w-3.5 h-3.5 text-brand-primary" />
+                <span>Download PDF to Attach</span>
+              </button>
+
+              <a
+                href={gmailUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 transition-all active:scale-95"
+              >
+                <Mail className="w-3.5 h-3.5" />
+                <span>Send with Gmail (Web)</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+
+              <a
+                href={mailtoUrl}
+                className="px-4 py-2.5 bg-brand-success hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 transition-all active:scale-95"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>Open Mail App</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
+

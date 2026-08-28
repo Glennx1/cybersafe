@@ -202,7 +202,7 @@ export const WizardStep3Action: React.FC<WizardStep3ActionProps> = ({
             >
               <div className="flex items-center justify-between mb-1.5">
                 <span className="text-[10px] font-bold text-brand-primary">
-                  Step {st.step}
+                  {dict.common.step} {st.step}
                 </span>
                 <span className="text-[9px] text-brand-success bg-emerald-50 px-2 py-0.5 rounded-full font-medium">
                   {st.time}
