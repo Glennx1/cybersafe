@@ -16,7 +16,6 @@ import { IncidentTracker } from "@/components/IncidentTracker";
 import { EmergencyVoiceGuide } from "@/components/EmergencyVoiceGuide";
 import { AuthModal } from "@/components/AuthModal";
 import { SavedCasesModal } from "@/components/SavedCasesModal";
-import { LiveCaptureOverlay } from "@/components/LiveCaptureOverlay";
 import { getUnmergedCovertSessions, clearCovertSession, CovertSession } from "@/lib/covertStore";
 import { UserSessionRecord } from "@/lib/db";
 import {
@@ -29,7 +28,7 @@ import {
 import { runForensicAudit, generateDispatchPayload } from "@/lib/forensicEngine";
 import { getDictionary } from "@/lib/i18n";
 import { generateBankFreezePdf, generatePoliceFirPdf, generateMagistratePetitionPdf, generateDigitalArrestFirPdf } from "@/lib/pdfGenerator";
-import { Shield, Sparkles, Code2, X, Zap, ShieldAlert, CheckCircle2, ArrowRight, Radio, EyeOff, FileText, Mic, AlertCircle } from "lucide-react";
+import { Shield, Sparkles, Code2, X, Zap, ShieldAlert, CheckCircle2, ArrowRight, Radio, EyeOff, FileText, AlertCircle } from "lucide-react";
 import confetti from "canvas-confetti";
 
 export default function Home() {
@@ -66,9 +65,6 @@ export default function Home() {
 
   // Authenticated User State (starts as null)
   const [currentUser, setCurrentUser] = useState<{ id: string; phone: string; name: string } | null>(null);
-
-  // Live Emergency Audio & Quick Note Capture Overlay control
-  const [showLiveCaptureOverlay, setShowLiveCaptureOverlay] = useState(false);
 
   // Unmerged Covert Notes detected on login
   const [pendingCovertSessions, setPendingCovertSessions] = useState<CovertSession[]>([]);
@@ -839,47 +835,6 @@ export default function Home() {
           onSelectSession={handleResumeSession}
         />
       )}
-
-      {/* Floating Action: 'Being scammed right now? Record live.' */}
-      {!showLiveCaptureOverlay && (
-        <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-2 animate-in fade-in">
-          {/* Unobtrusive Calm Pill Label */}
-          {!currentUser && (
-            <button
-              type="button"
-              onClick={() => setShowLiveCaptureOverlay(true)}
-              className="bg-surface-card/95 hover:bg-surface-card text-text-primary border border-stone-200/90 shadow-sm px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 backdrop-blur-xs group"
-            >
-              <span className="w-2 h-2 rounded-full bg-brand-primary shrink-0" />
-              <span>{dict.common.recordLiveCallout}</span>
-            </button>
-          )}
-
-          {/* Floating Live Capture Trigger Button (Unified with brand-navy pill family) */}
-          <button
-            type="button"
-            onClick={() => setShowLiveCaptureOverlay(true)}
-            className="h-11 px-4 rounded-full bg-brand-navy hover:bg-indigo-950 text-white shadow-lg border border-indigo-900/60 flex items-center gap-2 transition-all hover:scale-105 active:scale-95 backdrop-blur-xs group"
-            title="Start live emergency recording & quick evidence capture"
-            aria-label="Record live scam call"
-          >
-            <div className="w-2 h-2 rounded-full bg-indigo-300/60 shrink-0" />
-            <Mic className="w-4 h-4 text-indigo-200 group-hover:text-white" />
-            <span className="text-xs font-bold font-sans">{dict.common.recordLiveBtn}</span>
-          </button>
-        </div>
-      )}
-
-      {/* Direct-to-Capture Live Recording & Note Vault Modal Overlay */}
-      <LiveCaptureOverlay
-        isOpen={showLiveCaptureOverlay}
-        language={language}
-        onClose={() => setShowLiveCaptureOverlay(false)}
-        onNavigateToLogin={() => {
-          setShowLiveCaptureOverlay(false);
-          setShowAuthModal(true);
-        }}
-      />
 
       {/* Persistent Accessibility & Language Opt-In Panel */}
       <AccessibilityPanel
